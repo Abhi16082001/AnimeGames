@@ -140,7 +140,14 @@ Do not allow these failures to produce a broken or unusable page.
 
 ---
 
-## 12. Special Guidelines
+## 12. API Configuration
+
+* The Google Apps Script API URL is **not available yet**. Use a clearly marked placeholder for now.
+* The API URL must be read from the project's **configuration file**, not hardcoded throughout components.
+* When the actual API URL becomes available, it should only need to be changed in the configuration.
+
+
+## 13. Special Guidelines
 
 General project rules apply by default.
 

@@ -440,3 +440,58 @@ The website should not calculate ranking positions itself. The leaderboard shoul
 * Follow `DESIGN.md` only for project-wide UI consistency.
 * Maintain the project's own anime/game identity and **do not make the UI resemble Vercel**.
 * Game-specific interactions in this document must be implemented as specified, even when they differ from generic UI behavior.
+
+
+# 9. Homepage Layout
+
+The homepage must follow this section structure and visual direction:
+
+## 9.1 **Hero**
+
+   * Full-background hero image.
+   * Right side: a black overlay/filter with **more than 50% opacity**, containing a short description and a **`Browse Game`** CTA button.
+   * Left side: the unobstructed image area with floating bubbles in **lavender and red**, using varied sizes and positions.
+   * The hero should feel distinctive and anime/game-oriented, not like a generic SaaS landing page.
+
+## 9.2 **Short About Section**
+
+   * A very small introductory About section directly below the hero.
+   * Use a **lavender-to-red gradient background**.
+   * Keep the content intentionally brief because a dedicated About page will exist later.
+
+## 9.3 **Feature Badges**
+
+   * Use a separate/different background from the About section.
+   * Display badges highlighting:
+
+     * No Sign Up
+     * Free of Cost
+     * Daily New Questions
+     * Global Leaderboard
+     * Different Categories
+     * Anime Questions
+
+## 9.4 **Global Leaderboard Introduction**
+
+   * Briefly describe the Global Leaderboard.
+   * Include a CTA to the dedicated **Global Leaderboard** page.
+   * **Do not display the actual leaderboard on the homepage.**
+
+## 9.5 **FAQ**
+
+   * Add the FAQ section after the leaderboard introduction.
+
+## 9.6 **Footer**
+
+   * Include relevant navigation links, including:
+
+     * Game Categories
+     * Global Leaderboard
+     * About
+     * Other available site pages
+
+## 9.7 Responsive Design
+
+* The entire homepage must be fully responsive. Mobile layouts may **change, simplify, reposition, or remove** desktop elements when necessary—for example, the hero description, slanting overlay, or floating bubbles—to maintain a clean and usable experience on smaller screens.
+
+The homepage layout should remain visually distinct from the site's regular content pages while maintaining overall project-wide UI consistency through `DESIGN.md`.
