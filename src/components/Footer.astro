@@ -1,0 +1,76 @@
+---
+import { navItems } from '../config';
+import gamescategory from '../../database/gamescategory.json';
+import animecategory from '../../database/animecategory.json';
+---
+
+<footer class="border-t border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-[var(--color-bg)] dark:bg-[var(--color-bg-dark)] py-12 md:py-16 mt-auto">
+  <div class="section-container">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+      <!-- Brand column -->
+      <div class="flex flex-col gap-4 lg:col-span-1">
+        <a href="/" class="flex items-center gap-2 font-black text-xl tracking-wider gradient-text" aria-label="Anime Realm Home">
+          <span>ANIME REALM</span>
+          <span aria-hidden="true">🎮</span>
+        </a>
+        <p class="text-sm md:text-base text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] leading-relaxed max-w-xs">
+          A static anime-themed playground hosting Description, Zoomed Image, and Colour Guessing games. Scale the leaderboard today!
+        </p>
+      </div>
+
+      <!-- Quick Links column -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4">Navigation</h3>
+        <ul class="space-y-2" role="list">
+          {navItems.map((item) => (
+            <li>
+              <a href={item.path} class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 rounded-sm">
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Game Categories column -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4">Games</h3>
+        <ul class="space-y-2" role="list">
+          {gamescategory.filter(g => g.show).map((game) => (
+            <li>
+              <a href={game.gamepath} class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 rounded-sm">
+                {game.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Anime Categories column -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4">Featured Anime</h3>
+        <ul class="space-y-2" role="list">
+          {animecategory.map((anime) => (
+            <li>
+              <a href={`/games?anime=${anime.id}`} class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 rounded-sm">
+                {anime.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom footer bar -->
+    <div class="border-t border-[var(--color-border)] dark:border-[var(--color-border-dark)] mt-10 md:mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <span class="text-xs text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
+        &copy; {new Date().getFullYear()} Anime Realm. All rights reserved.
+      </span>
+      <div class="flex gap-4 text-xs font-semibold text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
+        <a href="/about" class="hover:underline hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 rounded-sm">About</a>
+        <span aria-hidden="true">|</span>
+        <span>Zero database setup required.</span>
+      </div>
+    </div>
+  </div>
+</footer>

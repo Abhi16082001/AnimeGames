@@ -1,0 +1,37 @@
+[
+  {
+    "id": "bleach-zoomed-q1",
+    "answer": "Ichigo Kurosaki",
+    "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop",
+    "troll": false,
+    "zoom": { "scale": 2.5, "position": { "x": 50, "y": 40 } }
+  },
+  {
+    "id": "bleach-zoomed-q2",
+    "answer": "Rukia Kuchiki",
+    "image": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop",
+    "troll": false,
+    "zoom": { "scale": 2.5, "position": { "x": 50, "y": 45 } }
+  },
+  {
+    "id": "bleach-zoomed-q3",
+    "answer": "Byakuya Kuchiki",
+    "image": "https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=600&auto=format&fit=crop",
+    "troll": false,
+    "zoom": { "scale": 2.5, "position": { "x": 50, "y": 40 } }
+  },
+  {
+    "id": "bleach-zoomed-q4",
+    "answer": "Kon",
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=600&auto=format&fit=crop",
+    "troll": true,
+    "zoom": { "scale": 3.0, "position": { "x": 50, "y": 50 } }
+  },
+  {
+    "id": "bleach-zoomed-q5",
+    "answer": "Don Kanonji",
+    "image": "https://images.unsplash.com/photo-1551085254-e96b210db58a?q=80&w=600&auto=format&fit=crop",
+    "troll": true,
+    "zoom": { "scale": 3.0, "position": { "x": 50, "y": 50 } }
+  }
+]

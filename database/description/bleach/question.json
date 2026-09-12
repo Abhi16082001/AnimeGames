@@ -1,0 +1,67 @@
+[
+  {
+    "id": "bleach-desc-q1",
+    "descriptions": [
+      "I am a high school student who can see ghosts.",
+      "I obtained Soul Reaper powers from Rukia Kuchiki.",
+      "My Zanpakuto's name is Zangetsu.",
+      "My signature attack is Getsuga Tensho.",
+      "I have bright orange hair."
+    ],
+    "answer": "Ichigo Kurosaki",
+    "image": "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "bleach-desc-q2",
+    "descriptions": [
+      "I am the captain of the 10th Division in the Gotei 13.",
+      "I am the youngest captain in Soul Society history.",
+      "My Zanpakuto is the ice-type Hyorinmaru.",
+      "I have white hair and am often frustrated at being treated like a child.",
+      "My name is..."
+    ],
+    "answer": "Toshiro Hitsugaya",
+    "image": "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "bleach-desc-q3",
+    "descriptions": [
+      "I am the captain of the 11th Division.",
+      "I wear an eyepatch that devours my spiritual pressure.",
+      "I have bells in my hair to give my enemies a fair warning.",
+      "I do not know the name of my Zanpakuto for a long time.",
+      "I live for the thrill of a good battle."
+    ],
+    "answer": "Kenpachi Zaraki",
+    "image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "bleach-desc-q4",
+    "descriptions": [
+      "I am the creator of the entire Bleach universe.",
+      "I am a literal drawing utensil.",
+      "I defeated Aizen in one stroke.",
+      "I am the legendary ink pen used by Tite Kubo.",
+      "Bow down before the almighty pen!"
+    ],
+    "answer": "Tite Kubo's Pen",
+    "image": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=600&auto=format&fit=crop",
+    "troll": true
+  },
+  {
+    "id": "bleach-desc-q5",
+    "descriptions": [
+      "I am the strongest Soul Reaper who ever lived.",
+      "I never fight seriously and always sleep on duty.",
+      "I have a plush body and a lion's mane.",
+      "I am a Mod-Soul trapped in a stuffed lion.",
+      "My name is..."
+    ],
+    "answer": "Kon",
+    "image": "https://images.unsplash.com/photo-1559251606-c623743a6d76?q=80&w=600&auto=format&fit=crop",
+    "troll": true
+  }
+]

@@ -1,0 +1,497 @@
+---
+// Description Game - [anime].astro
+import Layout from '../../../layouts/Layout.astro';
+import gamescategory from '../../../database/gamescategory.json';
+import animecategory from '../../../database/animecategory.json';
+import { loadQuestions, filterQuestionsByTrollMode, getQuestionLimit, getTrollMode, selectSessionQuestions, saveSessionProgress, calculatePercentage, formatDuration } from '../../../utils/gameSession';
+import { getAnimeProgress, getMiscProgress, saveAnimeProgress, saveMiscProgress, clearAnimeProgress, clearMiscProgress, saveGameResult, getLocalPlayer } from '../../../utils/api';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const anime of animecategory) {
+    if (anime.gameCategoryIds.includes('description')) {
+      paths.push({ params: { anime: anime.id } });
+    }
+  }
+  paths.push({ params: { anime: 'miscellaneous' } });
+  return paths;
+}
+
+const { anime } = Astro.params;
+const gameId = 'description';
+const isMiscellaneous = anime === 'miscellaneous';
+const isMiscellaneousStr = isMiscellaneous ? 'true' : 'false';
+
+const gameConfig = gamescategory.find(g => g.id === gameId);
+const questionLimit = gameConfig?.questionLimit || 3;
+
+let animeName = 'Miscellaneous';
+let animeBg = 'linear-gradient(135deg, #7C3AED 0%, #EF4444 100%)';
+
+if (!isMiscellaneous) {
+  const animeData = animecategory.find(a => a.id === anime);
+  if (animeData) {
+    animeName = animeData.name;
+    animeBg = animeData.bgimage;
+  }
+}
+
+const trollMode = getTrollMode(gameId);
+
+// Load questions at build time for static generation
+let allQuestions: any[] = [];
+if (!isMiscellaneous) {
+  const questionFiles = import.meta.glob('../../../database/description/*/question.json', { eager: true, import: 'default' });
+  const questionFile = questionFiles[`../../../database/description/${anime}/question.json`];
+  if (questionFile) allQuestions = questionFile as any[];
+}
+
+const filteredQuestions = filterQuestionsByTrollMode(allQuestions, trollMode);
+const sessionQuestions = selectSessionQuestions(
+  filteredQuestions,
+  gameId,
+  anime,
+  questionLimit,
+  isMiscellaneous,
+  getAnimeProgress,
+  getMiscProgress
+);
+
+const totalQuestions = sessionQuestions.length;
+const hasQuestions = totalQuestions > 0;
+---
+
+<Layout title={`${animeName} - Description Game - Anime Realm`}>
+  <main class="flex-grow min-h-screen">
+    <!-- Game Header -->
+    <header class="sticky top-16 z-30 bg-white/80 dark:bg-[var(--color-bg-dark)]/80 backdrop-blur-md border-b border-[var(--color-border)] dark:border-[var(--color-border-dark)] px-4 py-4 md:px-6">
+      <div class="section-container flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <a href="/games/description" class="p-2 rounded-lg text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] hover:bg-[var(--color-bg)] dark:hover:bg-[var(--color-border-dark)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]" aria-label="Back to Description Game">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+          </a>
+          <div>
+            <h1 class="text-xl md:text-2xl font-black gradient-text">{animeName}</h1>
+            <p class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Description Game • {totalQuestions} question{totalQuestions !== 1 ? 's' : ''}</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <!-- Troll Mode Toggle -->
+          <label class="relative inline-flex items-center cursor-pointer" role="switch" aria-checked={trollMode} aria-label="Troll Mode">
+            <input
+              type="checkbox"
+              id="troll-mode-toggle"
+              class="sr-only peer"
+              {trollMode && 'checked'}
+              onchange="toggleTrollMode(this.checked)"
+            />
+            <div class="w-11 h-6 bg-[var(--color-border)] dark:bg-[var(--color-border-dark)] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)] peer-focus:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--color-primary)]"></div>
+            <span class="ml-3 text-sm font-medium text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] peer-checked:text-[var(--color-primary)]">Troll</span>
+          </label>
+          
+          <!-- Progress Indicator -->
+          <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-sm font-medium text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
+            <span id="question-counter">1 / {totalQuestions}</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {hasQuestions ? (
+      <>
+        <!-- Game Area -->
+        <section class="py-8 md:py-12 px-4 md:px-6" aria-label="Game Area">
+          <div class="section-container max-w-3xl">
+            <!-- Question Card -->
+            <article id="question-card" class="card relative overflow-hidden" data-question-index="0" role="region" aria-label="Question 1 of {totalQuestions}">
+              <div class="absolute top-4 right-4 flex gap-2" aria-hidden="true">
+                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-[var(--color-accent-lavender)] dark:bg-[var(--color-primary)]/20 text-[var(--color-primary)] dark:text-[var(--color-accent-lavender)]">
+                  Q<span id="current-q-num">1</span>
+                </span>
+              </div>
+              
+              <!-- Front: Descriptions -->
+              <div id="card-front" class="p-6 md:p-8">
+                <div class="mb-6">
+                  <h2 class="text-lg font-semibold text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mb-4">Clues</h2>
+                  <div id="descriptions-container" class="space-y-3" role="list" aria-label="Progressive clues">
+                    {sessionQuestions[0].descriptions.map((desc: string, idx: number) => (
+                      <div 
+                        class="description-line p-4 rounded-lg bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] border border-[var(--color-border)] dark:border-[var(--color-border-dark)] transition-all duration-300 {idx === 0 ? '' : 'hidden opacity-0'}" 
+                        data-line-index={idx}
+                        role="listitem"
+                        aria-hidden={idx > 0}
+                      >
+                        <div class="flex items-start gap-3">
+                          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-white text-sm font-bold" aria-hidden="true">
+                            {idx + 1}
+                          </span>
+                          <p class="flex-1 text-[var(--color-text)] dark:text-[var(--color-text-dark)] leading-relaxed">{desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <!-- Answer Input -->
+                <div class="space-y-4">
+                  <label for="answer-input" class="block text-sm font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)]">
+                    Your Answer
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="answer-input"
+                      class="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-bg-dark)] text-[var(--color-text)] dark:text-[var(--color-text-dark)] placeholder-[var(--color-text-muted)] dark:placeholder-[var(--color-text-muted-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all text-lg pr-24"
+                      placeholder="Type the character name..."
+                      autocomplete="off"
+                      spellcheck="false"
+                      aria-describedby="answer-hint"
+                    />
+                    <button
+                      type="button"
+                      id="submit-answer"
+                      class="absolute right-3 top-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white font-semibold text-sm hover:from-[var(--color-primary-dark)] hover:to-[var(--color-secondary-dark)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
+                      aria-label="Submit answer"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                  <p id="answer-hint" class="text-xs text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Press Enter to submit</p>
+                </div>
+                
+                <!-- Feedback -->
+                <div id="feedback" class="hidden mt-4 p-4 rounded-lg" role="alert" aria-live="polite"></div>
+              </div>
+              
+              <!-- Back: Character Reveal -->
+              <div id="card-back" class="absolute inset-0 p-6 md:p-8 hidden flex-col items-center justify-center text-center">
+                <div class="relative w-full max-w-md">
+                  <div class="aspect-square rounded-xl overflow-hidden bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] mb-6 relative" style="background-image: url('{sessionQuestions[0].image}'); background-size: cover; background-position: center;">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true"></div>
+                  </div>
+                  <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg mb-2" id="revealed-name">{sessionQuestions[0].answer}</h3>
+                  <p class="text-white/80 text-sm mb-6">Tap the image to flip back</p>
+                  <div class="flex justify-center gap-4">
+                    <button
+                      id="next-question-btn"
+                      class="btn-primary"
+                      aria-label="Next question"
+                    >
+                      Next Question
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Score Summary (shown at end) -->
+            <div id="score-summary" class="hidden mt-6 card gradient-border text-center">
+              <h2 class="text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4">Session Complete!</h2>
+              <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="p-4 rounded-xl bg-[var(--color-accent-lavender)]/50 dark:bg-[var(--color-primary)]/20">
+                  <div class="text-3xl font-bold gradient-text" id="final-correct">0</div>
+                  <div class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Correct</div>
+                </div>
+                <div class="p-4 rounded-xl bg-red-100/50 dark:bg-red-900/20">
+                  <div class="text-3xl font-bold text-red-600 dark:text-red-400" id="final-wrong">0</div>
+                  <div class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Wrong</div>
+                </div>
+                <div class="p-4 rounded-xl bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)]">
+                  <div class="text-3xl font-bold gradient-text" id="final-percentage">0%</div>
+                  <div class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Score</div>
+                </div>
+              </div>
+              <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href={`/games/description/${anime}`} class="btn-secondary">Play Again</a>
+                <a href="/leaderboard" class="btn-primary">View Leaderboard</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
+    ) : (
+      // No questions available
+      <section class="py-16 md:py-24 px-4 md:px-6">
+        <div class="section-container max-w-md mx-auto text-center">
+          <div class="card gradient-border p-12">
+            <div class="text-6xl mb-4" aria-hidden="true">😔</div>
+            <h2 class="text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4">No Questions Available</h2>
+            <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mb-6">
+              {trollMode 
+                ? `No troll questions found for ${animeName}. Try turning off Troll Mode!`
+                : `No regular questions found for ${animeName}.`}
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="/games/description" class="btn-secondary">Back to Game Select</a>
+              <button 
+                id="toggle-troll-fallback"
+                class="btn-primary"
+                onclick="toggleTrollMode(!document.getElementById('troll-mode-toggle')?.checked)"
+              >
+                {trollMode ? 'Disable Troll Mode' : 'Enable Troll Mode'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+</Layout>
+
+<script define:vars={{ sessionQuestions, questionLimit, isMiscellaneous: isMiscellaneousStr, gameId, animeId: anime }}>
+  // Game state
+  let currentQuestionIndex = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let scores: number[] = [];
+  let playedQuestionIds: string[] = [];
+  let isFlipped = false;
+  let currentLineIndex = 0;
+  const totalQuestions = sessionQuestions.length;
+
+  // DOM Elements
+  const questionCard = document.getElementById('question-card');
+  const cardFront = document.getElementById('card-front');
+  const cardBack = document.getElementById('card-back');
+  const answerInput = document.getElementById('answer-input');
+  const submitBtn = document.getElementById('submit-answer');
+  const feedback = document.getElementById('feedback');
+  const descriptionsContainer = document.getElementById('descriptions-container');
+  const questionCounter = document.getElementById('question-counter');
+  const currentQNum = document.getElementById('current-q-num');
+  const revealedName = document.getElementById('revealed-name');
+  const nextQuestionBtn = document.getElementById('next-question-btn');
+  const scoreSummary = document.getElementById('score-summary');
+  const finalCorrect = document.getElementById('final-correct');
+  const finalWrong = document.getElementById('final-wrong');
+  const finalPercentage = document.getElementById('final-percentage');
+  const trollModeToggle = document.getElementById('troll-mode-toggle');
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!sessionQuestions.length) return;
+    
+    // Focus answer input
+    answerInput?.focus();
+    
+    // Event listeners
+    submitBtn?.addEventListener('click', submitAnswer);
+    answerInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        submitAnswer();
+      }
+    });
+    
+    nextQuestionBtn?.addEventListener('click', nextQuestion);
+    
+    // Card flip on click/tap
+    cardBack?.addEventListener('click', () => flipCard(false));
+  });
+
+  function getCurrentQuestion() {
+    return sessionQuestions[currentQuestionIndex];
+  }
+
+  function updateQuestionDisplay() {
+    const q = getCurrentQuestion();
+    if (!q) return;
+    
+    // Update question counter
+    questionCounter.textContent = `${currentQuestionIndex + 1} / ${totalQuestions}`;
+    currentQNum.textContent = String(currentQuestionIndex + 1);
+    
+    // Reset descriptions visibility
+    const lines = descriptionsContainer?.querySelectorAll('.description-line');
+    lines?.forEach((line, idx) => {
+      if (idx <= currentLineIndex) {
+        line.classList.remove('hidden', 'opacity-0');
+        line.setAttribute('aria-hidden', 'false');
+      } else {
+        line.classList.add('hidden', 'opacity-0');
+        line.setAttribute('aria-hidden', 'true');
+      }
+    });
+    
+    // Reset input
+    answerInput.value = '';
+    answerInput.disabled = false;
+    submitBtn.disabled = false;
+    feedback.classList.add('hidden');
+    feedback.textContent = '';
+    feedback.className = 'hidden mt-4 p-4 rounded-lg';
+    
+    // Update revealed name and image
+    if (revealedName) revealedName.textContent = q.answer;
+    const cardBackImg = cardBack?.querySelector('.aspect-square');
+    if (cardBackImg && q.image) {
+      (cardBackImg as HTMLElement).style.backgroundImage = `url('${q.image}')`;
+    }
+  }
+
+  function submitAnswer() {
+    const answer = answerInput.value.trim();
+    if (!answer) return;
+    
+    const question = getCurrentQuestion();
+    const isCorrect = compareAnswers(answer, question.answer);
+    
+    if (isCorrect) {
+      // Correct answer - reveal all lines, flip card
+      correctCount++;
+      scores.push(calculateDescriptionScore(currentLineIndex));
+      playedQuestionIds.push(question.id);
+      
+      showFeedback('Correct! 🎉', 'success');
+      revealAllLines();
+      setTimeout(() => flipCard(true), 1000);
+    } else {
+      // Wrong answer - reveal next line
+      if (currentLineIndex < question.descriptions.length - 1) {
+        currentLineIndex++;
+        updateQuestionDisplay();
+        showFeedback('Not quite! Next clue revealed.', 'error');
+        answerInput.value = '';
+        answerInput.focus();
+      } else {
+        // Wrong on last line
+        wrongCount++;
+        scores.push(0);
+        playedQuestionIds.push(question.id);
+        
+        showFeedback(`Wrong! The answer was: ${question.answer}`, 'error');
+        setTimeout(() => flipCard(true), 1500);
+      }
+    }
+  }
+
+  function compareAnswers(userAnswer: string, correctAnswer: string): boolean {
+    const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+    return normalize(userAnswer) === normalize(correctAnswer);
+  }
+
+  function calculateDescriptionScore(lineIndex: number): number {
+    const scores = [1.0, 0.8, 0.6, 0.4, 0.2];
+    return scores[lineIndex] || 0;
+  }
+
+  function revealAllLines() {
+    const lines = descriptionsContainer?.querySelectorAll('.description-line');
+    lines?.forEach(line => {
+      line.classList.remove('hidden', 'opacity-0');
+      line.setAttribute('aria-hidden', 'false');
+    });
+    currentLineIndex = 4; // All 5 lines shown
+  }
+
+  function flipCard(showBack: boolean) {
+    isFlipped = showBack;
+    if (showBack) {
+      cardFront?.classList.add('hidden');
+      cardBack?.classList.remove('hidden');
+      cardBack?.classList.add('flex');
+    } else {
+      cardBack?.classList.add('hidden');
+      cardBack?.classList.remove('flex');
+      cardFront?.classList.remove('hidden');
+    }
+  }
+
+  function nextQuestion() {
+    flipCard(false);
+    currentQuestionIndex++;
+    currentLineIndex = 0;
+    
+    if (currentQuestionIndex >= totalQuestions) {
+      // Game over
+      endGame();
+    } else {
+      // Next question
+      updateQuestionDisplay();
+      answerInput?.focus();
+    }
+  }
+
+  function endGame() {
+    questionCard?.classList.add('hidden');
+    scoreSummary?.classList.remove('hidden');
+    
+    const percentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+    
+    finalCorrect.textContent = String(correctCount);
+    finalWrong.textContent = String(wrongCount);
+    finalPercentage.textContent = `${percentage}%`;
+    
+    // Save progress and result
+    saveProgressAndResult(percentage);
+  }
+
+  function saveProgressAndResult(percentage: number) {
+    const avgScore = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
+    
+    // Save to localStorage via api
+    if (typeof saveGameResult === 'function') {
+      saveGameResult(gameId, animeId, avgScore, percentage);
+    }
+    
+    // Save progress
+    if (isMiscellaneous === 'true') {
+      if (typeof saveMiscProgress === 'function') {
+        saveMiscProgress(gameId, playedQuestionIds);
+      }
+    } else {
+      if (playedQuestionIds.length > 0 && typeof saveAnimeProgress === 'function') {
+        const lastPlayedId = playedQuestionIds[playedQuestionIds.length - 1];
+        const lastIndex = sessionQuestions.findIndex(q => q.id === lastPlayedId);
+        if (lastIndex === sessionQuestions.length - 1) {
+          if (typeof clearAnimeProgress === 'function') clearAnimeProgress(gameId, animeId);
+        } else {
+          saveAnimeProgress(gameId, animeId, lastPlayedId);
+        }
+      }
+    }
+  }
+
+  function showFeedback(message: string, type: 'success' | 'error') {
+    feedback.textContent = message;
+    feedback.className = `mt-4 p-4 rounded-lg ${type === 'success' 
+      ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border border-green-300 dark:border-green-700' 
+      : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 border border-red-300 dark:border-red-700'}`;
+    feedback.classList.remove('hidden');
+  }
+
+  // Troll Mode Toggle
+  function toggleTrollMode(enabled: boolean) {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(`animegames_trollmode_${gameId}`, String(enabled));
+      window.location.reload();
+    }
+  }
+
+  // Make toggleTrollMode globally accessible for inline onclick
+  (window as any).toggleTrollMode = toggleTrollMode;
+</script>
+
+<style>
+  .description-line {
+    animation: slideIn 0.3s ease-out forwards;
+  }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  #card-back {
+    animation: flipIn 0.5s ease-out forwards;
+  }
+  
+  @keyframes flipIn {
+    from { opacity: 0; transform: rotateY(90deg); }
+    to { opacity: 1; transform: rotateY(0); }
+  }
+</style>

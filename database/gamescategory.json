@@ -1,0 +1,23 @@
+[
+  {
+    "id": "description",
+    "name": "Description Game",
+    "show": true,
+    "gamepath": "/games/description",
+    "questionLimit": 3
+  },
+  {
+    "id": "zoomed",
+    "name": "Zoomed Image Game",
+    "show": true,
+    "gamepath": "/games/zoomed",
+    "questionLimit": 3
+  },
+  {
+    "id": "colour",
+    "name": "Colour Guessing Game",
+    "show": true,
+    "gamepath": "/games/colour",
+    "questionLimit": 3
+  }
+]

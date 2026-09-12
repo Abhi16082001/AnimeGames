@@ -1,0 +1,93 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import gamescategory from '../../database/gamescategory.json';
+import animecategory from '../../database/animecategory.json';
+---
+
+<Layout title="Browse Games - Anime Realm">
+  <main class="flex-grow">
+    <section class="bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-red)]/50 py-16 dark:from-[var(--color-primary)]/10 dark:to-[var(--color-secondary)]/10 md:py-24">
+      <div class="section-container text-center">
+        <h1 class="mb-6 text-4xl font-black tracking-tight gradient-text md:text-5xl lg:text-6xl">Browse Games</h1>
+        <p class="mx-auto max-w-2xl text-lg leading-relaxed text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] md:text-xl">
+          Choose a game mode, open its panel, and pick an anime to start playing.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-12 md:py-20">
+      <div class="section-container">
+        <div class="mx-auto max-w-5xl space-y-4">
+          {gamescategory.filter((game) => game.show).map((game) => {
+            const supportedAnime = animecategory.filter((anime) => anime.gameCategoryIds.includes(game.id));
+            const description = game.id === 'description'
+              ? 'Guess characters from progressive clues.'
+              : game.id === 'zoomed'
+                ? 'Identify characters from zoomed-in images.'
+                : 'Match the colour of anime images.';
+
+            return (
+              <details class="group overflow-hidden rounded-2xl border-2 border-[var(--color-border)] bg-white shadow-sm open:border-[var(--color-primary)] open:shadow-lg">
+                <summary class="flex cursor-pointer list-none items-center gap-4 px-5 py-5 [&::-webkit-details-marker]:hidden md:px-7 md:py-6">
+                  <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--color-accent-lavender)] text-2xl" aria-hidden="true">
+                    {game.id === 'description' ? '📝' : game.id === 'zoomed' ? '🔍' : '🎨'}
+                  </span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block text-xl font-bold text-[var(--color-text)] md:text-2xl">{game.name}</span>
+                    <span class="mt-1 block text-sm leading-relaxed text-[var(--color-text-muted)] md:text-base">{description}</span>
+                  </span>
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] text-2xl text-[var(--color-primary)] transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+
+                <div class="border-t border-[var(--color-border)] bg-[var(--color-bg)] px-5 py-6 md:px-7 md:py-8">
+                  <div class="mb-5 flex items-center justify-between gap-4">
+                    <h2 class="text-sm font-bold uppercase tracking-[0.16em] text-[var(--color-text-muted)]">Choose an anime</h2>
+                    <span class="text-sm text-[var(--color-text-muted)]">{supportedAnime.length} available</span>
+                  </div>
+                  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {supportedAnime.map((anime) => (
+                      <a href={`/games/${game.id}/${anime.id}`} class="group/anime relative flex aspect-square min-h-48 flex-col justify-end overflow-hidden rounded-xl border border-white/40 p-5 shadow-sm transition-transform hover:-translate-y-1 hover:shadow-lg" style={`background: ${anime.bgimage};`}>
+                        <span class="absolute inset-0 bg-black/20 transition-colors group-hover/anime:bg-black/5" aria-hidden="true"></span>
+                        <span class="relative text-xl font-bold text-white drop-shadow-md">{anime.name}</span>
+                        <span class="relative mt-1 text-sm font-medium text-white/85">Play {game.name}</span>
+                      </a>
+                    ))}
+                    <a href={`/games/${game.id}/miscellaneous`} class="group/anime relative flex aspect-square min-h-48 flex-col justify-end overflow-hidden rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] p-5 shadow-sm transition-transform hover:-translate-y-1 hover:shadow-lg">
+                      <span class="text-4xl" aria-hidden="true">🎲</span>
+                      <span class="mt-4 text-xl font-bold text-white">Miscellaneous</span>
+                      <span class="mt-1 text-sm font-medium text-white/85">Mix every supported anime</span>
+                    </a>
+                  </div>
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[var(--color-bg)] py-12 dark:bg-[var(--color-bg-dark)] md:py-20">
+      <div class="section-container">
+        <div class="mb-12 text-center md:mb-16">
+          <h2 class="section-title mb-4">How It Works</h2>
+          <p class="section-subtitle">Choose a mode, pick an anime, and start your challenge.</p>
+        </div>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+          {[
+            { step: 1, title: 'Open a Game', desc: 'Expand a game category to see its available anime.' },
+            { step: 2, title: 'Pick an Anime', desc: 'Choose a square anime card to launch that challenge.' },
+            { step: 3, title: 'Play & Score', desc: 'Answer questions, track progress, and climb the leaderboard.' }
+          ].map((step) => (
+            <article class="card relative text-center">
+              <div class="absolute -top-4 left-1/2 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-xl font-bold text-white" aria-hidden="true">{step.step}</div>
+              <div class="pt-10">
+                <h3 class="mb-3 text-xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)]">{step.title}</h3>
+                <p class="leading-relaxed text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">{step.desc}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

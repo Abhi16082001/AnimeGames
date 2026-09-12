@@ -1,0 +1,63 @@
+---
+// Hero.astro - Full-background hero with floating bubbles
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden" aria-labelledby="hero-title">
+  <!-- Background Image Layer -->
+  <div class="absolute inset-0 z-0">
+    <div 
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style="background-image: url('https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=1920&auto=format&fit=crop');"
+      aria-hidden="true"
+    ></div>
+    <!-- Dark overlay on right side -->
+    <div class="absolute inset-0 bg-gradient-to-l from-black/60 via-black/30 to-transparent" aria-hidden="true"></div>
+  </div>
+
+  <!-- Floating Bubbles (Left Side) -->
+  <div class="absolute left-1/4 top-1/2 -translate-y-1/2 z-10 pointer-events-none" aria-hidden="true">
+    <div class="absolute -top-20 -left-10 w-24 h-24 rounded-full bg-[var(--color-accent-lavender)]/60 blur-3xl animate-float"></div>
+    <div class="absolute top-20 -right-10 w-16 h-16 rounded-full bg-[var(--color-accent-red)]/60 blur-3xl animate-float-delayed"></div>
+    <div class="absolute bottom-20 left-20 w-32 h-32 rounded-full bg-[var(--color-primary)]/30 blur-3xl animate-float-slow"></div>
+    <div class="absolute -bottom-10 right-20 w-20 h-20 rounded-full bg-[var(--color-secondary)]/40 blur-3xl animate-float" style="animation-delay: 1s;"></div>
+    <div class="absolute top-1/2 left-40 w-12 h-12 rounded-full bg-[var(--color-accent-lavender)]/50 blur-2xl animate-float" style="animation-delay: 3s;"></div>
+    <div class="absolute top-1/2 -right-20 w-10 h-10 rounded-full bg-[var(--color-accent-red)]/50 blur-2xl animate-float" style="animation-delay: 5s;"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="section-container relative z-20 py-20 md:py-32">
+    <div class="max-w-3xl">
+      <h1 id="hero-title" class="mb-6 md:mb-8 text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-white leading-tight text-balance">
+        Discover Your Anime
+        <br />
+        <span class="gradient-text">Knowledge</span>
+      </h1>
+      <p class="mb-8 md:mb-10 text-lg md:text-xl lg:text-2xl text-white/90 max-w-xl leading-relaxed text-balance">
+        Test your anime expertise across three unique game modes. Climb the global leaderboard and prove you're the ultimate otaku!
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a 
+          href="/games" 
+          class="btn-primary text-center w-full sm:w-auto"
+          aria-label="Browse available games"
+        >
+          Browse Games
+        </a>
+        <a 
+          href="/leaderboard" 
+          class="btn-secondary text-center w-full sm:w-auto border-white/30 text-white hover:bg-white/10 dark:hover:bg-white/10"
+          aria-label="View global leaderboard"
+        >
+          View Leaderboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce" aria-hidden="true">
+    <svg class="w-6 h-6 text-white/70" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+    </svg>
+  </div>
+</section>

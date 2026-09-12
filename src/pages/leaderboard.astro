@@ -1,0 +1,292 @@
+---
+// Leaderboard page
+import Layout from '../layouts/Layout.astro';
+import gamescategory from '../../database/gamescategory.json';
+import { getLeaderboard } from '../utils/api';
+
+const gameCategories = [
+  { id: 'Combined', name: 'Combined', icon: '🏆' },
+  ...gamescategory.filter(g => g.show).map(g => ({ id: g.id, name: g.name, icon: g.id === 'description' ? '📝' : g.id === 'zoomed' ? '🔍' : '🎨' }))
+];
+---
+
+<Layout title="Global Leaderboard - Anime Realm">
+  <main class="flex-grow min-h-screen">
+    <!-- Page Header -->
+    <header class="py-16 md:py-24 bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-red)]/50 dark:from-[var(--color-primary)]/10 dark:to-[var(--color-secondary)]/10">
+      <div class="section-container text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight gradient-text mb-6">Global Leaderboard</h1>
+        <p class="text-lg md:text-xl text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] max-w-2xl mx-auto leading-relaxed">
+          The best anime quiz masters. Climb the ranks and prove your knowledge!
+        </p>
+      </div>
+    </header>
+
+    <!-- Leaderboard Content -->
+    <section class="py-16 md:py-24">
+      <div class="section-container">
+        <!-- Category Filter -->
+        <div class="mb-8 md:mb-12">
+          <div class="flex flex-wrap justify-center gap-3" role="tablist" aria-label="Leaderboard categories">
+            {gameCategories.map((cat, index) => (
+              <button
+                role="tab"
+                aria-selected={index === 0}
+                aria-controls={`leaderboard-${cat.id}`}
+                id={`tab-${cat.id}`}
+                class="tab-btn px-6 py-3 rounded-full bg-white dark:bg-[var(--color-surface-dark)] border border-[var(--color-border)] dark:border-[var(--color-border-dark)] text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] font-semibold hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] hover:border-[var(--color-primary)] dark:hover:border-[var(--color-primary)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] {index === 0 ? 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white border-transparent shadow-lg shadow-[var(--color-primary)]/30' : ''}"
+                data-category={cat.id}
+              >
+                <span class="flex items-center gap-2">
+                  <span aria-hidden="true">{cat.icon}</span>
+                  {cat.name}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        <!-- Leaderboard Panels -->
+        <div class="space-y-6" role="tabpanel">
+          {gameCategories.map((cat, index) => (
+            <div 
+              id={`leaderboard-${cat.id}`}
+              role="tabpanel"
+              aria-labelledby={`tab-${cat.id}`}
+              class={`leaderboard-panel ${index !== 0 ? 'hidden' : ''}`}
+            >
+              <div id={`leaderboard-content-${cat.id}`} class="card overflow-hidden">
+                <div class="overflow-x-auto">
+                  <table class="w-full" role="table" aria-label={`${cat.name} leaderboard`}>
+                    <thead>
+                      <tr class="bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] border-b border-[var(--color-border)] dark:border-[var(--color-border-dark)]">
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Rank</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Player</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Score</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Percentage</th>
+                      </tr>
+                    </thead>
+                    <tbody id={`leaderboard-body-${cat.id}`} class="divide-y divide-[var(--color-border)] dark:divide-[var(--color-border-dark)]">
+                      <tr>
+                        <td colspan="4" class="px-4 py-12 text-center text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
+                          <div class="flex flex-col items-center gap-3">
+                            <div class="w-8 h-8 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
+                            <span>Loading leaderboard...</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <!-- Empty State -->
+                <div id={`leaderboard-empty-${cat.id}`} class="hidden p-12 text-center">
+                  <div class="text-6xl mb-4" aria-hidden="true">🏆</div>
+                  <h3 class="text-xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-2">No Scores Yet</h3>
+                  <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Be the first to play and set a record!</p>
+                  <a href="/games" class="btn-primary mt-6 inline-block">Play Now</a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <!-- Legend / Info -->
+        <div class="mt-8 md:mt-12 card gradient-border">
+          <h3 class="text-lg font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-[var(--color-primary)]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+            </svg>
+            How Scoring Works
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
+            <div class="p-4 rounded-lg bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)]">
+              <h4 class="font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-2 flex items-center gap-2">
+                <span class="text-[var(--color-primary)]">📝</span> Description Game
+              </h4>
+              <p>Progressive clues. Earlier correct answers score higher (1.0 → 0.2). Wrong answers reveal next clue.</p>
+            </div>
+            <div class="p-4 rounded-lg bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)]">
+              <h4 class="font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-2 flex items-center gap-2">
+                <span class="text-[var(--color-primary)]">🔍</span> Zoomed Image Game
+              </h4>
+              <p>Identify from zoomed image. 1 point for correct, 0 for wrong. Image zooms out on answer.</p>
+            </div>
+            <div class="p-4 rounded-lg bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)]">
+              <h4 class="font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-2 flex items-center gap-2">
+                <span class="text-[var(--color-primary)]">🎨</span> Colour Guessing Game
+              </h4>
+              <p>Match color percentage (0-100%). Score = match% ÷ 100. Hold to compare with correct answer.</p>
+            </div>
+            <div class="md:col-span-3 p-4 rounded-lg bg-gradient-to-r from-[var(--color-primary)]/10 to-[var(--color-secondary)]/10 border border-[var(--color-primary)]/20 dark:border-[var(--color-secondary)]/20">
+              <h4 class="font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-2 flex items-center gap-2">
+                <span class="text-[var(--color-primary)]">🏆</span> Combined Score
+              </h4>
+              <p>Average of your best scores across all three game categories. Each category contributes equally regardless of anime played.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  // Leaderboard state
+  let currentCategory = 'Combined';
+  const categoryButtons = document.querySelectorAll('.tab-btn');
+  const leaderboardPanels = document.querySelectorAll('.leaderboard-panel');
+  
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    loadLeaderboard('Combined');
+    
+    // Tab click handlers
+    categoryButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.dataset.category;
+        if (category && category !== currentCategory) {
+          switchCategory(category);
+        }
+      });
+      
+      // Keyboard support
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+  });
+  
+  async function switchCategory(category: string) {
+    currentCategory = category;
+    
+    // Update tab buttons
+    categoryButtons.forEach(btn => {
+      const isActive = btn.dataset.category === category;
+      btn.setAttribute('aria-selected', String(isActive));
+      if (isActive) {
+        btn.classList.add('bg-gradient-to-r', 'from-[var(--color-primary)]', 'to-[var(--color-secondary)]', 'text-white', 'border-transparent', 'shadow-lg', 'shadow-[var(--color-primary)]/30');
+        btn.classList.remove('text-[var(--color-text-muted)]', 'dark:text-[var(--color-text-muted-dark)]', 'border-[var(--color-border)]', 'dark:border-[var(--color-border-dark)]');
+      } else {
+        btn.classList.remove('bg-gradient-to-r', 'from-[var(--color-primary)]', 'to-[var(--color-secondary)]', 'text-white', 'border-transparent', 'shadow-lg', 'shadow-[var(--color-primary)]/30');
+        btn.classList.add('text-[var(--color-text-muted)]', 'dark:text-[var(--color-text-muted-dark)]', 'border-[var(--color-border)]', 'dark:border-[var(--color-border-dark)]');
+      }
+    });
+    
+    // Update panels
+    leaderboardPanels.forEach(panel => {
+      const isActive = panel.id === `leaderboard-${category}`;
+      if (isActive) {
+        panel.classList.remove('hidden');
+      } else {
+        panel.classList.add('hidden');
+      }
+    });
+    
+    // Load leaderboard data
+    await loadLeaderboard(category);
+  }
+  
+  async function loadLeaderboard(category: string) {
+    const tbody = document.getElementById(`leaderboard-body-${category}`);
+    const emptyState = document.getElementById(`leaderboard-empty-${category}`);
+    const content = document.getElementById(`leaderboard-content-${category}`);
+    
+    if (!tbody) return;
+    
+    // Show loading
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4" class="px-4 py-12 text-center text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
+          <div class="flex flex-col items-center gap-3">
+            <div class="w-8 h-8 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
+            <span>Loading leaderboard...</span>
+          </div>
+        </td>
+      </tr>
+    `;
+    emptyState?.classList.add('hidden');
+    content?.classList.remove('hidden');
+    
+    try {
+      // Dynamic import to avoid circular dependency
+      const { getLeaderboard } = await import('../utils/api.js');
+      const entries = await getLeaderboard(category);
+      
+      if (entries.length === 0) {
+        content?.classList.add('hidden');
+        emptyState?.classList.remove('hidden');
+        return;
+      }
+      
+      // Render leaderboard
+      tbody.innerHTML = entries.map((entry, index) => {
+        const rank = index + 1;
+        const rankClass = rank === 1 ? 'text-yellow-500' : rank === 2 ? 'text-gray-400' : rank === 3 ? 'text-amber-700' : 'text-[var(--color-text-muted)]';
+        const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#';
+        
+        return `
+          <tr class="hover:bg-[var(--color-bg)] dark:hover:bg-[var(--color-border-dark)] transition-colors ${rank <= 3 ? 'bg-gradient-to-r from-[var(--color-primary)]/5 to-[var(--color-secondary)]/5' : ''}">
+            <td class="px-4 py-4 font-bold ${rankClass}">${rankIcon} ${rank}</td>
+            <td class="px-4 py-4 font-medium text-[var(--color-text)] dark:text-[var(--color-text-dark)]">${escapeHtml(entry.name)}</td>
+            <td class="px-4 py-4 text-right font-mono text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">${entry.score.toFixed(2)}</td>
+            <td class="px-4 py-4 text-right font-bold gradient-text">${entry.percentage}%</td>
+          </tr>
+        `;
+      }).join('');
+      
+    } catch (error) {
+      console.error('Failed to load leaderboard:', error);
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="4" class="px-4 py-12 text-center text-red-500">
+            <div class="flex flex-col items-center gap-3">
+              <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+              <span>Failed to load leaderboard. Please try again.</span>
+              <button onclick="loadLeaderboard('${category}')" class="btn-secondary text-sm">Retry</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
+  }
+  
+  function escapeHtml(text: string): string {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
+  // Make loadLeaderboard globally accessible for retry button
+  (window as any).loadLeaderboard = loadLeaderboard;
+</script>
+
+<style>
+  .tab-btn:focus-visible {
+    outline: none;
+    ring: 2px;
+    ring-offset: 2px;
+  }
+  
+  /* Smooth panel transitions */
+  .leaderboard-panel {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Table responsiveness */
+  @media (max-width: 640px) {
+    .overflow-x-auto table {
+      min-width: 500px;
+    }
+  }
+</style>

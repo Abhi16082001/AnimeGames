@@ -1,0 +1,53 @@
+---
+// LeaderboardIntro.astro - Global Leaderboard Introduction section
+---
+
+<section class="py-16 md:py-24 bg-white dark:bg-[var(--color-surface-dark)]" aria-labelledby="leaderboard-intro-title">
+  <div class="section-container">
+    <div class="text-center mb-12 md:mb-16">
+      <h2 id="leaderboard-intro-title" class="section-title mb-4">Global Leaderboard</h2>
+      <p class="section-subtitle">Prove your anime mastery and climb the ranks</p>
+    </div>
+    
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="card gradient-border mb-8">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 text-center md:text-left">
+          <div class="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-4xl md:text-5xl" aria-hidden="true">
+            🏆
+          </div>
+          <div>
+            <h3 class="text-xl md:text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-3">
+              Compete Globally
+            </h3>
+            <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] leading-relaxed">
+              Every completed game session updates your best scores. The leaderboard tracks your highest score per game category and calculates your Combined average across all three modes. See how you rank against anime fans worldwide!
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-8">
+        <div class="card text-center p-4 md:p-6">
+          <div class="text-3xl font-bold gradient-text mb-1">3</div>
+          <div class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Game Categories</div>
+        </div>
+        <div class="card text-center p-4 md:p-6">
+          <div class="text-3xl font-bold gradient-text mb-1">∞</div>
+          <div class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Daily Challenges</div>
+        </div>
+        <div class="card text-center p-4 md:p-6">
+          <div class="text-3xl font-bold gradient-text mb-1">1</div>
+          <div class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Combined Score</div>
+        </div>
+      </div>
+      
+      <a 
+        href="/leaderboard" 
+        class="btn-primary inline-block"
+        aria-label="View the global leaderboard"
+      >
+        View Leaderboard
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+---
+// FeatureBadges.astro - Feature badges with different background
+---
+
+<section class="py-16 md:py-24 bg-[var(--color-bg)] dark:bg-[var(--color-bg-dark)]" aria-labelledby="features-title">
+  <div class="section-container">
+    <div class="text-center mb-12 md:mb-16">
+      <h2 id="features-title" class="section-title mb-4">Why Play Here?</h2>
+      <p class="section-subtitle">Everything you need for the ultimate anime quiz experience</p>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {[
+        { icon: "⚡", title: "No Sign Up Required", desc: "Jump straight into games without accounts or emails" },
+        { icon: "💰", title: "Completely Free", desc: "No paywalls, no premium tiers, no hidden costs" },
+        { icon: "📅", title: "Daily New Questions", desc: "Fresh questions added regularly to keep you challenged" },
+        { icon: "🏆", title: "Global Leaderboard", desc: "Compete with players worldwide for the top spot" },
+        { icon: "🎮", title: "Three Game Modes", desc: "Description, Zoomed Image, and Colour Guessing" },
+        { icon: "🎌", title: "Anime Questions", desc: "Curated content from Naruto, One Piece, Bleach & more" }
+      ].map((feature) => (
+        <article class="card group relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/5 to-[var(--color-secondary)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true"></div>
+          <div class="relative flex flex-col h-full">
+            <div class="mb-4 text-4xl md:text-5xl animate-float" aria-hidden="true">
+              {feature.icon}
+            </div>
+            <h3 class="mb-2 text-xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] group-hover:gradient-text group-hover:text-transparent transition-all duration-300">
+              {feature.title}
+            </h3>
+            <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] leading-relaxed flex-1">
+              {feature.desc}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

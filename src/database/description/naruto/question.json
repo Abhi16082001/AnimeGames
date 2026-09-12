@@ -1,0 +1,67 @@
+[
+  {
+    "id": "naruto-desc-q1",
+    "descriptions": [
+      "I am the main protagonist of my series.",
+      "I love eating Miso Chashu Ramen at Ichiraku.",
+      "I have a nine-tailed beast sealed inside of me.",
+      "My dream is to become the Hokage.",
+      "My signature jutsu is the Rasengan."
+    ],
+    "answer": "Naruto Uzumaki",
+    "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q2",
+    "descriptions": [
+      "I am the last remaining loyal member of the Uchiha clan at the start.",
+      "I seek vengeance against my older brother.",
+      "My eye power is the Sharingan.",
+      "I walked away from the village to gain power from Orochimaru.",
+      "My primary lightning-style jutsu is Chidori."
+    ],
+    "answer": "Sasuke Uchiha",
+    "image": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q3",
+    "descriptions": [
+      "I am known as the Copy Ninja.",
+      "I always wear a mask covering my mouth and left eye.",
+      "I love reading 'Make-Out Paradise' books.",
+      "I was the leader of Team 7.",
+      "I became the Sixth Hokage."
+    ],
+    "answer": "Kakashi Hatake",
+    "image": "https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q4",
+    "descriptions": [
+      "I am the true mastermind of the entire shinobi world.",
+      "I defeated Madara Uchiha in one hit.",
+      "I served ramen to every major villain and hero without getting scratched.",
+      "I hold the legendary Sage of Six Bowls title.",
+      "I am the owner of Ichiraku Ramen."
+    ],
+    "answer": "Teuchi",
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=600&auto=format&fit=crop",
+    "troll": true
+  },
+  {
+    "id": "naruto-desc-q5",
+    "descriptions": [
+      "I am the most powerful creature in the Naruto universe.",
+      "I can speak human language and run at extreme speeds.",
+      "I have escaped from Team 7 multiple times.",
+      "I am an animal ninja wearing a headband.",
+      "I am a martial-arts-using ninja ostrich."
+    ],
+    "answer": "Condor",
+    "image": "https://images.unsplash.com/photo-1551085254-e96b210db58a?q=80&w=600&auto=format&fit=crop",
+    "troll": true
+  }
+]

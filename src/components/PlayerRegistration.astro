@@ -1,0 +1,138 @@
+---
+// PlayerRegistration.astro
+// Vanilla JS client-side component to handle player name entry on first visit.
+---
+
+<div
+  id="registration-modal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 opacity-0 pointer-events-none transition-opacity duration-300"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="registration-title"
+>
+  <div class="relative w-full max-w-md overflow-hidden rounded-2xl bg-white dark:bg-[var(--color-surface-dark)] border border-[var(--color-border)] dark:border-[var(--color-border-dark)] shadow-2xl">
+    <!-- Visual Gradient Top Bar -->
+    <div class="h-2 w-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]" aria-hidden="true"></div>
+
+    <div class="p-6 md:p-8">
+      <!-- Icon/Header -->
+      <div class="flex flex-col items-center text-center mb-6">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-[var(--color-accent-lavender)] to-[var(--color-accent-red)] dark:from-[var(--color-primary)]/20 dark:to-[var(--color-secondary)]/20 mb-3 text-2xl" aria-hidden="true">
+          🎮
+        </div>
+        <h2 id="registration-title" class="text-2xl font-bold tracking-tight text-[var(--color-text)] dark:text-[var(--color-text-dark)]">Welcome to Anime Realm!</h2>
+        <p class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mt-1">Enter your name to register and start climbing the leaderboard!</p>
+      </div>
+
+      <!-- Form -->
+      <form id="registration-form" class="space-y-4" onsubmit="return false;">
+        <div>
+          <label for="player-name" class="block text-sm font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-2">
+            Your Nickname
+          </label>
+          <input
+            type="text"
+            id="player-name"
+            required
+            minlength="2"
+            maxlength="20"
+            placeholder="e.g. NarutoLover99"
+            autocomplete="username"
+            spellcheck="false"
+            class="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-bg-dark)] text-[var(--color-text)] dark:text-[var(--color-text-dark)] placeholder-[var(--color-text-muted)] dark:placeholder-[var(--color-text-muted-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all"
+          />
+          <p id="registration-error" class="hidden text-xs text-red-500 mt-1 font-medium" aria-live="polite"></p>
+        </div>
+
+        <button
+          type="submit"
+          id="registration-submit"
+          class="btn-primary w-full"
+        >
+          <span>Enter Game Realm</span>
+          <span class="text-lg" aria-hidden="true">➔</span>
+        </button>
+      </form>
+
+      <!-- Security / Info Badges -->
+      <div class="mt-6 pt-5 border-t border-[var(--color-border)] dark:border-[var(--color-border-dark)] flex justify-around text-[11px] font-medium text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
+        <span class="flex items-center gap-1">⚡ Free to Play</span>
+        <span class="flex items-center gap-1">🔒 No Sign Up Required</span>
+        <span class="flex items-center gap-1">🏆 Global Standings</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { getLocalPlayer, registerPlayer } from '../utils/api';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('registration-modal') as HTMLDivElement;
+    const form = document.getElementById('registration-form') as HTMLFormElement;
+    const input = document.getElementById('player-name') as HTMLInputElement;
+    const errorMsg = document.getElementById('registration-error') as HTMLParagraphElement;
+    const submitBtn = document.getElementById('registration-submit') as HTMLButtonElement;
+
+    if (!modal || !form || !input || !errorMsg || !submitBtn) return;
+
+    // Check if player exists in localStorage
+    const player = getLocalPlayer();
+    if (!player) {
+      // Reveal the modal
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100');
+      // Focus the input after modal appears
+      setTimeout(() => input.focus(), 100);
+    }
+
+    // Form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = input.value.trim();
+
+      if (name.length < 2) {
+        showError('Name must be at least 2 characters long.');
+        return;
+      }
+
+      if (name.length > 20) {
+        showError('Name must be at most 20 characters long.');
+        return;
+      }
+
+      // Disable submission UI
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+      submitBtn.innerHTML = `<span>Entering realm...</span><svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+      errorMsg.classList.add('hidden');
+
+      try {
+        const registered = await registerPlayer(name);
+        
+        // Hide modal
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        
+        // Custom event so other components know a player is registered/active
+        const event = new CustomEvent('playerRegistered', { detail: registered });
+        window.dispatchEvent(event);
+
+        // Optional: Refresh the page to update header/states immediately
+        window.location.reload();
+      } catch (err) {
+        console.error(err);
+        showError('Failed to register. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+        submitBtn.innerHTML = `<span>Enter Game Realm</span><span class="text-lg" aria-hidden="true">➔</span>`;
+      }
+    });
+
+    function showError(msg: string) {
+      errorMsg.textContent = msg;
+      errorMsg.classList.remove('hidden');
+      input.focus();
+    }
+  });
+</script>

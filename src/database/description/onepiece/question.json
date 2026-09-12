@@ -1,0 +1,67 @@
+[
+  {
+    "id": "op-desc-q1",
+    "descriptions": [
+      "I am the captain of the Straw Hat Pirates.",
+      "I ate the Gum-Gum Fruit (Gomu Gomu no Mi).",
+      "I received my straw hat from Red-Haired Shanks.",
+      "My dream is to find the One Piece and become the Pirate King.",
+      "I am known for using techniques called Gears."
+    ],
+    "answer": "Monkey D. Luffy",
+    "image": "https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "op-desc-q2",
+    "descriptions": [
+      "I am the first member to join Luffy's crew.",
+      "I am a master of the Three Sword Style.",
+      "I have a terrible sense of direction and get lost easily.",
+      "My dream is to become the World's Strongest Swordsman.",
+      "My name is..."
+    ],
+    "answer": "Roronoa Zoro",
+    "image": "https://images.unsplash.com/photo-1580477667995-2b94f01c9516?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "op-desc-q3",
+    "descriptions": [
+      "I am the ship's cook of the Straw Hat Pirates.",
+      "I only fight using my legs to protect my cooking hands.",
+      "I am deeply chivalrous and refuse to hit any woman.",
+      "I am obsessed with beautiful women and get severe nosebleeds.",
+      "My family name is Vinsmoke."
+    ],
+    "answer": "Vinsmoke Sanji",
+    "image": "https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "op-desc-q4",
+    "descriptions": [
+      "I am the ultimate pirate in the sky.",
+      "I can fly with small pink wings.",
+      "Luffy fought me with gold attached to his arm.",
+      "I am a literal God.",
+      "Wait, no, I am actually a legendary sky-island melon-headed god of comedy."
+    ],
+    "answer": "Gan Fall",
+    "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop",
+    "troll": true
+  },
+  {
+    "id": "op-desc-q5",
+    "descriptions": [
+      "I am a legendary sword master.",
+      "My sword is a direct, unmatched weapon of destruction.",
+      "I wear a green stripey shirt and have white hair.",
+      "I am Zoro's greatest rival.",
+      "Just kidding, I am a green-haired moss ball that Zoro resembles."
+    ],
+    "answer": "Marimo",
+    "image": "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=600&auto=format&fit=crop",
+    "troll": true
+  }
+]

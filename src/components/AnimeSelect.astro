@@ -1,0 +1,166 @@
+---
+// AnimeSelect.astro - Shared anime selection component for game pages
+import Layout from '../layouts/Layout.astro';
+import gamescategory from '../database/gamescategory.json';
+import animecategory from '../database/animecategory.json';
+import { navItems } from '../config';
+
+interface Props {
+  gameId: string;
+  gameName: string;
+  gameDescription: string;
+  gameIcon: string;
+}
+
+const { gameId, gameName, gameDescription, gameIcon } = Astro.props;
+
+const gameConfig = gamescategory.find(g => g.id === gameId);
+const questionLimit = gameConfig?.questionLimit || 3;
+
+const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(gameId));
+---
+
+<Layout title={`${gameName} - Select Anime - Anime Realm`}>
+  <main class="flex-grow">
+    <!-- Page Header -->
+    <section class="py-16 md:py-24 bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-red)]/50 dark:from-[var(--color-primary)]/10 dark:to-[var(--color-secondary)]/10">
+      <div class="section-container">
+        <div class="max-w-3xl">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-3xl" aria-hidden="true">
+              {gameIcon}
+            </div>
+            <div>
+              <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight gradient-text">{gameName}</h1>
+              <p class="text-lg md:text-xl text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mt-1">{gameDescription}</p>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap items-center gap-4 mt-6 text-sm">
+            <span class="badge">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v16.5m16.5-16.5v16.5M3.75 3.75h16.5M3.75 20.25h16.5" />
+              </svg>
+              {questionLimit} Questions per Session
+            </span>
+            <span class="badge">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+              </svg>
+              {supportedAnime.length} Anime Series
+            </span>
+            <a href="/games" class="badge bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)]">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+              </svg>
+              Back to Games
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Anime Selection Grid -->
+    <section class="py-16 md:py-24">
+      <div class="section-container">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
+          {supportedAnime.map((anime) => (
+            <article class="card group relative overflow-hidden h-full" style="--anime-bg: {anime.bgimage};">
+              <div class="absolute inset-0 bg-[var(--anime-bg)] opacity-10 group-hover:opacity-20 transition-opacity duration-300" aria-hidden="true"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-300" aria-hidden="true"></div>
+              
+              <div class="relative h-full flex flex-col">
+                <div class="flex-1 flex items-end p-6">
+                  <h3 class="text-xl md:text-2xl font-bold text-white drop-shadow-lg group-hover:text-[var(--color-accent-lavender)] transition-colors duration-300">
+                    {anime.name}
+                  </h3>
+                </div>
+                
+                <div class="p-6 pt-0 border-t border-[var(--color-border)]/50 dark:border-[var(--color-border-dark)]/50">
+                  <a 
+                    href={`/games/${gameId}/${anime.id}`}
+                    class="btn-secondary w-full text-center group-hover:bg-[var(--color-primary)] group-hover:text-white group-hover:border-[var(--color-primary)] transition-all duration-300"
+                    aria-label={`Play ${gameName} with ${anime.name} questions`}
+                  >
+                    Play {anime.name}
+                  </a>
+                  <p class="text-center text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mt-3">
+                    {questionLimit} questions per session
+                  </p>
+                </div>
+              </div>
+            </article>
+          ))}
+          
+          <!-- Miscellaneous Option -->
+          <article class="card group relative overflow-hidden h-full gradient-border">
+            <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-[var(--color-secondary)]/10 group-hover:from-[var(--color-primary)]/20 group-hover:to-[var(--color-secondary)]/20 transition-all duration-300" aria-hidden="true"></div>
+            
+            <div class="relative h-full flex flex-col items-center justify-center text-center p-8">
+              <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-3xl mb-6 animate-float" aria-hidden="true">
+                🎲
+              </div>
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-3 group-hover:gradient-text group-hover:text-transparent transition-all duration-300">
+                Miscellaneous
+              </h3>
+              <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] leading-relaxed mb-6 max-w-sm">
+                Mixed questions from all {supportedAnime.length} supported anime. Questions are shuffled across series for a true test of knowledge!
+              </p>
+              
+              <a 
+                href={`/games/${gameId}/miscellaneous`}
+                class="btn-primary w-full sm:w-auto group-hover:shadow-xl group-hover:shadow-[var(--color-primary)]/40 transition-all duration-300"
+                aria-label={`Play ${gameName} with Miscellaneous questions`}
+              >
+                Play Miscellaneous
+              </a>
+              <p class="text-center text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mt-3">
+                {questionLimit} shuffled questions
+              </p>
+            </div>
+          </article>
+        </div>
+        
+        <!-- Game Rules Summary -->
+        <div class="card gradient-border max-w-3xl mx-auto">
+          <h3 class="text-lg font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-[var(--color-primary)]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+            </svg>
+            Game Rules
+          </h3>
+          <ul class="space-y-2 text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]" role="list">
+            {gameId === 'description' && (
+              <>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> 5 progressive clues per question</li>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Earlier correct answers score higher (1.0 → 0.2)</li>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Wrong answers reveal next clue automatically</li>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Card flips to reveal character image on answer</li>
+              </>
+            )}
+            {gameId === 'zoomed' && (
+              <>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Identify character from zoomed-in image portion</li>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Image smoothly zooms out on answer (correct or wrong)</li>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Each question has unique zoom level & position</li>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> 1 point for correct, 0 for incorrect</li>
+              </>
+            )}
+            {gameId === 'colour' && (
+              <>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Match color of transparent anime image area</li>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Adjust Hue, Saturation & Brightness sliders</li>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Score = color match percentage (0-100%)</li>
+                <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Hold to compare your result with correct answer</li>
+              </>
+            )}
+            <li class="flex items-start gap-2 pt-2 border-t border-[var(--color-border)] dark:border-[var(--color-border-dark)]"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Troll Mode toggles fun/misleading questions</li>
+            <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Progress saves automatically in browser</li>
+            <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Best scores compete on global leaderboard</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

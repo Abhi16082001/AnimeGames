@@ -1,0 +1,107 @@
+---
+import { navItems } from '../config';
+---
+
+<header class="sticky top-0 z-40 w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-md">
+  <div class="section-container">
+    <div class="flex h-16 items-center justify-between">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="/" class="flex items-center gap-2 font-black text-xl tracking-wider gradient-text hover:opacity-90 transition-opacity" aria-label="Anime Realm Home">
+          <span>ANIME REALM</span>
+          <span aria-hidden="true">🎮</span>
+        </a>
+      </div>
+
+      <!-- Navigation Links (Desktop) -->
+      <nav class="hidden md:flex items-center gap-1" aria-label="Main navigation">
+        {navItems.map((item) => (
+          <a
+            href={item.path}
+            class:list={["px-4 py-2 rounded-full text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]", Astro.url.pathname === item.path ? "bg-[var(--color-text)] text-white" : "text-[var(--color-text-muted)] hover:bg-white hover:text-[var(--color-text)]"]}
+          >
+            {item.name}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Player Identity Corner -->
+      <div class="flex items-center gap-4">
+        <!-- Player Nickname Box -->
+        <div id="header-player-container" class="hidden items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] border border-[var(--color-border)] dark:border-[var(--color-border-dark)] text-sm font-bold" role="status" aria-live="polite">
+          <span class="flex h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" aria-hidden="true"></span>
+          <span id="header-player-name" class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">...</span>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button
+          type="button"
+          id="mobile-menu-toggle"
+          class="inline-flex md:hidden items-center justify-center p-2 rounded-lg text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] hover:bg-[var(--color-bg)] dark:hover:bg-[var(--color-border-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] transition-all"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          aria-label="Open main menu"
+        >
+          <!-- Icon Menu (hamburger) -->
+          <svg id="hamburger-icon" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+          <!-- Icon Close -->
+          <svg id="close-icon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-b border-[var(--color-border)] bg-[var(--color-bg)] transition-all duration-200 ease-in-out" role="navigation" aria-label="Mobile navigation">
+    <div class="space-y-1 px-4 py-3 sm:px-6">
+      {navItems.map((item) => (
+        <a
+          href={item.path}
+          class="block px-3 py-2.5 rounded-lg text-base font-semibold text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] hover:bg-[var(--color-bg)] dark:hover:bg-[var(--color-border-dark)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+        >
+          {item.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<script>
+  import { getLocalPlayer } from '../utils/api';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Mobile Menu Toggle
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    if (toggleBtn && mobileMenu && hamburgerIcon && closeIcon) {
+      toggleBtn.addEventListener('click', () => {
+        const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+        toggleBtn.setAttribute('aria-expanded', (!isExpanded).toString());
+        
+        mobileMenu.classList.toggle('hidden');
+        hamburgerIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+    }
+
+    // 2. Fetch Player Identity & update Navbar UI
+    const playerContainer = document.getElementById('header-player-container');
+    const playerNameEl = document.getElementById('header-player-name');
+
+    if (playerContainer && playerNameEl) {
+      const player = getLocalPlayer();
+      if (player) {
+        playerNameEl.textContent = player.name;
+        playerContainer.classList.remove('hidden');
+        playerContainer.classList.add('flex');
+      }
+    }
+  });
+</script>

@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About - Anime Realm">
+  <main class="flex-grow min-h-screen">
+    <!-- Page Header -->
+    <header class="py-16 md:py-24 bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-red)]/50 dark:from-[var(--color-primary)]/10 dark:to-[var(--color-secondary)]/10">
+      <div class="section-container text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight gradient-text mb-6">About Anime Realm</h1>
+        <p class="text-lg md:text-xl text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] max-w-2xl mx-auto leading-relaxed">
+          A static anime quiz playground built with modern web technologies
+        </p>
+      </div>
+    </header>
+
+    <!-- About Content -->
+    <section class="py-16 md:py-24">
+      <div class="section-container max-w-4xl">
+        <div class="space-y-12 md:space-y-16">
+          <!-- What is Anime Realm -->
+          <article class="card gradient-border">
+            <div class="flex gap-6 md:gap-8">
+              <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-3xl" aria-hidden="true">
+                🎮
+              </div>
+              <div>
+                <h2 class="text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4">What is Anime Realm?</h2>
+                <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] leading-relaxed mb-4">
+                  Anime Realm is a lightweight, browser-based anime quiz platform featuring three unique game modes. Built as a static site with Astro, it requires no database, no server, and no complex infrastructure — just pure client-side fun with localStorage persistence and Google Sheets for global leaderboards.
+                </p>
+                <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] leading-relaxed">
+                  Whether you're a casual fan or a hardcore otaku, there's a challenge waiting for you. Test your knowledge, climb the leaderboards, and discover new anime along the way!
+                </p>
+              </div>
+            </div>
+          </article>
+          
+          <!-- Game Modes -->
+          <article class="card gradient-border">
+            <h2 class="text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-6">Game Modes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { icon: '📝', title: 'Description Game', desc: 'Guess the character from 5 progressive clues. Earlier correct answers score higher (1.0 → 0.2). Card flips to reveal character image.', features: ['5 clues per question', 'Progressive scoring', 'Character image reveal', 'Troll mode available'] },
+                { icon: '🔍', title: 'Zoomed Image Game', desc: 'Identify characters from heavily zoomed-in image portions. Smooth zoom-out animation reveals full image on answer.', features: ['Variable zoom levels', 'Smooth zoom animation', 'Instant feedback', 'Unique positions per question'] },
+                { icon: '🎨', title: 'Colour Guessing Game', desc: 'Match the exact color of transparent anime image areas using Hue, Saturation & Brightness controls.', features: ['Circular hue picker', 'Saturation & brightness sliders', 'Percentage-based scoring', 'Hold-to-compare feature'] }
+              ].map((game) => (
+                <div class="p-6 rounded-xl bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] border border-[var(--color-border)] dark:border-[var(--color-border-dark)]">
+                  <div class="text-4xl mb-4" aria-hidden="true">{game.icon}</div>
+                  <h3 class="text-xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-2">{game.title}</h3>
+                  <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] leading-relaxed mb-4">{game.desc}</p>
+                  <ul class="space-y-2" role="list">
+                    {game.features.map(f => (
+                      <li class="flex items-center gap-2 text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]" aria-hidden="true"></span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </article>
+          
+          <!-- Features -->
+          <article class="card gradient-border">
+            <h2 class="text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-6">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { icon: '⚡', title: 'Zero Setup', desc: 'No accounts, no emails, no passwords. Just enter a nickname and start playing instantly.' },
+                { icon: '💾', title: 'Local Progress', desc: 'Your question progress saves automatically in your browser. Pick up where you left off anytime.' },
+                { icon: '🏆', title: 'Global Leaderboards', desc: 'Compete with players worldwide. Best scores per game category + Combined average.' },
+                { icon: '🎭', title: 'Troll Mode', desc: 'Toggle fun/misleading questions for a laugh. Separate progress tracking for each mode.' },
+                { icon: '🎲', title: 'Miscellaneous Mode', desc: 'Mixed questions from all anime, shuffled across series. Independent progress tracking.' },
+                { icon: '📱', title: 'Fully Responsive', desc: 'Works beautifully on desktop, tablet, and mobile. Touch-friendly controls for all games.' }
+              ].map((feature) => (
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-secondary)]/20 flex items-center justify-center text-2xl" aria-hidden="true">
+                    {feature.icon}
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-1">{feature.title}</h3>
+                    <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">{feature.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+          
+          <!-- Technical Details -->
+          <article class="card gradient-border">
+            <h2 class="text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-6">Technical Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 class="text-lg font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-3 flex items-center gap-2">
+                  <span class="text-[var(--color-primary)]">⚙️</span> Stack
+                </h3>
+                <ul class="space-y-2 text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]" role="list">
+                  <li class="flex items-center gap-2"><code class="px-2 py-0.5 rounded bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-sm">Astro 7</code> Static site generator</li>
+                  <li class="flex items-center gap-2"><code class="px-2 py-0.5 rounded bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-sm">TypeScript</code> Type safety</li>
+                  <li class="flex items-center gap-2"><code class="px-2 py-0.5 rounded bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-sm">Tailwind CSS 4</code> Utility-first styling</li>
+                  <li class="flex items-center gap-2"><code class="px-2 py-0.5 rounded bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-sm">Vanilla JS</code> Client-side game logic</li>
+                  <li class="flex items-center gap-2"><code class="px-2 py-0.5 rounded bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-sm">Google Apps Script</code> Serverless backend</li>
+                  <li class="flex items-center gap-2"><code class="px-2 py-0.5 rounded bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-sm">Google Sheets</code> Persistent leaderboard storage</li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-3 flex items-center gap-2">
+                  <span class="text-[var(--color-primary)]">🏗️</span> Architecture
+                </h3>
+                <ul class="space-y-2 text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]" role="list">
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]" aria-hidden="true"></span> Data-driven from JSON files in <code class="px-2 py-0.5 rounded bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-sm">database/</code></li>
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]" aria-hidden="true"></span> No global question search — each game/anime combo has own <code class="px-2 py-0.5 rounded bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-sm">question.json</code></li>
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]" aria-hidden="true"></span> Progress tracked by stable question IDs (not array indices)</li>
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]" aria-hidden="true"></span> New questions added at top of JSON — automatically played first after cycle</li>
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]" aria-hidden="true"></span> Player identity via Apps Script (fallback to local generation)</li>
+                  <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]" aria-hidden="true"></span> All external calls through Apps Script Web App (no exposed credentials)</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          
+          <!-- Data Sources -->
+          <article class="card gradient-border">
+            <h2 class="text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-6">Supported Anime</h2>
+            <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] leading-relaxed mb-6">
+              Currently featuring three iconic anime series, with more planned:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {[
+                { name: 'Naruto', desc: 'Ninja adventures in the Hidden Leaf Village', color: 'from-orange-500 to-red-500', games: 'All 3 modes' },
+                { name: 'One Piece', desc: 'Pirate journey for the ultimate treasure', color: 'from-blue-500 to-indigo-700', games: 'All 3 modes' },
+                { name: 'Bleach', desc: 'Soul Reapers protecting the living world', color: 'from-gray-500 to-gray-900', games: 'All 3 modes' }
+              ].map((anime) => (
+                <div class="p-6 rounded-xl bg-gradient-to-br {anime.color} text-white relative overflow-hidden">
+                  <h3 class="text-xl font-bold mb-2">{anime.name}</h3>
+                  <p class="text-white/80 mb-3">{anime.desc}</p>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-white/20 backdrop-blur-sm">{anime.games}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+          
+          <!-- Future Plans -->
+          <article class="card gradient-border">
+            <h2 class="text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-6">Roadmap</h2>
+            <div class="space-y-4">
+              {[
+                { status: 'planned', title: 'More Anime Series', desc: 'Adding Attack on Titan, My Hero Academia, Demon Slayer, Jujutsu Kaisen, and more' },
+                { status: 'planned', title: 'Additional Game Modes', desc: 'New mechanics like Audio Guessing, Silhouette Recognition, and Timeline Ordering' },
+                { status: 'planned', title: 'Daily Challenges', desc: 'Special daily questions with bonus rewards and streak tracking' },
+                { status: 'planned', title: 'Player Profiles', desc: 'Detailed stats, achievement badges, and personal history pages' },
+                { status: 'planned', title: 'Multiplayer Modes', desc: 'Real-time head-to-head battles and cooperative play' }
+              ].map((item) => (
+                <div class="flex gap-4 p-4 rounded-lg bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] border border-[var(--color-border)] dark:border-[var(--color-border-dark)]">
+                  <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold {item.status === 'planned' ? 'bg-[var(--color-primary)]/20 text-[var(--color-primary)]' : 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'}">
+                    {item.status === 'planned' ? '📋' : '✅'}
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)]">{item.title}</h3>
+                    <p class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="py-16 md:py-24 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]">
+      <div class="section-container text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Play?</h2>
+        <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8 leading-relaxed">
+          Jump into the action and test your anime knowledge today!
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/games" class="btn-secondary border-white/30 text-white hover:bg-white/10">Browse Games</a>
+          <a href="/leaderboard" class="btn-primary bg-white text-[var(--color-primary)] hover:bg-white/90">View Leaderboard</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
