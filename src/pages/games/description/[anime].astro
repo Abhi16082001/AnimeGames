@@ -64,36 +64,23 @@ const hasQuestions = totalQuestions > 0;
 <Layout title={`${animeName} - Description Game - Anime Realm`}>
   <main class="flex-grow min-h-screen">
     <!-- Game Header -->
-    <header class="sticky top-16 z-30 bg-white/80 dark:bg-[var(--color-bg-dark)]/80 backdrop-blur-md border-b border-[var(--color-border)] dark:border-[var(--color-border-dark)] px-4 py-4 md:px-6">
+    <header class="sticky top-16 z-30 bg-white/80 bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--color-border)] border-[var(--color-border)] px-4 py-4 md:px-6">
       <div class="section-container flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div class="flex items-center gap-3">
-          <a href="/games/description" class="p-2 rounded-lg text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] hover:bg-[var(--color-bg)] dark:hover:bg-[var(--color-border-dark)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]" aria-label="Back to Description Game">
+          <a href="/games/description" class="p-2 rounded-lg text-[var(--color-text-muted)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] hover:bg-[var(--color-bg)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]" aria-label="Back to Description Game">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
           </a>
           <div>
             <h1 class="text-xl md:text-2xl font-black gradient-text">{animeName}</h1>
-            <p class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Description Game • {totalQuestions} question{totalQuestions !== 1 ? 's' : ''}</p>
+            <p class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Description Game • {totalQuestions} question{totalQuestions !== 1 ? 's' : ''}</p>
           </div>
         </div>
         
         <div class="flex items-center gap-3">
-          <!-- Troll Mode Toggle -->
-          <label class="relative inline-flex items-center cursor-pointer" role="switch" aria-checked={trollMode} aria-label="Troll Mode">
-            <input
-              type="checkbox"
-              id="troll-mode-toggle"
-              class="sr-only peer"
-              {trollMode && 'checked'}
-              onchange="toggleTrollMode(this.checked)"
-            />
-            <div class="w-11 h-6 bg-[var(--color-border)] dark:bg-[var(--color-border-dark)] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)] peer-focus:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--color-primary)]"></div>
-            <span class="ml-3 text-sm font-medium text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] peer-checked:text-[var(--color-primary)]">Troll</span>
-          </label>
-          
           <!-- Progress Indicator -->
-          <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-sm font-medium text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
+          <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-bg)] bg-[var(--color-border)] text-sm font-medium text-[var(--color-text-muted)] text-[var(--color-text-muted)]">
             <span id="question-counter">1 / {totalQuestions}</span>
           </div>
         </div>
@@ -106,9 +93,9 @@ const hasQuestions = totalQuestions > 0;
         <section class="py-8 md:py-12 px-4 md:px-6" aria-label="Game Area">
           <div class="section-container max-w-3xl">
             <!-- Question Card -->
-            <article id="question-card" class="card relative overflow-hidden" data-question-index="0" role="region" aria-label="Question 1 of {totalQuestions}">
+            <article id="question-card" class="card relative" data-question-index="0" role="region" aria-label="Question 1 of {totalQuestions}">
               <div class="absolute top-4 right-4 flex gap-2" aria-hidden="true">
-                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-[var(--color-accent-lavender)] dark:bg-[var(--color-primary)]/20 text-[var(--color-primary)] dark:text-[var(--color-accent-lavender)]">
+                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-[var(--color-accent-lavender)] bg-[var(--color-primary)]/20 text-[var(--color-primary)] text-[var(--color-accent-lavender)]">
                   Q<span id="current-q-num">1</span>
                 </span>
               </div>
@@ -116,36 +103,22 @@ const hasQuestions = totalQuestions > 0;
               <!-- Front: Descriptions -->
               <div id="card-front" class="p-6 md:p-8">
                 <div class="mb-6">
-                  <h2 class="text-lg font-semibold text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mb-4">Clues</h2>
+                  <h2 class="text-lg font-semibold text-[var(--color-text-muted)] text-[var(--color-text-muted)] mb-4">Clues</h2>
                   <div id="descriptions-container" class="space-y-3" role="list" aria-label="Progressive clues">
-                    {sessionQuestions[0].descriptions.map((desc: string, idx: number) => (
-                      <div 
-                        class="description-line p-4 rounded-lg bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] border border-[var(--color-border)] dark:border-[var(--color-border-dark)] transition-all duration-300 {idx === 0 ? '' : 'hidden opacity-0'}" 
-                        data-line-index={idx}
-                        role="listitem"
-                        aria-hidden={idx > 0}
-                      >
-                        <div class="flex items-start gap-3">
-                          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-white text-sm font-bold" aria-hidden="true">
-                            {idx + 1}
-                          </span>
-                          <p class="flex-1 text-[var(--color-text)] dark:text-[var(--color-text-dark)] leading-relaxed">{desc}</p>
-                        </div>
-                      </div>
-                    ))}
+                    <!-- Dynamically populated by renderDescriptions() -->
                   </div>
                 </div>
-                
+
                 <!-- Answer Input -->
                 <div class="space-y-4">
-                  <label for="answer-input" class="block text-sm font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)]">
+                  <label for="answer-input" class="block text-sm font-semibold text-[var(--color-text)] text-[var(--color-text)]">
                     Your Answer
                   </label>
                   <div class="relative">
                     <input
                       type="text"
                       id="answer-input"
-                      class="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-bg-dark)] text-[var(--color-text)] dark:text-[var(--color-text-dark)] placeholder-[var(--color-text-muted)] dark:placeholder-[var(--color-text-muted-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all text-lg pr-24"
+                      class="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] placeholder-[var(--color-text-muted)] caret-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all text-lg pr-24"
                       placeholder="Type the character name..."
                       autocomplete="off"
                       spellcheck="false"
@@ -160,7 +133,7 @@ const hasQuestions = totalQuestions > 0;
                       Submit
                     </button>
                   </div>
-                  <p id="answer-hint" class="text-xs text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Press Enter to submit</p>
+                  <p id="answer-hint" class="text-xs text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Press Enter to submit</p>
                 </div>
                 
                 <!-- Feedback -->
@@ -168,17 +141,20 @@ const hasQuestions = totalQuestions > 0;
               </div>
               
               <!-- Back: Character Reveal -->
-              <div id="card-back" class="absolute inset-0 p-6 md:p-8 hidden flex-col items-center justify-center text-center">
+              <div id="card-back" class="absolute inset-0 p-6 md:p-8 hidden flex-col items-center justify-center text-center cursor-pointer">
                 <div class="relative w-full max-w-md">
-                  <div class="aspect-square rounded-xl overflow-hidden bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] mb-6 relative" style="background-image: url('{sessionQuestions[0].image}'); background-size: cover; background-position: center;">
+                  <div id="reveal-image" class="aspect-square rounded-xl overflow-hidden bg-[var(--color-bg)] bg-[var(--color-border)] mb-6 relative" style={`background-image: url('${sessionQuestions[0].image}'); background-size: cover; background-position: center;`}>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true"></div>
+                  </div>
+                  <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/90 text-white font-bold text-sm shadow-lg" id="question-score">
+                    +<span id="earned-score">1.0</span>
                   </div>
                   <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg mb-2" id="revealed-name">{sessionQuestions[0].answer}</h3>
                   <p class="text-white/80 text-sm mb-6">Tap the image to flip back</p>
                   <div class="flex justify-center gap-4">
                     <button
                       id="next-question-btn"
-                      class="btn-primary"
+                      class="btn-primary hidden"
                       aria-label="Next question"
                     >
                       Next Question
@@ -190,19 +166,19 @@ const hasQuestions = totalQuestions > 0;
             
             <!-- Score Summary (shown at end) -->
             <div id="score-summary" class="hidden mt-6 card gradient-border text-center">
-              <h2 class="text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4">Session Complete!</h2>
+              <h2 class="text-2xl font-bold text-[var(--color-text)] text-[var(--color-text)] mb-4">Session Complete!</h2>
               <div class="grid grid-cols-3 gap-4 mb-6">
-                <div class="p-4 rounded-xl bg-[var(--color-accent-lavender)]/50 dark:bg-[var(--color-primary)]/20">
+                <div class="p-4 rounded-xl bg-[var(--color-accent-lavender)]/50 bg-[var(--color-primary)]/20">
                   <div class="text-3xl font-bold gradient-text" id="final-correct">0</div>
-                  <div class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Correct</div>
+                  <div class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Correct</div>
                 </div>
-                <div class="p-4 rounded-xl bg-red-100/50 dark:bg-red-900/20">
-                  <div class="text-3xl font-bold text-red-600 dark:text-red-400" id="final-wrong">0</div>
-                  <div class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Wrong</div>
+                <div class="p-4 rounded-xl bg-red-100/50 bg-red-900/20">
+                  <div class="text-3xl font-bold text-red-600 text-red-400" id="final-wrong">0</div>
+                  <div class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Wrong</div>
                 </div>
-                <div class="p-4 rounded-xl bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)]">
-                  <div class="text-3xl font-bold gradient-text" id="final-percentage">0%</div>
-                  <div class="text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">Score</div>
+                <div class="p-4 rounded-xl bg-[var(--color-bg)] bg-[var(--color-border)]">
+                  <div class="text-3xl font-bold gradient-text" id="final-percentage">0.0</div>
+                  <div class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Total Score</div>
                 </div>
               </div>
               <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -219,21 +195,14 @@ const hasQuestions = totalQuestions > 0;
         <div class="section-container max-w-md mx-auto text-center">
           <div class="card gradient-border p-12">
             <div class="text-6xl mb-4" aria-hidden="true">😔</div>
-            <h2 class="text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4">No Questions Available</h2>
-            <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mb-6">
+            <h2 class="text-2xl font-bold text-[var(--color-text)] text-[var(--color-text)] mb-4">No Questions Available</h2>
+            <p class="text-[var(--color-text-muted)] text-[var(--color-text-muted)] mb-6">
               {trollMode 
                 ? `No troll questions found for ${animeName}. Try turning off Troll Mode!`
                 : `No regular questions found for ${animeName}.`}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="/games/description" class="btn-secondary">Back to Game Select</a>
-              <button 
-                id="toggle-troll-fallback"
-                class="btn-primary"
-                onclick="toggleTrollMode(!document.getElementById('troll-mode-toggle')?.checked)"
-              >
-                {trollMode ? 'Disable Troll Mode' : 'Enable Troll Mode'}
-              </button>
             </div>
           </div>
         </div>
@@ -247,10 +216,11 @@ const hasQuestions = totalQuestions > 0;
   let currentQuestionIndex = 0;
   let correctCount = 0;
   let wrongCount = 0;
-  let scores: number[] = [];
-  let playedQuestionIds: string[] = [];
+  let scores = [];
+  let playedQuestionIds = [];
   let isFlipped = false;
   let currentLineIndex = 0;
+  let questionAnswered = false;
   const totalQuestions = sessionQuestions.length;
 
   // DOM Elements
@@ -264,20 +234,25 @@ const hasQuestions = totalQuestions > 0;
   const questionCounter = document.getElementById('question-counter');
   const currentQNum = document.getElementById('current-q-num');
   const revealedName = document.getElementById('revealed-name');
+  const revealImage = document.getElementById('reveal-image');
+  const earnedScore = document.getElementById('earned-score');
+  const questionScore = document.getElementById('question-score');
   const nextQuestionBtn = document.getElementById('next-question-btn');
   const scoreSummary = document.getElementById('score-summary');
   const finalCorrect = document.getElementById('final-correct');
   const finalWrong = document.getElementById('final-wrong');
   const finalPercentage = document.getElementById('final-percentage');
-  const trollModeToggle = document.getElementById('troll-mode-toggle');
 
   // Initialize
   document.addEventListener('DOMContentLoaded', () => {
     if (!sessionQuestions.length) return;
-    
+
+    // Render first question descriptions
+    renderDescriptions();
+
     // Focus answer input
     answerInput?.focus();
-    
+
     // Event listeners
     submitBtn?.addEventListener('click', submitAnswer);
     answerInput?.addEventListener('keydown', (e) => {
@@ -286,37 +261,56 @@ const hasQuestions = totalQuestions > 0;
         submitAnswer();
       }
     });
-    
-    nextQuestionBtn?.addEventListener('click', nextQuestion);
-    
-    // Card flip on click/tap
-    cardBack?.addEventListener('click', () => flipCard(false));
+
+    nextQuestionBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nextQuestion();
+    });
+
+    // Toggle the card face on click/tap, but only once the question is answered
+    questionCard?.addEventListener('click', () => {
+      if (!questionAnswered) return;
+      flipCard(!isFlipped);
+    });
   });
 
   function getCurrentQuestion() {
     return sessionQuestions[currentQuestionIndex];
   }
 
+  function renderDescriptions() {
+    const q = getCurrentQuestion();
+    if (!q || !descriptionsContainer) return;
+
+    descriptionsContainer.innerHTML = '';
+    q.descriptions.forEach((desc, idx) => {
+      const isVisible = idx === 0 || idx <= currentLineIndex;
+      const line = document.createElement('div');
+      line.className = `description-line p-4 rounded-lg bg-[var(--color-bg)] bg-[var(--color-border)] border border-[var(--color-border)] transition-all duration-300 ${isVisible ? '' : 'hidden opacity-0'}`;
+      line.dataset.lineIndex = String(idx);
+      line.setAttribute('role', 'listitem');
+      line.setAttribute('aria-hidden', idx > currentLineIndex ? 'true' : 'false');
+      line.innerHTML = `
+        <div class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-white text-sm font-bold" aria-hidden="true">${idx + 1}</span>
+          <p class="flex-1 text-[var(--color-text)] text-[var(--color-text)] leading-relaxed">${desc}</p>
+        </div>
+      `;
+      descriptionsContainer.appendChild(line);
+    });
+  }
+
   function updateQuestionDisplay() {
     const q = getCurrentQuestion();
     if (!q) return;
-    
+
     // Update question counter
     questionCounter.textContent = `${currentQuestionIndex + 1} / ${totalQuestions}`;
     currentQNum.textContent = String(currentQuestionIndex + 1);
-    
-    // Reset descriptions visibility
-    const lines = descriptionsContainer?.querySelectorAll('.description-line');
-    lines?.forEach((line, idx) => {
-      if (idx <= currentLineIndex) {
-        line.classList.remove('hidden', 'opacity-0');
-        line.setAttribute('aria-hidden', 'false');
-      } else {
-        line.classList.add('hidden', 'opacity-0');
-        line.setAttribute('aria-hidden', 'true');
-      }
-    });
-    
+
+    // Re-render descriptions for the current question
+    renderDescriptions();
+
     // Reset input
     answerInput.value = '';
     answerInput.disabled = false;
@@ -324,31 +318,51 @@ const hasQuestions = totalQuestions > 0;
     feedback.classList.add('hidden');
     feedback.textContent = '';
     feedback.className = 'hidden mt-4 p-4 rounded-lg';
-    
+
     // Update revealed name and image
     if (revealedName) revealedName.textContent = q.answer;
-    const cardBackImg = cardBack?.querySelector('.aspect-square');
-    if (cardBackImg && q.image) {
-      (cardBackImg as HTMLElement).style.backgroundImage = `url('${q.image}')`;
+    if (revealImage && q.image) {
+      revealImage.style.backgroundImage = `url('${q.image}')`;
     }
+
+    // Reset flipped state and visibility
+    questionAnswered = false;
+    nextQuestionBtn?.classList.add('hidden');
+    flipCard(false);
   }
 
   function submitAnswer() {
+    if (questionAnswered) return;
+
     const answer = answerInput.value.trim();
     if (!answer) return;
-    
+
     const question = getCurrentQuestion();
     const isCorrect = compareAnswers(answer, question.answer);
-    
+
     if (isCorrect) {
-      // Correct answer - reveal all lines, flip card
+      // Correct answer - reveal all remaining lines, flip card
+      const earnedPoints = calculateDescriptionScore(currentLineIndex);
       correctCount++;
-      scores.push(calculateDescriptionScore(currentLineIndex));
+      scores.push(earnedPoints);
       playedQuestionIds.push(question.id);
-      
-      showFeedback('Correct! 🎉', 'success');
+      questionAnswered = true;
+
+      showFeedback(`Correct! 🎉 Score: ${earnedPoints.toFixed(1)} point${earnedPoints === 1 ? '' : 's'}`, 'success');
       revealAllLines();
-      setTimeout(() => flipCard(true), 1000);
+
+      // Update score display on card back
+      if (earnedScore) earnedScore.textContent = earnedPoints.toFixed(1);
+      if (questionScore) {
+        questionScore.className = 'absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/90 text-white font-bold text-sm shadow-lg';
+      }
+
+      // Disable input after correct answer
+      answerInput.disabled = true;
+      submitBtn.disabled = true;
+
+      nextQuestionBtn?.classList.remove('hidden');
+      setTimeout(() => flipCard(true), 800);
     } else {
       // Wrong answer - reveal next line
       if (currentLineIndex < question.descriptions.length - 1) {
@@ -358,46 +372,67 @@ const hasQuestions = totalQuestions > 0;
         answerInput.value = '';
         answerInput.focus();
       } else {
-        // Wrong on last line
+        // Wrong on last line - game over for this question
         wrongCount++;
         scores.push(0);
         playedQuestionIds.push(question.id);
-        
+        questionAnswered = true;
+
         showFeedback(`Wrong! The answer was: ${question.answer}`, 'error');
+        revealAllLines();
+
+        // Update score display on card back (0 points)
+        if (earnedScore) earnedScore.textContent = '0';
+        if (questionScore) {
+          questionScore.className = 'absolute top-4 right-4 px-3 py-1 rounded-full bg-red-500/90 text-white font-bold text-sm shadow-lg';
+        }
+
+        // Disable input
+        answerInput.disabled = true;
+        submitBtn.disabled = true;
+
+        nextQuestionBtn?.classList.remove('hidden');
         setTimeout(() => flipCard(true), 1500);
       }
     }
   }
 
-  function compareAnswers(userAnswer: string, correctAnswer: string): boolean {
-    const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  function compareAnswers(userAnswer, correctAnswer) {
+    const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
     return normalize(userAnswer) === normalize(correctAnswer);
   }
 
-  function calculateDescriptionScore(lineIndex: number): number {
+  function calculateDescriptionScore(lineIndex) {
     const scores = [1.0, 0.8, 0.6, 0.4, 0.2];
     return scores[lineIndex] || 0;
   }
 
   function revealAllLines() {
-    const lines = descriptionsContainer?.querySelectorAll('.description-line');
-    lines?.forEach(line => {
-      line.classList.remove('hidden', 'opacity-0');
-      line.setAttribute('aria-hidden', 'false');
-    });
-    currentLineIndex = 4; // All 5 lines shown
+    const q = getCurrentQuestion();
+    if (!q) return;
+    currentLineIndex = q.descriptions.length - 1;
+    renderDescriptions();
   }
 
-  function flipCard(showBack: boolean) {
+  function flipCard(showBack) {
     isFlipped = showBack;
+
     if (showBack) {
-      cardFront?.classList.add('hidden');
+      // Render the back before rotating so it is visible as the card turns
       cardBack?.classList.remove('hidden');
       cardBack?.classList.add('flex');
     } else {
-      cardBack?.classList.add('hidden');
-      cardBack?.classList.remove('flex');
+      // Keep the front in normal flow so the card keeps its height when flipped
       cardFront?.classList.remove('hidden');
+    }
+
+    questionCard?.classList.toggle('flipped', showBack);
+
+    if (!showBack) {
+      setTimeout(() => {
+        cardBack?.classList.add('hidden');
+        cardBack?.classList.remove('flex');
+      }, 300);
     }
   }
 
@@ -419,25 +454,24 @@ const hasQuestions = totalQuestions > 0;
   function endGame() {
     questionCard?.classList.add('hidden');
     scoreSummary?.classList.remove('hidden');
-    
+
+    const totalScore = scores.reduce((a, b) => a + b, 0);
     const percentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
-    
+
     finalCorrect.textContent = String(correctCount);
     finalWrong.textContent = String(wrongCount);
-    finalPercentage.textContent = `${percentage}%`;
-    
+    finalPercentage.textContent = `${totalScore.toFixed(1)}`;
+
     // Save progress and result
-    saveProgressAndResult(percentage);
+    saveProgressAndResult(percentage, totalScore);
   }
 
-  function saveProgressAndResult(percentage: number) {
-    const avgScore = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
-    
+  function saveProgressAndResult(percentage, totalScore) {
     // Save to localStorage via api
     if (typeof saveGameResult === 'function') {
-      saveGameResult(gameId, animeId, avgScore, percentage);
+      saveGameResult(gameId, animeId, totalScore, percentage);
     }
-    
+
     // Save progress
     if (isMiscellaneous === 'true') {
       if (typeof saveMiscProgress === 'function') {
@@ -456,42 +490,43 @@ const hasQuestions = totalQuestions > 0;
     }
   }
 
-  function showFeedback(message: string, type: 'success' | 'error') {
+  function showFeedback(message, type) {
     feedback.textContent = message;
-    feedback.className = `mt-4 p-4 rounded-lg ${type === 'success' 
-      ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border border-green-300 dark:border-green-700' 
-      : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 border border-red-300 dark:border-red-700'}`;
+    feedback.className = `mt-4 p-4 rounded-lg ${type === 'success'
+      ? 'bg-green-100 bg-green-900/30 text-green-800 text-green-300 border border-green-300 border-green-700'
+      : 'bg-red-100 bg-red-900/30 text-red-800 text-red-300 border border-red-300 border-red-700'}`;
     feedback.classList.remove('hidden');
   }
-
-  // Troll Mode Toggle
-  function toggleTrollMode(enabled: boolean) {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(`animegames_trollmode_${gameId}`, String(enabled));
-      window.location.reload();
-    }
-  }
-
-  // Make toggleTrollMode globally accessible for inline onclick
-  (window as any).toggleTrollMode = toggleTrollMode;
 </script>
 
 <style>
   .description-line {
     animation: slideIn 0.3s ease-out forwards;
   }
-  
+
   @keyframes slideIn {
     from { opacity: 0; transform: translateX(-10px); }
     to { opacity: 1; transform: translateX(0); }
   }
-  
-  #card-back {
-    animation: flipIn 0.5s ease-out forwards;
+
+  /* Card flip styles */
+  #question-card {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
   }
-  
-  @keyframes flipIn {
-    from { opacity: 0; transform: rotateY(90deg); }
-    to { opacity: 1; transform: rotateY(0); }
+
+  #question-card.flipped {
+    transform: rotateY(180deg);
+  }
+
+  #card-front,
+  #card-back {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  #card-back {
+    transform: rotateY(180deg);
   }
 </style>

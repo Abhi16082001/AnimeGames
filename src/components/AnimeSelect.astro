@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import gamescategory from '../database/gamescategory.json';
 import animecategory from '../database/animecategory.json';
 import { navItems } from '../config';
+import { getTrollMode } from '../utils/gameSession';
 
 interface Props {
   gameId: string;
@@ -16,6 +17,7 @@ const { gameId, gameName, gameDescription, gameIcon } = Astro.props;
 
 const gameConfig = gamescategory.find(g => g.id === gameId);
 const questionLimit = gameConfig?.questionLimit || 3;
+const trollMode = getTrollMode(gameId);
 
 const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(gameId));
 ---
@@ -23,7 +25,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
 <Layout title={`${gameName} - Select Anime - Anime Realm`}>
   <main class="flex-grow">
     <!-- Page Header -->
-    <section class="py-16 md:py-24 bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-red)]/50 dark:from-[var(--color-primary)]/10 dark:to-[var(--color-secondary)]/10">
+    <section class="py-16 md:py-24 bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-red)]/50">
       <div class="section-container">
         <div class="max-w-3xl">
           <div class="flex items-center gap-4 mb-4">
@@ -32,7 +34,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
             </div>
             <div>
               <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight gradient-text">{gameName}</h1>
-              <p class="text-lg md:text-xl text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mt-1">{gameDescription}</p>
+              <p class="text-lg md:text-xl text-[var(--color-text-muted)] mt-1">{gameDescription}</p>
             </div>
           </div>
           
@@ -49,7 +51,18 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
               </svg>
               {supportedAnime.length} Anime Series
             </span>
-            <a href="/games" class="badge bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)]">
+            <label class="badge cursor-pointer bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] flex items-center gap-2 relative inline-flex" role="switch" aria-label="Troll Mode">
+              <input
+                type="checkbox"
+                id="troll-mode-toggle"
+                class="sr-only peer"
+                {trollMode && 'checked'}
+                onchange="toggleTrollMode('${gameId}', this.checked)"
+              />
+              <div class="w-9 h-5 bg-[var(--color-border)] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)] peer-focus:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[var(--color-primary)]" style="margin-right: 0.75rem;"></div>
+              <span class="text-sm font-medium peer-checked:text-[var(--color-primary)]">Troll Mode</span>
+            </label>
+            <a href="/games" class="badge bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
               </svg>
@@ -77,7 +90,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
                   </h3>
                 </div>
                 
-                <div class="p-6 pt-0 border-t border-[var(--color-border)]/50 dark:border-[var(--color-border-dark)]/50">
+                <div class="p-6 pt-0 border-t border-[var(--color-border)]/50">
                   <a 
                     href={`/games/${gameId}/${anime.id}`}
                     class="btn-secondary w-full text-center group-hover:bg-[var(--color-primary)] group-hover:text-white group-hover:border-[var(--color-primary)] transition-all duration-300"
@@ -85,7 +98,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
                   >
                     Play {anime.name}
                   </a>
-                  <p class="text-center text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mt-3">
+                  <p class="text-center text-sm text-[var(--color-text-muted)] mt-3">
                     {questionLimit} questions per session
                   </p>
                 </div>
@@ -101,10 +114,10 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
               <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-3xl mb-6 animate-float" aria-hidden="true">
                 🎲
               </div>
-              <h3 class="text-xl md:text-2xl font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-3 group-hover:gradient-text group-hover:text-transparent transition-all duration-300">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--color-text)] mb-3 group-hover:gradient-text group-hover:text-transparent transition-all duration-300">
                 Miscellaneous
               </h3>
-              <p class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] leading-relaxed mb-6 max-w-sm">
+              <p class="text-[var(--color-text-muted)] leading-relaxed mb-6 max-w-sm">
                 Mixed questions from all {supportedAnime.length} supported anime. Questions are shuffled across series for a true test of knowledge!
               </p>
               
@@ -115,7 +128,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
               >
                 Play Miscellaneous
               </a>
-              <p class="text-center text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] mt-3">
+              <p class="text-center text-sm text-[var(--color-text-muted)] mt-3">
                 {questionLimit} shuffled questions
               </p>
             </div>
@@ -124,13 +137,13 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
         
         <!-- Game Rules Summary -->
         <div class="card gradient-border max-w-3xl mx-auto">
-          <h3 class="text-lg font-bold text-[var(--color-text)] dark:text-[var(--color-text-dark)] mb-4 flex items-center gap-2">
+          <h3 class="text-lg font-bold text-[var(--color-text)] mb-4 flex items-center gap-2">
             <svg class="w-5 h-5 text-[var(--color-primary)]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
             </svg>
             Game Rules
           </h3>
-          <ul class="space-y-2 text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]" role="list">
+          <ul class="space-y-2 text-[var(--color-text-muted)]" role="list">
             {gameId === 'description' && (
               <>
                 <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> 5 progressive clues per question</li>
@@ -155,7 +168,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
                 <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Hold to compare your result with correct answer</li>
               </>
             )}
-            <li class="flex items-start gap-2 pt-2 border-t border-[var(--color-border)] dark:border-[var(--color-border-dark)]"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Troll Mode toggles fun/misleading questions</li>
+            <li class="flex items-start gap-2 pt-2 border-t border-[var(--color-border)]"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Troll Mode toggles fun/misleading questions</li>
             <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Progress saves automatically in browser</li>
             <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Best scores compete on global leaderboard</li>
           </ul>
@@ -164,3 +177,24 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
     </section>
   </main>
 </Layout>
+
+<script define:vars={{ gameId }}>
+  function toggleTrollMode(gameId: string, enabled: boolean): void {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(`animegames_trollmode_${gameId}`, String(enabled));
+      window.location.reload();
+    }
+  }
+
+  // Initialize toggle state on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('troll-mode-toggle') as HTMLInputElement;
+    if (toggle) {
+      const stored = localStorage.getItem(`animegames_trollmode_${gameId}`);
+      toggle.checked = stored === 'true';
+    }
+  });
+
+  // Make toggleTrollMode globally accessible for inline onclick
+  (window as any).toggleTrollMode = toggleTrollMode;
+</script>

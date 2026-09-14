@@ -1,0 +1,50 @@
+[
+  {
+    "id": "naruto-colour-q1",
+    "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop",
+    "troll": false,
+    "color": { "hex": "#FF8C00", "saturation": 100, "brightness": 50 },
+    "correctImage": "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop",
+    "answer": "Naruto Uzumaki"
+  },
+  {
+    "id": "naruto-colour-q2",
+    "image": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop",
+    "troll": false,
+    "color": { "hex": "#000000", "saturation": 0, "brightness": 15 },
+    "correctImage": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop",
+    "answer": "Sasuke Uchiha"
+  },
+  {
+    "id": "naruto-colour-q3",
+    "image": "https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=600&auto=format&fit=crop",
+    "troll": false,
+    "color": { "hex": "#808080", "saturation": 0, "brightness": 50 },
+    "correctImage": "https://images.unsplash.com/photo-1541562232579-512a21360020?q=80&w=600&auto=format&fit=crop",
+    "answer": "Kakashi Hatake"
+  },
+  {
+    "id": "naruto-colour-q4",
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=600&auto=format&fit=crop",
+    "troll": true,
+    "color": { "hex": "#FFFACD", "saturation": 100, "brightness": 90 },
+    "correctImage": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=600&auto=format&fit=crop",
+    "answer": "Teuchi"
+  },
+  {
+    "id": "naruto-colour-q5",
+    "image": "https://images.unsplash.com/photo-1551085254-e96b210db58a?q=80&w=600&auto=format&fit=crop",
+    "troll": true,
+    "color": { "hex": "#FFFF00", "saturation": 100, "brightness": 50 },
+    "correctImage": "https://images.unsplash.com/photo-1551085254-e96b210db58a?q=80&w=600&auto=format&fit=crop",
+    "answer": "Condor"
+  },
+  {
+    "id": "naruto-colour-q6",
+    "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
+    "troll": false,
+    "color": { "hex": "#FF69B4", "saturation": 100, "brightness": 75 },
+    "correctImage": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
+    "answer": "Sakura Haruno"
+  }
+]

@@ -2,14 +2,14 @@
 // FAQSection.astro - FAQ section
 ---
 
-<section class="py-16 md:py-24 bg-[var(--color-bg)] dark:bg-[var(--color-bg-dark)]" aria-labelledby="faq-title">
+<section class="py-12 md:py-20 bg-[var(--color-bg)]" aria-labelledby="faq-title">
   <div class="section-container">
     <div class="text-center mb-12 md:mb-16">
       <h2 id="faq-title" class="section-title mb-4">Frequently Asked Questions</h2>
       <p class="section-subtitle">Everything you need to know about Anime Realm</p>
     </div>
     
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-xl mx-auto">
       <dl class="space-y-4" role="list">
         {[
           {
@@ -54,14 +54,14 @@
               aria-expanded="false"
               aria-controls={`faq-answer-${index}`}
             >
-              <span class="font-semibold text-[var(--color-text)] dark:text-[var(--color-text-dark)] text-balance flex-1 pr-4">
+              <span class="font-semibold text-[var(--color-text)] text-balance flex-1 pr-4">
                 {faq.q}
               </span>
-              <svg class="flex-shrink-0 w-5 h-5 text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] transition-transform duration-300 group-data-[open=true]:rotate-180" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <svg class="flex-shrink-0 w-5 h-5 text-[var(--color-text-muted)] transition-transform duration-300 group-data-[open=true]:rotate-180" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
             </dt>
-            <dd id={`faq-answer-${index}`} class="hidden group-data-[open=true]:block px-4 md:px-6 pb-6 pt-0 text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] leading-relaxed animate-slide-down">
+            <dd id={`faq-answer-${index}`} class="hidden group-data-[open=true]:block px-4 md:px-6 pb-6 pt-0 text-[var(--color-text-muted)] leading-relaxed animate-slide-down">
               {faq.a}
             </dd>
           </div>

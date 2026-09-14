@@ -63,5 +63,83 @@
     "answer": "Condor",
     "image": "https://images.unsplash.com/photo-1551085254-e96b210db58a?q=80&w=600&auto=format&fit=crop",
     "troll": true
+  },
+  {
+    "id": "naruto-desc-q6",
+    "descriptions": [
+      "I am the kunoichi with excellent medical ninjutsu.",
+      "I trained under Lady Tsunade.",
+      "I have pink hair and green eyes.",
+      "I am part of Team 7.",
+      "My signature technique is the Hundred Healings Mark."
+    ],
+    "answer": "Sakura Haruno",
+    "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q7",
+    "descriptions": [
+      "I am a legendary Sannin known as the Toad Sage.",
+      "I wrote the Make-Out series of books.",
+      "I taught the Fourth Hokage.",
+      "I have white spiky hair and wear a forehead protector with 'Oil' kanji.",
+      "I died fighting Pain in the Hidden Rain Village."
+    ],
+    "answer": "Jiraiya",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q8",
+    "descriptions": [
+      "I am the genius of the Hyuga clan.",
+      "I have the Byakugan eye ability.",
+      "I am shy and admire Naruto deeply.",
+      "My fighting style is Gentle Fist.",
+      "I eventually marry Naruto and become the mother of Boruto."
+    ],
+    "answer": "Hinata Hyuga",
+    "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q9",
+    "descriptions": [
+      "I am the strongest creature in existence.",
+      "I can summon meteors with a single hand gesture.",
+      "I possess the legendary Rinnegan in both eyes from birth.",
+      "I defeated all five Kage simultaneously without breaking a sweat.",
+      "I am Sakura's pet goldfish that she named after Sasuke."
+    ],
+    "answer": "Sakura's Goldfish",
+    "image": "https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?q=80&w=600&auto=format&fit=crop",
+    "troll": true
+  },
+  {
+    "id": "naruto-desc-q10",
+    "descriptions": [
+      "I possess the most powerful jutsu in all of shinobi history.",
+      "My technique can instantly defeat any opponent regardless of their power.",
+      "I used this ability to defeat Kaguya Otsutsuki.",
+      "My jutsu is called 'Talk no Jutsu'.",
+      "I am the main character who talks villains into becoming good guys."
+    ],
+    "answer": "Naruto Uzumaki",
+    "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop",
+    "troll": true
+  },
+  {
+    "id": "naruto-desc-q11",
+    "descriptions": [
+      "I am the most feared weapon in the ninja world.",
+      "I have taken down countless enemies without mercy.",
+      "My existence terrifies even the strongest shinobi.",
+      "I am wielded by Rock Lee and might break your bones.",
+      "I am a pair of green spandex training weights."
+    ],
+    "answer": "Rock Lee's Leg Weights",
+    "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600&auto=format&fit=crop",
+    "troll": true
   }
 ]

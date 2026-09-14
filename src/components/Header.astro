@@ -28,16 +28,16 @@ import { navItems } from '../config';
       <!-- Player Identity Corner -->
       <div class="flex items-center gap-4">
         <!-- Player Nickname Box -->
-        <div id="header-player-container" class="hidden items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--color-bg)] dark:bg-[var(--color-border-dark)] border border-[var(--color-border)] dark:border-[var(--color-border-dark)] text-sm font-bold" role="status" aria-live="polite">
+        <div id="header-player-container" class="hidden items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--color-bg)] border border-[var(--color-border)] text-sm font-bold" role="status" aria-live="polite">
           <span class="flex h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" aria-hidden="true"></span>
-          <span id="header-player-name" class="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">...</span>
+          <span id="header-player-name" class="text-[var(--color-text-muted)]">...</span>
         </div>
 
         <!-- Mobile Menu Button -->
         <button
           type="button"
           id="mobile-menu-toggle"
-          class="inline-flex md:hidden items-center justify-center p-2 rounded-lg text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] hover:bg-[var(--color-bg)] dark:hover:bg-[var(--color-border-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] transition-all"
+          class="inline-flex md:hidden items-center justify-center p-2 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] transition-all"
           aria-controls="mobile-menu"
           aria-expanded="false"
           aria-label="Open main menu"
@@ -61,7 +61,7 @@ import { navItems } from '../config';
       {navItems.map((item) => (
         <a
           href={item.path}
-          class="block px-3 py-2.5 rounded-lg text-base font-semibold text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-text-dark)] hover:bg-[var(--color-bg)] dark:hover:bg-[var(--color-border-dark)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+          class="block px-3 py-2.5 rounded-lg text-base font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
         >
           {item.name}
         </a>
