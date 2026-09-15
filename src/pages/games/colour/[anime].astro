@@ -1,10 +1,10 @@
 ---
 // Colour Guessing Game - [anime].astro
 import Layout from '../../../layouts/Layout.astro';
-import gamescategory from '../../../database/gamescategory.json';
-import animecategory from '../../../database/animecategory.json';
-import { loadQuestions, filterQuestionsByTrollMode, getQuestionLimit, getTrollMode, selectSessionQuestions } from '../../../utils/gameSession';
-import { getAnimeProgress, getMiscProgress, saveAnimeProgress, saveMiscProgress, clearAnimeProgress, clearMiscProgress, saveGameResult } from '../../../utils/api';
+import gamescategory from '../../../../database/gamescategory.json';
+import animecategory from '../../../../database/animecategory.json';
+import { filterQuestionsByTrollMode, selectSessionQuestions } from '../../../utils/gameSession';
+import { getAnimeProgress, getMiscProgress } from '../../../utils/api';
 
 export async function getStaticPaths() {
   const paths = [];
@@ -23,7 +23,7 @@ const isMiscellaneous = anime === 'miscellaneous';
 const isMiscellaneousStr = isMiscellaneous ? 'true' : 'false';
 
 const gameConfig = gamescategory.find(g => g.id === gameId);
-const questionLimit = gameConfig?.questionLimit || 3;
+const questionLimit = gameConfig?.questionLimit ?? 0;
 
 let animeName = 'Miscellaneous';
 let animeBg = 'linear-gradient(135deg, #7C3AED 0%, #EF4444 100%)';
@@ -36,18 +36,21 @@ if (!isMiscellaneous) {
   }
 }
 
-const trollMode = getTrollMode(gameId);
-
-// Load questions at build time for static generation
+// Load the documented static data source at build time.
 let allQuestions: any[] = [];
-if (!isMiscellaneous) {
-  const questionFiles = import.meta.glob('../../../database/colour/*/question.json', { eager: true, import: 'default' });
-  const questionFile = questionFiles[`../../../database/colour/${anime}/question.json`];
+const questionFiles = import.meta.glob('../../../../database/colour/*/question.json', { eager: true, import: 'default' });
+if (isMiscellaneous) {
+  allQuestions = Object.entries(questionFiles).flatMap(([path, questions]) => {
+    const animeId = path.split('/').at(-2) || '';
+    return (questions as any[]).map((question) => ({ ...question, _animeId: animeId }));
+  });
+} else {
+  const questionFile = questionFiles[`../../../../database/colour/${anime}/question.json`];
   if (questionFile) allQuestions = questionFile as any[];
 }
 
-const filteredQuestions = filterQuestionsByTrollMode(allQuestions, trollMode);
-const sessionQuestions = selectSessionQuestions(
+const filteredQuestions = filterQuestionsByTrollMode(allQuestions, false);
+const selectedSessionQuestions = selectSessionQuestions(
   filteredQuestions,
   gameId,
   anime,
@@ -57,8 +60,11 @@ const sessionQuestions = selectSessionQuestions(
   getMiscProgress
 );
 
+const sessionQuestions = selectedSessionQuestions.length
+  ? selectedSessionQuestions
+  : allQuestions.slice(0, questionLimit);
 const totalQuestions = sessionQuestions.length;
-const hasQuestions = totalQuestions > 0;
+const hasQuestions = allQuestions.length > 0;
 ---
 
 <Layout title={`${animeName} - Colour Guessing Game - Anime Realm`}>
@@ -74,7 +80,7 @@ const hasQuestions = totalQuestions > 0;
           </a>
           <div>
             <h1 class="text-xl md:text-2xl font-black gradient-text">{animeName}</h1>
-            <p class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Colour Guessing Game • {totalQuestions} question{totalQuestions !== 1 ? 's' : ''}</p>
+            <p class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Colour Guessing Game • <span id="session-question-count">{totalQuestions}</span> question<span id="session-question-plural">{totalQuestions !== 1 ? 's' : ''}</span></p>
           </div>
         </div>
         
@@ -113,6 +119,8 @@ const hasQuestions = totalQuestions > 0;
                   <img 
                     id="transparent-image" 
                     src="{sessionQuestions[0].image}" 
+                    width="600"
+                    height="600"
                     alt="" 
                     class="absolute inset-0 w-full h-full object-cover opacity-90"
                     aria-hidden="true"
@@ -136,22 +144,22 @@ const hasQuestions = totalQuestions > 0;
                     Hue
                     <span id="hue-value" class="text-sm font-mono text-[var(--color-text-muted)] text-[var(--color-text-muted)]">0°</span>
                   </label>
-                  <div class="relative">
+                  <div id="hue-wheel" class="relative mx-auto h-48 w-48 touch-none rounded-full p-7" role="slider" tabindex="0" aria-label="Hue picker" aria-valuemin="0" aria-valuemax="360" aria-valuenow="0" style="background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);">
+                    <div class="h-full w-full rounded-full bg-[var(--color-surface)]" aria-hidden="true"></div>
                     <input
                       type="range"
                       id="hue-picker"
                       min="0"
                       max="360"
                       value="0"
-                      class="w-full h-2 appearance-none bg-transparent cursor-pointer"
-                      aria-label="Hue slider"
+                      class="sr-only"
+                      tabindex="-1"
+                      aria-hidden="true"
                       aria-valuemin="0"
                       aria-valuemax="360"
                       aria-valuenow="0"
                     />
-                    <!-- Gradient track visual -->
-                    <div class="absolute inset-0 h-2 rounded-full pointer-events-none" style="background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);" aria-hidden="true"></div>
-                    <div id="hue-thumb" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-[var(--color-primary)] shadow-lg pointer-events-none transition-transform duration-100" style="left: 0%; transform: translate(-50%, -50%);" aria-hidden="true"></div>
+                    <div id="hue-thumb" class="absolute left-1/2 top-[8%] h-4 w-4 rounded-full border-2 border-[var(--color-primary)] bg-white shadow-lg pointer-events-none" aria-hidden="true"></div>
                   </div>
                 </div>
                 
@@ -228,16 +236,20 @@ const hasQuestions = totalQuestions > 0;
                   <div id="player-result" class="absolute inset-0" style="background-color: hsl(0, 100%, 50%);">
                     <img 
                       src="{sessionQuestions[0].image}" 
+                      width="600"
+                      height="600"
                       alt="" 
                       class="absolute inset-0 w-full h-full object-cover opacity-90"
                       aria-hidden="true"
                     />
                   </div>
                   <!-- Correct image overlay -->
-                  <div id="correct-overlay" class="absolute inset-0 hidden">
+                  <div id="correct-overlay" class="absolute inset-0">
                     <img 
                       id="correct-image" 
                       src="{sessionQuestions[0].correctImage || sessionQuestions[0].image}" 
+                      width="600"
+                      height="600"
                       alt="Correct color reference" 
                       class="absolute inset-0 w-full h-full object-cover"
                     />
@@ -264,6 +276,12 @@ const hasQuestions = totalQuestions > 0;
                 </div>
               </div>
             </article>
+
+            <div id="runtime-no-questions" class="hidden card gradient-border text-center" role="status" aria-live="polite">
+              <h2 class="text-2xl font-bold text-[var(--color-text)] mb-4">No Questions Available</h2>
+              <p class="text-[var(--color-text-muted)] mb-6">No questions match the current Troll Mode. Return to Browse Games to change the global setting, or add matching questions.</p>
+              <a href="/games/colour" class="btn-secondary">Back to Game Select</a>
+            </div>
             
             <!-- Score Summary (shown at end) -->
             <div id="score-summary" class="hidden mt-6 card gradient-border text-center">
@@ -298,9 +316,7 @@ const hasQuestions = totalQuestions > 0;
             <div class="text-6xl mb-4" aria-hidden="true">😔</div>
             <h2 class="text-2xl font-bold text-[var(--color-text)] text-[var(--color-text)] mb-4">No Questions Available</h2>
             <p class="text-[var(--color-text-muted)] text-[var(--color-text-muted)] mb-6">
-              {trollMode 
-                ? `No troll questions found for ${animeName}. Try turning off Troll Mode!`
-                : `No regular questions found for ${animeName}.`}
+              No questions are available for {animeName} yet. Try a different anime or add matching questions.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="/games/colour" class="btn-secondary">Back to Game Select</a>
@@ -312,8 +328,17 @@ const hasQuestions = totalQuestions > 0;
   </main>
 </Layout>
 
-<script define:vars={{ sessionQuestions, questionLimit, isMiscellaneous: isMiscellaneousStr, gameId, animeId: anime }}>
+<script id="game-session-data" type="application/json" set:html={JSON.stringify({ initialQuestions: sessionQuestions, allQuestions, questionLimit, isMiscellaneous: isMiscellaneousStr, gameId, animeId: anime })}></script>
+
+<script>
+  import { getClientSessionQuestions, saveClientSession } from '../../../utils/gameClient';
+
+  const sessionData = document.getElementById('game-session-data')?.textContent;
+  if (!sessionData) throw new Error('Missing game session data');
+  const { initialQuestions, allQuestions, questionLimit, isMiscellaneous, gameId, animeId } = JSON.parse(sessionData);
+
   // Game state
+  let sessionQuestions = initialQuestions;
   let currentQuestionIndex = 0;
   let correctCount = 0;
   let wrongCount = 0;
@@ -321,12 +346,13 @@ const hasQuestions = totalQuestions > 0;
   let playedQuestionIds: string[] = [];
   let answerSubmitted = false;
   let isComparing = false;
-  const totalQuestions = sessionQuestions.length;
+  let totalQuestions = sessionQuestions.length;
 
   // Color state
   let currentHue = 0;
   let currentSaturation = 100;
   let currentBrightness = 50;
+  let comparisonReady = false;
 
   // DOM Elements
   const questionCard = document.getElementById('question-card');
@@ -335,6 +361,7 @@ const hasQuestions = totalQuestions > 0;
   const currentColorSwatch = document.getElementById('current-color-swatch');
   const currentColorValue = document.getElementById('current-color-value');
   const huePicker = document.getElementById('hue-picker');
+  const hueWheel = document.getElementById('hue-wheel');
   const saturationSlider = document.getElementById('saturation-slider');
   const brightnessSlider = document.getElementById('brightness-slider');
   const hueThumb = document.getElementById('hue-thumb');
@@ -347,6 +374,8 @@ const hasQuestions = totalQuestions > 0;
   const submitBtn = document.getElementById('submit-answer');
   const feedback = document.getElementById('feedback');
   const questionCounter = document.getElementById('question-counter');
+  const sessionQuestionCount = document.getElementById('session-question-count');
+  const sessionQuestionPlural = document.getElementById('session-question-plural');
   const currentQNum = document.getElementById('current-q-num');
   const revealedName = document.getElementById('revealed-name');
   const matchPercentage = document.getElementById('match-percentage');
@@ -359,22 +388,41 @@ const hasQuestions = totalQuestions > 0;
   const finalCorrect = document.getElementById('final-correct');
   const finalWrong = document.getElementById('final-wrong');
   const finalPercentage = document.getElementById('final-percentage');
+  const runtimeNoQuestions = document.getElementById('runtime-no-questions');
+
+  function applyClientSession(): boolean {
+    sessionQuestions = getClientSessionQuestions(
+      allQuestions,
+      gameId,
+      animeId,
+      questionLimit,
+      isMiscellaneous === 'true',
+    );
+    totalQuestions = sessionQuestions.length;
+    if (sessionQuestionCount) sessionQuestionCount.textContent = String(totalQuestions);
+    if (sessionQuestionPlural) sessionQuestionPlural.textContent = totalQuestions === 1 ? '' : 's';
+
+    if (!sessionQuestions.length) {
+      questionCard?.classList.add('hidden');
+      runtimeNoQuestions?.classList.remove('hidden');
+      return false;
+    }
+
+    questionCard?.classList.remove('hidden');
+    runtimeNoQuestions?.classList.add('hidden');
+    if (questionCounter) questionCounter.textContent = `1 / ${totalQuestions}`;
+    if (currentQNum) currentQNum.textContent = '1';
+    return true;
+  }
 
   // Initialize
   document.addEventListener('DOMContentLoaded', () => {
-    if (!sessionQuestions.length) return;
-    
-    // Initialize color from first question's correct answer or defaults
-    const firstQuestion = sessionQuestions[0];
-    if (firstQuestion.color) {
-      currentHue = hexToHue(firstQuestion.color.hex);
-      currentSaturation = firstQuestion.color.saturation;
-      currentBrightness = firstQuestion.color.brightness;
-    }
-    
-    updateColorDisplay();
+    if (!applyClientSession()) return;
+
     setupSliders();
+    setupHueWheel();
     setupComparison();
+    updateQuestionDisplay();
     
     // Event listeners
     submitBtn?.addEventListener('click', submitAnswer);
@@ -420,13 +468,43 @@ const hasQuestions = totalQuestions > 0;
     });
   }
 
+  function setHueFromPointer(event: PointerEvent) {
+    if (!hueWheel || !huePicker) return;
+    const rect = hueWheel.getBoundingClientRect();
+    const x = event.clientX - (rect.left + rect.width / 2);
+    const y = event.clientY - (rect.top + rect.height / 2);
+    const angle = (Math.atan2(y, x) * 180 / Math.PI + 90 + 360) % 360;
+    currentHue = Math.round(angle);
+    huePicker.value = String(currentHue);
+    updateColorDisplay();
+  }
+
+  function setupHueWheel() {
+    if (!hueWheel) return;
+
+    hueWheel.addEventListener('pointerdown', (event) => {
+      hueWheel.setPointerCapture(event.pointerId);
+      setHueFromPointer(event);
+    });
+    hueWheel.addEventListener('pointermove', (event) => {
+      if (hueWheel.hasPointerCapture(event.pointerId)) setHueFromPointer(event);
+    });
+    hueWheel.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+      event.preventDefault();
+      currentHue = (currentHue + (event.key === 'ArrowLeft' || event.key === 'ArrowDown' ? -1 : 1) + 360) % 360;
+      if (huePicker) huePicker.value = String(currentHue);
+      updateColorDisplay();
+    });
+  }
+
   function updateColorDisplay() {
     const hslColor = `hsl(${currentHue}, ${currentSaturation}%, ${currentBrightness}%)`;
     
     // Update color display background
     if (colorDisplay) colorDisplay.style.backgroundColor = hslColor;
     if (currentColorSwatch) currentColorSwatch.style.backgroundColor = hslColor;
-    if (currentColorValue) currentColorValue.textContent = `HSL(${currentHue}, ${currentSat}%, ${currentBrightness}%)`;
+    if (currentColorValue) currentColorValue.textContent = `HSL(${currentHue}, ${currentSaturation}%, ${currentBrightness}%)`;
     if (playerResult) playerResult.style.backgroundColor = hslColor;
     
     // Update saturation track gradient
@@ -450,9 +528,12 @@ const hasQuestions = totalQuestions > 0;
 
   function updateHueThumb() {
     if (hueThumb) {
-      const percent = (currentHue / 360) * 100;
-      hueThumb.style.left = `${percent}%`;
+      const angle = (currentHue - 90) * Math.PI / 180;
+      const radius = 42;
+      hueThumb.style.left = `${50 + Math.cos(angle) * radius}%`;
+      hueThumb.style.top = `${50 + Math.sin(angle) * radius}%`;
     }
+    hueWheel?.setAttribute('aria-valuenow', String(currentHue));
   }
 
   function updateSaturationThumb() {
@@ -476,20 +557,22 @@ const hasQuestions = totalQuestions > 0;
   }
 
   function setupComparison() {
+    if (comparisonReady) return;
     const resultImageContainer = document.querySelector('#result-view .relative.aspect-square');
     if (!resultImageContainer) return;
+    comparisonReady = true;
     
     // Mouse events
-    resultImageContainer.addEventListener('mouseenter', () => showCorrectImage());
-    resultImageContainer.addEventListener('mouseleave', () => hideCorrectImage());
+    resultImageContainer.addEventListener('mouseenter', () => hideCorrectImage());
+    resultImageContainer.addEventListener('mouseleave', () => showCorrectImage());
     
     // Touch events
     resultImageContainer.addEventListener('touchstart', (e) => {
       e.preventDefault();
-      showCorrectImage();
-    }, { passive: false });
-    resultImageContainer.addEventListener('touchend', () => hideCorrectImage());
-    resultImageContainer.addEventListener('touchcancel', () => hideCorrectImage());
+       hideCorrectImage();
+     }, { passive: false });
+     resultImageContainer.addEventListener('touchend', () => showCorrectImage());
+     resultImageContainer.addEventListener('touchcancel', () => showCorrectImage());
   }
 
   function showCorrectImage() {
@@ -514,16 +597,10 @@ const hasQuestions = totalQuestions > 0;
     questionCounter.textContent = `${currentQuestionIndex + 1} / ${totalQuestions}`;
     currentQNum.textContent = String(currentQuestionIndex + 1);
     
-    // Reset color to defaults or question's correct answer
-    if (q.color) {
-      currentHue = hexToHue(q.color.hex);
-      currentSaturation = q.color.saturation;
-      currentBrightness = q.color.brightness;
-    } else {
-      currentHue = 0;
-      currentSaturation = 100;
-      currentBrightness = 50;
-    }
+    // Start every question from a neutral, player-selected color.
+    currentHue = 0;
+    currentSaturation = 100;
+    currentBrightness = 50;
     
     // Update sliders
     if (huePicker) huePicker.value = String(currentHue);
@@ -588,6 +665,7 @@ const hasQuestions = totalQuestions > 0;
     // Show result view
     if (matchPercentage) matchPercentage.textContent = `Match: ${matchPct}%`;
     resultView?.classList.remove('hidden');
+    correctOverlay?.classList.remove('hidden');
     
     // Setup comparison for this result
     setupComparison();
@@ -662,27 +740,15 @@ const hasQuestions = totalQuestions > 0;
       ? Math.round(matchPercentages.reduce((a, b) => a + b, 0) / matchPercentages.length)
       : 0;
     
-    // Save to localStorage via api
-    if (typeof saveGameResult === 'function') {
-      saveGameResult(gameId, animeId, avgScore, avgMatchPct);
-    }
-    
-    // Save progress
-    if (isMiscellaneous === 'true') {
-      if (typeof saveMiscProgress === 'function') {
-        saveMiscProgress(gameId, playedQuestionIds);
-      }
-    } else {
-      if (playedQuestionIds.length > 0 && typeof saveAnimeProgress === 'function') {
-        const lastPlayedId = playedQuestionIds[playedQuestionIds.length - 1];
-        const lastIndex = sessionQuestions.findIndex(q => q.id === lastPlayedId);
-        if (lastIndex === sessionQuestions.length - 1) {
-          if (typeof clearAnimeProgress === 'function') clearAnimeProgress(gameId, animeId);
-        } else {
-          saveAnimeProgress(gameId, animeId, lastPlayedId);
-        }
-      }
-    }
+    saveClientSession(
+      allQuestions,
+      gameId,
+      animeId,
+      isMiscellaneous === 'true',
+      playedQuestionIds,
+      avgScore,
+      avgMatchPct,
+    ).catch((error) => console.error('Failed to save game session:', error));
   }
 
   function showFeedback(message: string, type: 'success' | 'error') {

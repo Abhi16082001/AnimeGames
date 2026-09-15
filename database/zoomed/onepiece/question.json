@@ -24,14 +24,14 @@
     "id": "onepiece-zoomed-q4",
     "answer": "Pandaman",
     "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=600&auto=format&fit=crop",
-    "troll": true,
+    "troll": false,
     "zoom": { "scale": 3.0, "position": { "x": 50, "y": 50 } }
   },
   {
     "id": "onepiece-zoomed-q5",
     "answer": "God Usopp",
     "image": "https://images.unsplash.com/photo-1551085254-e96b210db58a?q=80&w=600&auto=format&fit=crop",
-    "troll": true,
+    "troll": false,
     "zoom": { "scale": 3.0, "position": { "x": 50, "y": 50 } }
   }
 ]

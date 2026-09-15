@@ -16,5 +16,11 @@
     "name": "Bleach",
     "bgimage": "linear-gradient(135deg, #444444 0%, #111111 100%)",
     "gameCategoryIds": ["description", "zoomed", "colour"]
+  },
+   {
+    "id": "pokemon",
+    "name": "Pokemon",
+    "bgimage": "linear-gradient(135deg, #448888 0%, #115611 100%)",
+    "gameCategoryIds": ["description","zoomed"]
   }
 ]

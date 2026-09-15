@@ -81,29 +81,31 @@ export function filterQuestionsByTrollMode(questions: Question[], trollMode: boo
  */
 export function getQuestionLimit(gameId: string): number {
   const game = gamescategory.find(g => g.id === gameId);
-  return game?.questionLimit || 3;
+  return game?.questionLimit ?? 0;
 }
 
 /**
  * Get Troll Mode state from localStorage
  */
-export function getTrollMode(gameId: string): boolean {
-  if (typeof window === 'undefined') return false;
+export function getTrollMode(_gameId?: string): boolean {
   try {
-    const data = localStorage.getItem(`${TROLL_MODE_KEY}_${gameId}`);
-    return data === 'true';
+    if (typeof window !== 'undefined') {
+      const data = localStorage.getItem(TROLL_MODE_KEY);
+      return data === 'true';
+    }
   } catch {
-    return false;
+    // ignore
   }
+  return false;
 }
 
 /**
  * Save Troll Mode state to localStorage
  */
-export function setTrollMode(gameId: string, enabled: boolean): void {
+export function setTrollMode(_gameId: string | undefined, enabled: boolean): void {
   if (typeof window === 'undefined') return;
   try {
-    localStorage.setItem(`${TROLL_MODE_KEY}_${gameId}`, String(enabled));
+    localStorage.setItem(TROLL_MODE_KEY, String(enabled));
   } catch (error) {
     console.error('Failed to save Troll Mode:', error);
   }
@@ -247,4 +249,3 @@ export async function saveGameResult(
   
   return await saveResult(result);
 }
-

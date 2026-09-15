@@ -1,0 +1,10 @@
+[
+  {
+    "id": "pokemon-zoomed-q1",
+    "answer": "Serperior",
+    "image": "https://i.kym-cdn.com/photos/images/original/000/956/105/0c6.png",
+    "troll": true,
+    "zoom": { "scale": 4, "position": { "x": 20, "y": 40 } }
+  }
+
+]

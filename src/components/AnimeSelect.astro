@@ -1,10 +1,9 @@
 ---
 // AnimeSelect.astro - Shared anime selection component for game pages
 import Layout from '../layouts/Layout.astro';
-import gamescategory from '../database/gamescategory.json';
-import animecategory from '../database/animecategory.json';
+import gamescategory from '../../database/gamescategory.json';
+import animecategory from '../../database/animecategory.json';
 import { navItems } from '../config';
-import { getTrollMode } from '../utils/gameSession';
 
 interface Props {
   gameId: string;
@@ -16,9 +15,7 @@ interface Props {
 const { gameId, gameName, gameDescription, gameIcon } = Astro.props;
 
 const gameConfig = gamescategory.find(g => g.id === gameId);
-const questionLimit = gameConfig?.questionLimit || 3;
-const trollMode = getTrollMode(gameId);
-
+const questionLimit = gameConfig?.questionLimit ?? 0;
 const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(gameId));
 ---
 
@@ -51,17 +48,6 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
               </svg>
               {supportedAnime.length} Anime Series
             </span>
-            <label class="badge cursor-pointer bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] flex items-center gap-2 relative inline-flex" role="switch" aria-label="Troll Mode">
-              <input
-                type="checkbox"
-                id="troll-mode-toggle"
-                class="sr-only peer"
-                {trollMode && 'checked'}
-                onchange="toggleTrollMode('${gameId}', this.checked)"
-              />
-              <div class="w-9 h-5 bg-[var(--color-border)] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)] peer-focus:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[var(--color-primary)]" style="margin-right: 0.75rem;"></div>
-              <span class="text-sm font-medium peer-checked:text-[var(--color-primary)]">Troll Mode</span>
-            </label>
             <a href="/games" class="badge bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -168,7 +154,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
                 <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Hold to compare your result with correct answer</li>
               </>
             )}
-            <li class="flex items-start gap-2 pt-2 border-t border-[var(--color-border)]"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Troll Mode toggles fun/misleading questions</li>
+            <li class="flex items-start gap-2 pt-2 border-t border-[var(--color-border)]"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Troll Mode is set globally from Browse Games before you start</li>
             <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Progress saves automatically in browser</li>
             <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Best scores compete on global leaderboard</li>
           </ul>
@@ -177,24 +163,3 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
     </section>
   </main>
 </Layout>
-
-<script define:vars={{ gameId }}>
-  function toggleTrollMode(gameId: string, enabled: boolean): void {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(`animegames_trollmode_${gameId}`, String(enabled));
-      window.location.reload();
-    }
-  }
-
-  // Initialize toggle state on page load
-  document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.getElementById('troll-mode-toggle') as HTMLInputElement;
-    if (toggle) {
-      const stored = localStorage.getItem(`animegames_trollmode_${gameId}`);
-      toggle.checked = stored === 'true';
-    }
-  });
-
-  // Make toggleTrollMode globally accessible for inline onclick
-  (window as any).toggleTrollMode = toggleTrollMode;
-</script>

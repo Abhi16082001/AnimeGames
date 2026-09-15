@@ -1,10 +1,10 @@
 ---
 // Zoomed Image Game - [anime].astro
 import Layout from '../../../layouts/Layout.astro';
-import gamescategory from '../../../database/gamescategory.json';
-import animecategory from '../../../database/animecategory.json';
-import { loadQuestions, filterQuestionsByTrollMode, getQuestionLimit, getTrollMode, selectSessionQuestions } from '../../../utils/gameSession';
-import { getAnimeProgress, getMiscProgress, saveAnimeProgress, saveMiscProgress, clearAnimeProgress, clearMiscProgress, saveGameResult } from '../../../utils/api';
+import gamescategory from '../../../../database/gamescategory.json';
+import animecategory from '../../../../database/animecategory.json';
+import { filterQuestionsByTrollMode, selectSessionQuestions } from '../../../utils/gameSession';
+import { getAnimeProgress, getMiscProgress } from '../../../utils/api';
 
 export async function getStaticPaths() {
   const paths = [];
@@ -23,7 +23,7 @@ const isMiscellaneous = anime === 'miscellaneous';
 const isMiscellaneousStr = isMiscellaneous ? 'true' : 'false';
 
 const gameConfig = gamescategory.find(g => g.id === gameId);
-const questionLimit = gameConfig?.questionLimit || 3;
+const questionLimit = gameConfig?.questionLimit ?? 0;
 
 let animeName = 'Miscellaneous';
 let animeBg = 'linear-gradient(135deg, #7C3AED 0%, #EF4444 100%)';
@@ -36,18 +36,21 @@ if (!isMiscellaneous) {
   }
 }
 
-const trollMode = getTrollMode(gameId);
-
-// Load questions at build time for static generation
+// Load the documented static data source at build time.
 let allQuestions: any[] = [];
-if (!isMiscellaneous) {
-  const questionFiles = import.meta.glob('../../../database/zoomed/*/question.json', { eager: true, import: 'default' });
-  const questionFile = questionFiles[`../../../database/zoomed/${anime}/question.json`];
+const questionFiles = import.meta.glob('../../../../database/zoomed/*/question.json', { eager: true, import: 'default' });
+if (isMiscellaneous) {
+  allQuestions = Object.entries(questionFiles).flatMap(([path, questions]) => {
+    const animeId = path.split('/').at(-2) || '';
+    return (questions as any[]).map((question) => ({ ...question, _animeId: animeId }));
+  });
+} else {
+  const questionFile = questionFiles[`../../../../database/zoomed/${anime}/question.json`];
   if (questionFile) allQuestions = questionFile as any[];
 }
 
-const filteredQuestions = filterQuestionsByTrollMode(allQuestions, trollMode);
-const sessionQuestions = selectSessionQuestions(
+const filteredQuestions = filterQuestionsByTrollMode(allQuestions, false);
+const selectedSessionQuestions = selectSessionQuestions(
   filteredQuestions,
   gameId,
   anime,
@@ -57,8 +60,11 @@ const sessionQuestions = selectSessionQuestions(
   getMiscProgress
 );
 
+const sessionQuestions = selectedSessionQuestions.length
+  ? selectedSessionQuestions
+  : allQuestions.slice(0, questionLimit);
 const totalQuestions = sessionQuestions.length;
-const hasQuestions = totalQuestions > 0;
+const hasQuestions = allQuestions.length > 0;
 ---
 
 <Layout title={`${animeName} - Zoomed Image Game - Anime Realm`}>
@@ -74,7 +80,7 @@ const hasQuestions = totalQuestions > 0;
           </a>
           <div>
             <h1 class="text-xl md:text-2xl font-black gradient-text">{animeName}</h1>
-            <p class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Zoomed Image Game • {totalQuestions} question{totalQuestions !== 1 ? 's' : ''}</p>
+            <p class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Zoomed Image Game • <span id="session-question-count">{totalQuestions}</span> question<span id="session-question-plural">{totalQuestions !== 1 ? 's' : ''}</span></p>
           </div>
         </div>
         
@@ -158,6 +164,12 @@ const hasQuestions = totalQuestions > 0;
                 </div>
               </div>
             </article>
+
+            <div id="runtime-no-questions" class="hidden card gradient-border text-center" role="status" aria-live="polite">
+              <h2 class="text-2xl font-bold text-[var(--color-text)] mb-4">No Questions Available</h2>
+              <p class="text-[var(--color-text-muted)] mb-6">No questions match the current Troll Mode. Return to Browse Games to change the global setting, or add matching questions.</p>
+              <a href="/games/zoomed" class="btn-secondary">Back to Game Select</a>
+            </div>
             
             <!-- Score Summary (shown at end) -->
             <div id="score-summary" class="hidden mt-6 card gradient-border text-center">
@@ -192,9 +204,7 @@ const hasQuestions = totalQuestions > 0;
             <div class="text-6xl mb-4" aria-hidden="true">😔</div>
             <h2 class="text-2xl font-bold text-[var(--color-text)] text-[var(--color-text)] mb-4">No Questions Available</h2>
             <p class="text-[var(--color-text-muted)] text-[var(--color-text-muted)] mb-6">
-              {trollMode 
-                ? `No troll questions found for ${animeName}. Try turning off Troll Mode!`
-                : `No regular questions found for ${animeName}.`}
+              No questions are available for {animeName} yet. Try a different anime or add matching questions.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="/games/zoomed" class="btn-secondary">Back to Game Select</a>
@@ -206,15 +216,24 @@ const hasQuestions = totalQuestions > 0;
   </main>
 </Layout>
 
-<script define:vars={{ sessionQuestions, questionLimit, isMiscellaneous: isMiscellaneousStr, gameId, animeId: anime }}>
+<script id="game-session-data" type="application/json" set:html={JSON.stringify({ initialQuestions: sessionQuestions, allQuestions, questionLimit, isMiscellaneous: isMiscellaneousStr, gameId, animeId: anime })}></script>
+
+<script>
+  import { getClientSessionQuestions, saveClientSession } from '../../../utils/gameClient';
+
+  const sessionData = document.getElementById('game-session-data')?.textContent;
+  if (!sessionData) throw new Error('Missing game session data');
+  const { initialQuestions, allQuestions, questionLimit, isMiscellaneous, gameId, animeId } = JSON.parse(sessionData);
+
   // Game state
+  let sessionQuestions = initialQuestions;
   let currentQuestionIndex = 0;
   let correctCount = 0;
   let wrongCount = 0;
   let scores: number[] = [];
   let playedQuestionIds: string[] = [];
   let answerSubmitted = false;
-  const totalQuestions = sessionQuestions.length;
+  let totalQuestions = sessionQuestions.length;
 
   // DOM Elements
   const questionCard = document.getElementById('question-card');
@@ -223,6 +242,8 @@ const hasQuestions = totalQuestions > 0;
   const submitBtn = document.getElementById('submit-answer');
   const feedback = document.getElementById('feedback');
   const questionCounter = document.getElementById('question-counter');
+  const sessionQuestionCount = document.getElementById('session-question-count');
+  const sessionQuestionPlural = document.getElementById('session-question-plural');
   const currentQNum = document.getElementById('current-q-num');
   const revealedName = document.getElementById('revealed-name');
   const resultMessage = document.getElementById('result-message');
@@ -233,10 +254,36 @@ const hasQuestions = totalQuestions > 0;
   const finalCorrect = document.getElementById('final-correct');
   const finalWrong = document.getElementById('final-wrong');
   const finalPercentage = document.getElementById('final-percentage');
+  const runtimeNoQuestions = document.getElementById('runtime-no-questions');
+
+  function applyClientSession(): boolean {
+    sessionQuestions = getClientSessionQuestions(
+      allQuestions,
+      gameId,
+      animeId,
+      questionLimit,
+      isMiscellaneous === 'true',
+    );
+    totalQuestions = sessionQuestions.length;
+    if (sessionQuestionCount) sessionQuestionCount.textContent = String(totalQuestions);
+    if (sessionQuestionPlural) sessionQuestionPlural.textContent = totalQuestions === 1 ? '' : 's';
+
+    if (!sessionQuestions.length) {
+      questionCard?.classList.add('hidden');
+      runtimeNoQuestions?.classList.remove('hidden');
+      return false;
+    }
+
+    questionCard?.classList.remove('hidden');
+    runtimeNoQuestions?.classList.add('hidden');
+    if (questionCounter) questionCounter.textContent = `1 / ${totalQuestions}`;
+    if (currentQNum) currentQNum.textContent = '1';
+    return true;
+  }
 
   // Initialize
   document.addEventListener('DOMContentLoaded', () => {
-    if (!sessionQuestions.length) return;
+    if (!applyClientSession()) return;
     
     // Focus answer input
     answerInput?.focus();
@@ -252,8 +299,7 @@ const hasQuestions = totalQuestions > 0;
     
     nextQuestionBtn?.addEventListener('click', nextQuestion);
     
-    // Apply initial zoom for first question
-    applyZoom(0);
+    updateQuestionDisplay();
   });
 
   function getCurrentQuestion() {
@@ -304,6 +350,10 @@ const hasQuestions = totalQuestions > 0;
     
     // Apply zoom for this question
     applyZoom(currentQuestionIndex);
+
+    if (zoomedView && q.image) {
+      zoomedView.style.backgroundImage = `url('${q.image}')`;
+    }
     
     // Update revealed name for result view
     if (revealedName) revealedName.textContent = q.answer;
@@ -391,27 +441,15 @@ const hasQuestions = totalQuestions > 0;
   function saveProgressAndResult(percentage: number) {
     const avgScore = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
     
-    // Save to localStorage via api
-    if (typeof saveGameResult === 'function') {
-      saveGameResult(gameId, animeId, avgScore, percentage);
-    }
-    
-    // Save progress
-    if (isMiscellaneous === 'true') {
-      if (typeof saveMiscProgress === 'function') {
-        saveMiscProgress(gameId, playedQuestionIds);
-      }
-    } else {
-      if (playedQuestionIds.length > 0 && typeof saveAnimeProgress === 'function') {
-        const lastPlayedId = playedQuestionIds[playedQuestionIds.length - 1];
-        const lastIndex = sessionQuestions.findIndex(q => q.id === lastPlayedId);
-        if (lastIndex === sessionQuestions.length - 1) {
-          if (typeof clearAnimeProgress === 'function') clearAnimeProgress(gameId, animeId);
-        } else {
-          saveAnimeProgress(gameId, animeId, lastPlayedId);
-        }
-      }
-    }
+    saveClientSession(
+      allQuestions,
+      gameId,
+      animeId,
+      isMiscellaneous === 'true',
+      playedQuestionIds,
+      avgScore,
+      percentage,
+    ).catch((error) => console.error('Failed to save game session:', error));
   }
 
   function showFeedback(message: string, type: 'success' | 'error') {
