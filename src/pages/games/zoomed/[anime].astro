@@ -219,7 +219,7 @@ const hasQuestions = allQuestions.length > 0;
 <script id="game-session-data" type="application/json" set:html={JSON.stringify({ initialQuestions: sessionQuestions, allQuestions, questionLimit, isMiscellaneous: isMiscellaneousStr, gameId, animeId: anime })}></script>
 
 <script>
-  import { getClientSessionQuestions, saveClientSession } from '../../../utils/gameClient';
+  import { getClientSessionQuestions, loadCurrentClientQuestions, saveClientSession } from '../../../utils/gameClient';
 
   const sessionData = document.getElementById('game-session-data')?.textContent;
   if (!sessionData) throw new Error('Missing game session data');
@@ -256,9 +256,15 @@ const hasQuestions = allQuestions.length > 0;
   const finalPercentage = document.getElementById('final-percentage');
   const runtimeNoQuestions = document.getElementById('runtime-no-questions');
 
-  function applyClientSession(): boolean {
-    sessionQuestions = getClientSessionQuestions(
+  async function applyClientSession(): Promise<boolean> {
+    const currentQuestions = await loadCurrentClientQuestions(
       allQuestions,
+      gameId,
+      animeId,
+      isMiscellaneous === 'true',
+    );
+    sessionQuestions = getClientSessionQuestions(
+      currentQuestions,
       gameId,
       animeId,
       questionLimit,
@@ -281,8 +287,8 @@ const hasQuestions = allQuestions.length > 0;
     return true;
   }
 
-  function initializeGame() {
-    if (!applyClientSession()) return;
+  async function initializeGame() {
+    if (!await applyClientSession()) return;
     
     // Focus answer input
     answerInput?.focus();
@@ -447,7 +453,6 @@ const hasQuestions = allQuestions.length > 0;
     const avgScore = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
     
     saveClientSession(
-      allQuestions,
       gameId,
       animeId,
       isMiscellaneous === 'true',

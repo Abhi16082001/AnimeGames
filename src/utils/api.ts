@@ -27,8 +27,7 @@ export interface LeaderboardEntry {
 }
 
 export interface GameProgress {
-  lastPlayedQuestionId?: string;
-  playedQuestionIds?: string[]; // Used for miscellaneous
+  playedQuestionId?: string[];
 }
 
 interface FullProgressSchema {
@@ -181,12 +180,12 @@ function saveProgressStore(store: FullProgressSchema): void {
 /**
  * Updates progress for a normal anime category game session
  */
-export function saveAnimeProgress(gameId: string, animeId: string, lastPlayedQuestionId: string): void {
+export function saveAnimeProgress(gameId: string, animeId: string, playedQuestionId: string[]): void {
   const store = getProgressStore();
   if (!store.gameProgress[gameId]) {
     store.gameProgress[gameId] = {};
   }
-  store.gameProgress[gameId][animeId] = { lastPlayedQuestionId };
+  store.gameProgress[gameId][animeId] = { playedQuestionId: Array.from(new Set(playedQuestionId)) };
   saveProgressStore(store);
 }
 
@@ -207,9 +206,9 @@ export function clearAnimeProgress(gameId: string, animeId: string): void {
 /**
  * Gets progress for a normal anime category
  */
-export function getAnimeProgress(gameId: string, animeId: string): string | null {
+export function getAnimeProgress(gameId: string, animeId: string): string[] {
   const store = getProgressStore();
-  return store.gameProgress[gameId]?.[animeId]?.lastPlayedQuestionId || null;
+  return store.gameProgress[gameId]?.[animeId]?.playedQuestionId || [];
 }
 
 /**
@@ -221,10 +220,10 @@ export function saveMiscProgress(gameId: string, playedQuestionIds: string[]): v
     store.gameProgress[gameId] = {};
   }
   
-  const currentPlayed = store.gameProgress[gameId]["miscellaneous"]?.playedQuestionIds || [];
+  const currentPlayed = store.gameProgress[gameId]["miscellaneous"]?.playedQuestionId || [];
   const updatedPlayed = Array.from(new Set([...currentPlayed, ...playedQuestionIds]));
 
-  store.gameProgress[gameId]["miscellaneous"] = { playedQuestionIds: updatedPlayed };
+  store.gameProgress[gameId]["miscellaneous"] = { playedQuestionId: updatedPlayed };
   saveProgressStore(store);
 }
 
@@ -247,7 +246,7 @@ export function clearMiscProgress(gameId: string): void {
  */
 export function getMiscProgress(gameId: string): string[] {
   const store = getProgressStore();
-  return store.gameProgress[gameId]?.[ "miscellaneous" ]?.playedQuestionIds || [];
+  return store.gameProgress[gameId]?.[ "miscellaneous" ]?.playedQuestionId || [];
 }
 
 // -------------------------------------------------------------

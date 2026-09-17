@@ -1,8 +1,6 @@
 // gameSession.ts - Shared game session logic for all game types
 
-import { config } from '../config';
 import gamescategory from '../../database/gamescategory.json';
-import type { GameProgress } from './api';
 
 export interface Question {
   id: string;
@@ -120,78 +118,38 @@ export function selectSessionQuestions(
   animeId: string,
   questionLimit: number,
   isMiscellaneous: boolean,
-  getProgress: (gameId: string, animeId: string) => string | null,
-  getMiscProgress: (gameId: string) => string[]
-): Question[] {
-  if (isMiscellaneous) {
-    const playedIds = getMiscProgress(gameId);
-    const available = questions.filter(q => !playedIds.includes(q.id));
-    
-    // Shuffle available questions
-    const shuffled = [...available].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, questionLimit);
-  }
-  
-  // Normal anime category - use lastPlayedQuestionId
-  const lastPlayedId = getProgress(gameId, animeId);
-  let startIndex = 0;
-  
-  if (lastPlayedId) {
-    const lastIndex = questions.findIndex(q => q.id === lastPlayedId);
-    if (lastIndex !== -1) {
-      startIndex = lastIndex + 1;
-    }
-  }
-  
-  // If we've reached the end, cycle is complete - start from beginning
-  if (startIndex >= questions.length) {
-    startIndex = 0;
-  }
-  
-  return questions.slice(startIndex, startIndex + questionLimit);
-}
-
-/**
- * Save progress after a session
- */
-export function saveSessionProgress(
-  gameId: string,
-  animeId: string,
-  isMiscellaneous: boolean,
-  playedQuestionIds: string[],
-  getProgress: (gameId: string, animeId: string) => string | null,
+  getProgress: (gameId: string, animeId: string) => string[],
   getMiscProgress: (gameId: string) => string[],
-  saveAnimeProgress: (gameId: string, animeId: string, lastPlayedQuestionId: string) => void,
-  saveMiscProgress: (gameId: string, playedQuestionIds: string[]) => void,
-  clearAnimeProgress: (gameId: string, animeId: string) => void,
-  clearMiscProgress: (gameId: string) => void,
-  allQuestions: Question[]
-): void {
-  if (isMiscellaneous) {
-    const currentPlayed = getMiscProgress(gameId);
-    const updatedPlayed = Array.from(new Set([...currentPlayed, ...playedQuestionIds]));
-    
-    // Check if all available questions have been played
-    const availableCount = allQuestions.filter(q => !currentPlayed.includes(q.id)).length;
-    if (updatedPlayed.length >= allQuestions.length || availableCount === 0) {
-      clearMiscProgress(gameId);
-    } else {
-      saveMiscProgress(gameId, updatedPlayed);
+  clearProgress?: (gameId: string, animeId: string, isMiscellaneous: boolean) => void,
+): Question[] {
+  const shuffle = (items: Question[]): Question[] => {
+    const shuffled = [...items];
+    for (let index = shuffled.length - 1; index > 0; index--) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
     }
-  } else {
-    if (playedQuestionIds.length > 0) {
-      const lastPlayedId = playedQuestionIds[playedQuestionIds.length - 1];
-      
-      // Check if this was the last question
-      const lastIndex = allQuestions.findIndex(q => q.id === lastPlayedId);
-      if (lastIndex === allQuestions.length - 1) {
-        // Completed the cycle
-        clearAnimeProgress(gameId, animeId);
-      } else {
-        saveAnimeProgress(gameId, animeId, lastPlayedId);
-      }
-    }
+    return shuffled;
+  };
+  // An ID represents one question in a round, even if malformed source data repeats it.
+  const uniqueQuestions = Array.from(new Map(questions.map(question => [question.id, question])).values());
+  const playedIds = isMiscellaneous ? getMiscProgress(gameId) : getProgress(gameId, animeId);
+  const playedSet = new Set(playedIds);
+  const unplayed = uniqueQuestions.filter(question => !playedSet.has(question.id));
+
+  if (unplayed.length === 0) {
+    clearProgress?.(gameId, animeId, isMiscellaneous);
+    return shuffle(uniqueQuestions).slice(0, questionLimit);
   }
+
+  const selected = shuffle(unplayed).slice(0, questionLimit);
+  if (selected.length < questionLimit) {
+    const selectedIds = new Set(selected.map(question => question.id));
+    const oldPoolQuestions = uniqueQuestions.filter(question => playedSet.has(question.id) && !selectedIds.has(question.id));
+    selected.push(...shuffle(oldPoolQuestions).slice(0, questionLimit - selected.length));
+    clearProgress?.(gameId, animeId, isMiscellaneous);
+  }
+
+  return selected;
 }
 
 /**
