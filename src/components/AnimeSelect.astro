@@ -1,6 +1,7 @@
 ---
 // AnimeSelect.astro - Shared anime selection component for game pages
 import Layout from '../layouts/Layout.astro';
+import TrollModeToggle from './TrollModeToggle.astro';
 import gamescategory from '../../database/gamescategory.json';
 import animecategory from '../../database/animecategory.json';
 import { navItems } from '../config';
@@ -54,6 +55,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
               </svg>
               Back to Games
             </a>
+            <TrollModeToggle />
           </div>
         </div>
       </div>
@@ -154,7 +156,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
                 <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-2" aria-hidden="true"></span> Hold to compare your result with correct answer</li>
               </>
             )}
-            <li class="flex items-start gap-2 pt-2 border-t border-[var(--color-border)]"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Troll Mode is set globally from Browse Games before you start</li>
+            <li class="flex items-start gap-2 pt-2 border-t border-[var(--color-border)]"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Troll Mode is set globally and saved for every game</li>
             <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Progress saves automatically in browser</li>
             <li class="flex items-start gap-2"><span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-2" aria-hidden="true"></span> Best scores compete on global leaderboard</li>
           </ul>

@@ -170,20 +170,20 @@ const hasQuestions = allQuestions.length > 0;
                     Saturation
                     <span id="saturation-value" class="text-sm font-mono text-[var(--color-text-muted)] text-[var(--color-text-muted)]">100%</span>
                   </label>
-                  <div class="relative">
+                  <div class="relative flex h-6 items-center">
                     <input
                       type="range"
                       id="saturation-slider"
                       min="0"
                       max="100"
                       value="100"
-                      class="w-full h-2 appearance-none bg-transparent cursor-pointer"
+                      class="relative z-10 h-6 w-full cursor-pointer appearance-none bg-transparent"
                       aria-label="Saturation slider"
                       aria-valuemin="0"
                       aria-valuemax="100"
                       aria-valuenow="100"
                     />
-                    <div id="saturation-track" class="absolute inset-0 h-2 rounded-full pointer-events-none" style="background: linear-gradient(90deg, hsl(0, 0%, 50%), hsl(0, 100%, 50%));" aria-hidden="true"></div>
+                    <div id="saturation-track" class="pointer-events-none absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full" style="background: linear-gradient(90deg, hsl(0, 0%, 50%), hsl(0, 100%, 50%));" aria-hidden="true"></div>
                     <div id="saturation-thumb" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-[var(--color-secondary)] shadow-lg pointer-events-none transition-transform duration-100" style="left: 100%; transform: translate(-50%, -50%);" aria-hidden="true"></div>
                   </div>
                 </div>
@@ -195,20 +195,20 @@ const hasQuestions = allQuestions.length > 0;
                     Brightness
                     <span id="brightness-value" class="text-sm font-mono text-[var(--color-text-muted)] text-[var(--color-text-muted)]">50%</span>
                   </label>
-                  <div class="relative">
+                  <div class="relative flex h-6 items-center">
                     <input
                       type="range"
                       id="brightness-slider"
                       min="0"
                       max="100"
                       value="50"
-                      class="w-full h-2 appearance-none bg-transparent cursor-pointer"
+                      class="relative z-10 h-6 w-full cursor-pointer appearance-none bg-transparent"
                       aria-label="Brightness slider"
                       aria-valuemin="0"
                       aria-valuemax="100"
                       aria-valuenow="50"
                     />
-                    <div class="absolute inset-0 h-2 rounded-full pointer-events-none bg-gradient-to-r from-black to-white" aria-hidden="true"></div>
+                    <div class="pointer-events-none absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full bg-gradient-to-r from-black to-white" aria-hidden="true"></div>
                     <div id="brightness-thumb" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-[var(--color-primary)] shadow-lg pointer-events-none transition-transform duration-100" style="left: 50%; transform: translate(-50%, -50%);" aria-hidden="true"></div>
                   </div>
                 </div>
@@ -415,8 +415,7 @@ const hasQuestions = allQuestions.length > 0;
     return true;
   }
 
-  // Initialize
-  document.addEventListener('DOMContentLoaded', () => {
+  function initializeGame() {
     if (!applyClientSession()) return;
 
     setupSliders();
@@ -427,7 +426,13 @@ const hasQuestions = allQuestions.length > 0;
     // Event listeners
     submitBtn?.addEventListener('click', submitAnswer);
     nextQuestionBtn?.addEventListener('click', nextQuestion);
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeGame, { once: true });
+  } else {
+    initializeGame();
+  }
 
   function setupSliders() {
     // Hue picker

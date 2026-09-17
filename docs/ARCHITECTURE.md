@@ -286,108 +286,7 @@ Miscellaneous has independent progress from individual Anime Categories.
 
 ---
 
-## 12. Question Progress Persistence
-
-Question progress must persist in `localStorage` across page reloads and browser closing.
-
-Progress is tracked independently for each `game_id` + `anime_id`.
-
-### Normal Anime
-
-For an individual Anime Category, store the `id` of the last question played:
-
-```json
-{
-  "gameProgress": {
-    "typing": {
-      "naruto": {
-        "lastPlayedQuestionId": "naruto-q005"
-      }
-    }
-  }
-}
-```
-
-When starting the next session:
-
-1. Find `lastPlayedQuestionId` in the current `question.json`.
-2. Continue with the questions after that question.
-3. Load up to `questionLimit` questions.
-4. After the session, update `lastPlayedQuestionId` to the ID of the last question played.
-
-Do not store an array index as the persistent progress because adding questions at the top changes array indexes.
-
-### Completing a Cycle
-
-If there are no questions after `lastPlayedQuestionId`, the player has completed the current cycle.
-
-Remove that Anime's progress entry.
-
-The next session then starts from the top of the current `question.json`.
-
-Because new questions are always added at the top, newly added questions will automatically be played first after the cycle has been completed.
-
-There is no need to detect or track when new questions were added.
-
-Example:
-
-```text
-Current:
-Q001
-Q002
-Q003
-Q004
-Q005
-
-Player completes Q005
-→ remove progress
-
-New questions added at top:
-
-Q008
-Q007
-Q006
-Q001
-Q002
-Q003
-Q004
-Q005
-
-Next Play Again:
-→ starts from Q008
-```
-
-### Miscellaneous Progress
-
-Miscellaneous questions are shuffled, so it must not use a simple `lastPlayedQuestionId`.
-
-Store the IDs of questions already played during the current Miscellaneous cycle:
-
-```json
-{
-  "gameProgress": {
-    "typing": {
-      "miscellaneous": {
-        "playedQuestionIds": [
-          "naruto-q007",
-          "bleach-q002",
-          "onepiece-q014"
-        ]
-      }
-    }
-  }
-}
-```
-
-After each completed Miscellaneous session, add the played question IDs to this list.
-
-When all currently available Miscellaneous questions have been played, remove the Miscellaneous progress entry.
-
-The next session starts a new shuffled cycle from the top-level question pool.
-
----
-
-## 13. Player Identity
+## 12. Player Identity
 
 Player identity is stored locally in the user's browser.
 
@@ -419,7 +318,7 @@ If localStorage is cleared, treat the visitor as a new player and create a new i
 
 ---
 
-## 14. Player ID
+## 13. Player ID
 
 Player ID is not stored in a separate player registry.
 
@@ -434,7 +333,7 @@ Prefer generating/checking the ID through Apps Script rather than relying entire
 
 ---
 
-## 15. Google Sheets + Apps Script
+## 14. Google Sheets + Apps Script
 
 Google Sheets is the persistent store for completed game results and leaderboard data.
 
@@ -458,7 +357,7 @@ The Apps Script must validate incoming requests and reject invalid/malformed ope
 
 ---
 
-## 16. Game Results
+## 15. Game Results
 
 Save a result only after the player completes the selected session.
 
@@ -479,7 +378,7 @@ The saved score and percentage must match the Result Page values.
 
 ---
 
-## 17. Leaderboard
+## 16. Leaderboard
 
 The homepage displays a global leaderboard.
 
@@ -501,7 +400,7 @@ Handle loading, empty, and request-error states gracefully.
 
 ---
 
-## 18. Core Separation
+## 17. Core Separation
 
 ```text
 localStorage
