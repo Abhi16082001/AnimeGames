@@ -9,6 +9,13 @@ export interface Player {
   name: string;
 }
 
+export class PlayerRegistrationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'PlayerRegistrationError';
+  }
+}
+
 export interface GameResult {
   playerId: string;
   name: string;
@@ -49,7 +56,9 @@ export function getLocalPlayer(): Player | null {
   const data = localStorage.getItem(PLAYER_KEY);
   if (!data) return null;
   try {
-    return JSON.parse(data) as Player;
+    const player = JSON.parse(data) as Partial<Player>;
+    if (typeof player.id !== 'string' || !player.id.trim()) return null;
+    return { id: player.id, name: typeof player.name === 'string' ? player.name : '' };
   } catch (e) {
     console.error("Failed to parse player from localStorage", e);
     return null;
@@ -79,14 +88,16 @@ async function fetchFromAppsScript(action: string, payload: any): Promise<any> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 seconds timeout
+    const formData = new URLSearchParams({ action });
+    Object.entries(payload).forEach(([key, value]) => formData.set(key, String(value)));
 
     const response = await fetch(url, {
       method: "POST",
-      mode: "cors",
       headers: {
-        "Content-Type": "application/json",
+        // application/x-www-form-urlencoded is CORS-safelisted and avoids an OPTIONS preflight.
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: JSON.stringify({ action, ...payload }),
+      body: formData.toString(),
       signal: controller.signal,
     });
 
@@ -104,25 +115,61 @@ async function fetchFromAppsScript(action: string, payload: any): Promise<any> {
 }
 
 /**
- * Registers a new player by checking/generating a unique ID in Apps Script.
- * Falls back to local generation if the service is unavailable.
+ * Creates a player through the registration API. Player IDs are API-issued only.
  */
 export async function registerPlayer(name: string): Promise<Player> {
-  const sanitizedName = name.trim();
-  if (!sanitizedName) throw new Error("Name is required");
+  const existingPlayer = getLocalPlayer();
+  if (existingPlayer?.id) return existingPlayer;
 
-  // Attempt remote registration
-  const result = await fetchFromAppsScript("registerPlayer", { name: sanitizedName });
-  
-  if (result && result.success && result.playerId) {
-    const player = { id: result.playerId, name: sanitizedName };
-    saveLocalPlayer(player);
-    return player;
+  const sanitizedName = name.trim();
+  if (!sanitizedName) throw new PlayerRegistrationError("Name is required");
+
+  let response: Response;
+  try {
+    response = await fetch(config.googleAppsScriptUrl, {
+      method: 'POST',
+      // A form-encoded POST is CORS-simple, so Google Apps Script receives this
+      // request directly instead of the browser issuing an OPTIONS preflight.
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        action: 'createPlayer',
+        playerName: sanitizedName,
+      }).toString(),
+    });
+  } catch (error) {
+    console.error('Player registration request failed:', error);
+    throw new PlayerRegistrationError('Unable to reach the registration service. Please check your connection and try again.');
   }
 
-  // Graceful fallback: Client-side ID generation
-  const localId = `P-${Date.now()}-${Math.random().toString(36).substring(2, 11).toUpperCase()}`;
-  const player = { id: localId, name: sanitizedName };
+  if (!response.ok) {
+    throw new PlayerRegistrationError(`Registration service returned an error (${response.status}). Please try again.`);
+  }
+
+  let result: unknown;
+  try {
+    result = await response.json();
+  } catch (error) {
+    console.error('Player registration returned invalid JSON:', error);
+    throw new PlayerRegistrationError('The registration service returned an invalid response. Please try again.');
+  }
+
+  if (!result || typeof result !== 'object') {
+    throw new PlayerRegistrationError('The registration service returned an unexpected response. Please try again.');
+  }
+
+  const data = result as { success?: unknown; playerId?: unknown; playerName?: unknown; error?: unknown };
+  if (data.success !== true) {
+    const message = typeof data.error === 'string' && data.error.trim()
+      ? data.error
+      : 'Player registration failed. Please try again.';
+    throw new PlayerRegistrationError(message);
+  }
+
+  if (typeof data.playerId !== 'string' || !data.playerId || typeof data.playerName !== 'string') {
+    throw new PlayerRegistrationError('The registration service returned an incomplete response. Please try again.');
+  }
+
+  const player = { id: data.playerId, name: data.playerName };
   saveLocalPlayer(player);
   return player;
 }

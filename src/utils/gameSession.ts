@@ -74,6 +74,18 @@ export function filterQuestionsByTrollMode(questions: Question[], trollMode: boo
   return questions.filter(q => q.troll === trollMode);
 }
 
+/** Checks an exact lower-case user answer against the accepted answers in question.json. */
+export function isAnswerInList(userAnswer: string, configuredAnswers: string[] | string): boolean {
+  // Keep existing single-string question files playable while new files use lower-case arrays.
+  const acceptedAnswers = Array.isArray(configuredAnswers) ? configuredAnswers : [configuredAnswers.toLowerCase()];
+  return acceptedAnswers.includes(userAnswer.toLowerCase());
+}
+
+/** Uses the primary accepted answer when revealing a question. */
+export function getPrimaryAnswer(configuredAnswers: string[] | string): string {
+  return Array.isArray(configuredAnswers) ? configuredAnswers[0] ?? '' : configuredAnswers;
+}
+
 /**
  * Get question limit for a game
  */

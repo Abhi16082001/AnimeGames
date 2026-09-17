@@ -3,7 +3,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import gamescategory from '../../../../database/gamescategory.json';
 import animecategory from '../../../../database/animecategory.json';
-import { filterQuestionsByTrollMode, selectSessionQuestions } from '../../../utils/gameSession';
+import { filterQuestionsByTrollMode, getPrimaryAnswer, selectSessionQuestions } from '../../../utils/gameSession';
 import { getAnimeProgress, getMiscProgress } from '../../../utils/api';
 
 export async function getStaticPaths() {
@@ -255,7 +255,7 @@ const hasQuestions = allQuestions.length > 0;
                     />
                   </div>
                   <div class="absolute bottom-4 left-4 right-4">
-                    <h3 class="text-2xl font-bold text-white drop-shadow-lg" id="revealed-name">{sessionQuestions[0].answer}</h3>
+                    <h3 class="text-2xl font-bold text-white drop-shadow-lg" id="revealed-name">{getPrimaryAnswer(sessionQuestions[0].answer)}</h3>
                     <p class="text-white/80 text-sm" id="match-percentage">Match: 0%</p>
                   </div>
                 </div>
@@ -332,6 +332,7 @@ const hasQuestions = allQuestions.length > 0;
 
 <script>
   import { getClientSessionQuestions, loadCurrentClientQuestions, saveClientSession } from '../../../utils/gameClient';
+  import { getPrimaryAnswer } from '../../../utils/gameSession';
 
   const sessionData = document.getElementById('game-session-data')?.textContent;
   if (!sessionData) throw new Error('Missing game session data');
@@ -629,7 +630,7 @@ const hasQuestions = allQuestions.length > 0;
     }
     
     // Update revealed name
-    if (revealedName) revealedName.textContent = q.answer;
+    if (revealedName) revealedName.textContent = getPrimaryAnswer(q.answer);
     
     // Reset UI
     updateColorDisplay();

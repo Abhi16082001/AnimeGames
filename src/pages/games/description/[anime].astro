@@ -3,7 +3,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import gamescategory from '../../../../database/gamescategory.json';
 import animecategory from '../../../../database/animecategory.json';
-import { filterQuestionsByTrollMode, selectSessionQuestions } from '../../../utils/gameSession';
+import { filterQuestionsByTrollMode, getPrimaryAnswer, selectSessionQuestions } from '../../../utils/gameSession';
 import { getAnimeProgress, getMiscProgress } from '../../../utils/api';
 
 export async function getStaticPaths() {
@@ -162,7 +162,7 @@ const hasQuestions = allQuestions.length > 0;
                   <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/90 text-white font-bold text-sm shadow-lg" id="question-score">
                     +<span id="earned-score">1.0</span>
                   </div>
-                  <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg mb-2" id="revealed-name">{sessionQuestions[0].answer}</h3>
+                  <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg mb-2" id="revealed-name">{getPrimaryAnswer(sessionQuestions[0].answer)}</h3>
                   <p class="text-white/80 text-sm mb-6">Tap the image to flip back</p>
                   <div class="flex justify-center gap-4">
                     <button
@@ -232,6 +232,7 @@ const hasQuestions = allQuestions.length > 0;
 
 <script>
   import { getClientSessionQuestions, loadCurrentClientQuestions, saveClientSession } from '../../../utils/gameClient';
+  import { getPrimaryAnswer, isAnswerInList } from '../../../utils/gameSession';
 
   const sessionData = document.getElementById('game-session-data')?.textContent;
   if (!sessionData) throw new Error('Missing game session data');
@@ -386,7 +387,7 @@ const hasQuestions = allQuestions.length > 0;
     feedback.className = 'hidden mt-4 p-4 rounded-lg';
 
     // Update revealed name and image
-    if (revealedName) revealedName.textContent = q.answer;
+    if (revealedName) revealedName.textContent = getPrimaryAnswer(q.answer);
     if (revealImage && q.image) {
       revealImage.style.backgroundImage = `url('${q.image}')`;
     }
@@ -404,7 +405,7 @@ const hasQuestions = allQuestions.length > 0;
     if (!answer) return;
 
     const question = getCurrentQuestion();
-    const isCorrect = compareAnswers(answer, question.answer);
+    const isCorrect = isAnswerInList(answer, question.answer);
 
     if (isCorrect) {
       // Correct answer - reveal all remaining lines, flip card
@@ -444,7 +445,7 @@ const hasQuestions = allQuestions.length > 0;
         playedQuestionIds.push(question.id);
         questionAnswered = true;
 
-        showFeedback(`Wrong! The answer was: ${question.answer}`, 'error');
+        showFeedback(`Wrong! The answer was: ${getPrimaryAnswer(question.answer)}`, 'error');
         revealAllLines();
 
         // Update score display on card back (0 points)
@@ -461,11 +462,6 @@ const hasQuestions = allQuestions.length > 0;
         setTimeout(() => flipCard(true), 1500);
       }
     }
-  }
-
-  function compareAnswers(userAnswer, correctAnswer) {
-    const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-    return normalize(userAnswer) === normalize(correctAnswer);
   }
 
   function calculateDescriptionScore(lineIndex) {
