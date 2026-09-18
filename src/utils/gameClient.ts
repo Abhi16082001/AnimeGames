@@ -11,8 +11,9 @@ import {
   getLocalPlayer,
   getMiscProgress,
   saveAnimeProgress,
-  saveGameResult,
+  saveLocalBestScore,
   saveMiscProgress,
+  updateBestScore,
 } from './api';
 import { loadQuestions } from './gameSession';
 
@@ -83,14 +84,8 @@ export async function saveClientSession(
   }
 
   const player = getLocalPlayer();
-  if (player) {
-    await saveGameResult({
-      playerId: player.id,
-      name: player.name,
-      gameId,
-      animeId,
-      score,
-      percentage,
-    });
+  if (player && saveLocalBestScore(gameId, percentage)) {
+    // A failed sync must not interfere with the already-visible result page.
+    await updateBestScore(player.id, gameId, percentage);
   }
 }

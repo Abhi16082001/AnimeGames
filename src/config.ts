@@ -1,5 +1,5 @@
 export const config = {
-  googleAppsScriptUrl: "https://script.google.com/macros/s/AKfycbxGNc7m4U_UWwcIP5m9FeyRzygb3Zrs2bKAKnCLwG30T-j4uB9DQhv3hZ13hTSlRO5W/exec",
+  googleAppsScriptUrl: "https://script.google.com/macros/s/AKfycbyDeXIArP-k69e1LRpBQYmOmIJpPbWJdpSCLzhHGk0RsOEGOZZvnzH6azFF2p-2-rd7bg/exec",
 };
 
 export const navItems = [

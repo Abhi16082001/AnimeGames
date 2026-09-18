@@ -16,15 +16,6 @@ export class PlayerRegistrationError extends Error {
   }
 }
 
-export interface GameResult {
-  playerId: string;
-  name: string;
-  gameId: string;
-  animeId: string;
-  score: number;       // 0-1 range
-  percentage: number;  // 0-100 range
-}
-
 export interface LeaderboardEntry {
   name: string;
   playerId: string;
@@ -174,17 +165,79 @@ export async function registerPlayer(name: string): Promise<Player> {
   return player;
 }
 
-/**
- * Saves a completed game session result to Google Sheets.
- * Stores individual game category best score AND recalculated Combined score.
- * Recalculating combined score should ideally happen server-side or client-side.
- */
-export async function saveGameResult(result: GameResult): Promise<boolean> {
-  // Save locally in mock history/leaderboard too for offline support or testing
-  saveLocalResult(result);
+// -------------------------------------------------------------
+// Local Best Scores and Score Sync
+// -------------------------------------------------------------
 
-  const response = await fetchFromAppsScript("saveResult", result);
-  return !!(response && response.success);
+export interface LocalBestScores {
+  Description: number;
+  Colour: number;
+  Zoom: number;
+}
+
+type ScoreCategory = keyof LocalBestScores;
+
+const BEST_SCORES_KEY = 'animegames_best_scores';
+const EMPTY_BEST_SCORES: LocalBestScores = { Description: 0, Colour: 0, Zoom: 0 };
+
+function scoreCategoryFor(gameId: string): ScoreCategory | null {
+  const categories: Record<string, ScoreCategory> = {
+    description: 'Description',
+    colour: 'Colour',
+    zoomed: 'Zoom',
+  };
+  return categories[gameId] ?? null;
+}
+
+/** Gets best percentage scores by game category, never by anime. */
+export function getLocalBestScores(): LocalBestScores {
+  if (typeof window === 'undefined') return { ...EMPTY_BEST_SCORES };
+  try {
+    const data = localStorage.getItem(BEST_SCORES_KEY);
+    if (!data) return { ...EMPTY_BEST_SCORES };
+    const saved = JSON.parse(data) as Partial<LocalBestScores>;
+    return {
+      Description: typeof saved.Description === 'number' ? saved.Description : 0,
+      Colour: typeof saved.Colour === 'number' ? saved.Colour : 0,
+      Zoom: typeof saved.Zoom === 'number' ? saved.Zoom : 0,
+    };
+  } catch (error) {
+    console.error('Failed to read local best scores:', error);
+    return { ...EMPTY_BEST_SCORES };
+  }
+}
+
+/** Saves and reports a new category best only when the completed round improves it. */
+export function saveLocalBestScore(gameId: string, currentScore: number): boolean {
+  const category = scoreCategoryFor(gameId);
+  if (!category) return false;
+
+  const bestScores = getLocalBestScores();
+  if (currentScore <= bestScores[category]) return false;
+
+  bestScores[category] = currentScore;
+  localStorage.setItem(BEST_SCORES_KEY, JSON.stringify(bestScores));
+  return true;
+}
+
+/** Sends only one improved category score; the other API category values remain zero. */
+export async function updateBestScore(playerId: string, gameId: string, currentScore: number): Promise<boolean> {
+  const category = scoreCategoryFor(gameId);
+  if (!category) return false;
+
+  const scores: LocalBestScores = { ...EMPTY_BEST_SCORES, [category]: currentScore };
+  const response = await fetchFromAppsScript('updateScores', {
+    playerId,
+    scores: JSON.stringify(scores),
+  });
+  if (!response?.success) {
+    console.error('Google Sheets score update was rejected:', response?.error ?? 'No valid API response received.', {
+      playerId,
+      scores,
+    });
+    return false;
+  }
+  return true;
 }
 
 /**
@@ -297,86 +350,22 @@ export function getMiscProgress(gameId: string): string[] {
 }
 
 // -------------------------------------------------------------
-// Local Mock Leaderboard (for offline fallback/testing)
+// Local Best-score Leaderboard Fallback
 // -------------------------------------------------------------
 
-const LOCAL_RESULTS_KEY = "animegames_local_results";
-
-function getLocalResults(): GameResult[] {
-  if (typeof window === "undefined") return [];
-  const data = localStorage.getItem(LOCAL_RESULTS_KEY);
-  if (!data) return [];
-  try {
-    return JSON.parse(data) as GameResult[];
-  } catch (e) {
-    return [];
-  }
-}
-
-function saveLocalResult(result: GameResult): void {
-  if (typeof window === "undefined") return;
-  const results = getLocalResults();
-  results.push(result);
-  localStorage.setItem(LOCAL_RESULTS_KEY, JSON.stringify(results));
-}
-
 export function getLocalLeaderboard(gameId: string | 'Combined'): LeaderboardEntry[] {
-  const results = getLocalResults();
-  
-  // Aggregate results by Player ID
-  // For each player, we need to track their best score per game category
-  const playerBests: { [playerId: string]: { name: string; bestScores: { [gId: string]: number } } } = {};
+  const player = getLocalPlayer();
+  if (!player) return [];
 
-  results.forEach(r => {
-    if (!playerBests[r.playerId]) {
-      playerBests[r.playerId] = { name: r.name, bestScores: {} };
-    }
-    const currentBest = playerBests[r.playerId].bestScores[r.gameId] || 0;
-    if (r.score > currentBest) {
-      playerBests[r.playerId].bestScores[r.gameId] = r.score;
-    }
-  });
+  const bestScores = getLocalBestScores();
+  if (gameId === 'Combined') {
+    const score = (bestScores.Description + bestScores.Colour + bestScores.Zoom) / 300;
+    if (score === 0) return [];
+    return [{ name: player.name, playerId: player.id, gameId: 'Combined', score, percentage: Math.round(score * 100) }];
+  }
 
-  const leaderboard: LeaderboardEntry[] = [];
-
-  Object.entries(playerBests).forEach(([playerId, data]) => {
-    if (gameId === 'Combined') {
-      // Average best scores across all game categories (e.g. description, zoomed, colour)
-      const categories = ['description', 'zoomed', 'colour'];
-      let sum = 0;
-      let count = 0;
-      categories.forEach(cat => {
-        if (data.bestScores[cat] !== undefined) {
-          sum += data.bestScores[cat];
-          count++;
-        }
-      });
-      // Average is calculated based on category bests
-      if (count > 0) {
-        const avgScore = sum / 3; // Follow guidelines: Divided by total categories (3)
-        leaderboard.push({
-          name: data.name,
-          playerId,
-          gameId: 'Combined',
-          score: avgScore,
-          percentage: Math.round(avgScore * 100)
-        });
-      }
-    } else {
-      // Individual game category best score
-      const bestScore = data.bestScores[gameId];
-      if (bestScore !== undefined) {
-        leaderboard.push({
-          name: data.name,
-          playerId,
-          gameId,
-          score: bestScore,
-          percentage: Math.round(bestScore * 100)
-        });
-      }
-    }
-  });
-
-  // Sort descending by score
-  return leaderboard.sort((a, b) => b.score - a.score);
+  const category = scoreCategoryFor(gameId);
+  const percentage = category ? bestScores[category] : 0;
+  if (percentage === 0) return [];
+  return [{ name: player.name, playerId: player.id, gameId, score: percentage / 100, percentage }];
 }
