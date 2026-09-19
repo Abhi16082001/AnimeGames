@@ -2,7 +2,7 @@
 import { navItems } from '../config';
 ---
 
-<header class="sticky top-0 z-40 w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-md">
+<header class="sticky top-0 z-40 w-full border-b border-white/20 bg-[var(--color-bg)]/20 text-[var(--color-text)] backdrop-blur-xl">
   <div class="section-container">
     <div class="flex h-16 items-center justify-between">
       <!-- Logo -->
@@ -18,7 +18,7 @@ import { navItems } from '../config';
         {navItems.map((item) => (
           <a
             href={item.path}
-            class:list={["px-4 py-2 rounded-full text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]", Astro.url.pathname === item.path ? "bg-[var(--color-text)] text-white" : "text-[var(--color-text-muted)] hover:bg-white hover:text-[var(--color-text)]"]}
+            class:list={["px-4 py-2 rounded-full text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]", Astro.url.pathname === item.path ? "bg-white/90 text-[var(--color-bg)] shadow-sm" : "text-[var(--color-text)] hover:bg-white/15"]}
           >
             {item.name}
           </a>
@@ -28,9 +28,12 @@ import { navItems } from '../config';
       <!-- Player Identity Corner -->
       <div class="flex items-center gap-4">
         <!-- Player Nickname Box -->
-        <div id="header-player-container" class="hidden items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--color-bg)] border border-[var(--color-border)] text-sm font-bold" role="status" aria-live="polite">
+        <div id="header-player-container" class="hidden items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-1.5" role="status" aria-live="polite">
           <span class="flex h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" aria-hidden="true"></span>
-          <span id="header-player-name" class="text-[var(--color-text-muted)]">...</span>
+          <span class="flex flex-col leading-tight">
+            <span id="header-player-name" class="text-base font-bold text-[var(--color-text)]">...</span>
+            <span id="header-player-id" class="text-xs font-normal text-[var(--color-text-muted)]"></span>
+          </span>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -56,12 +59,12 @@ import { navItems } from '../config';
   </div>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden border-b border-[var(--color-border)] bg-[var(--color-bg)] transition-all duration-200 ease-in-out" role="navigation" aria-label="Mobile navigation">
+  <div id="mobile-menu" class="hidden md:hidden border-b border-white/20 bg-[var(--color-bg)]/20 backdrop-blur-xl transition-all duration-200 ease-in-out" role="navigation" aria-label="Mobile navigation">
     <div class="space-y-1 px-4 py-3 sm:px-6">
       {navItems.map((item) => (
         <a
           href={item.path}
-          class="block px-3 py-2.5 rounded-lg text-base font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+          class:list={["block px-3 py-2.5 rounded-lg text-base font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]", Astro.url.pathname === item.path ? "bg-white/90 text-[var(--color-bg)]" : "text-[var(--color-text)] hover:bg-white/15"]}
         >
           {item.name}
         </a>
@@ -94,11 +97,13 @@ import { navItems } from '../config';
     // 2. Fetch Player Identity & update Navbar UI
     const playerContainer = document.getElementById('header-player-container');
     const playerNameEl = document.getElementById('header-player-name');
+    const playerIdEl = document.getElementById('header-player-id');
 
-    if (playerContainer && playerNameEl) {
+    if (playerContainer && playerNameEl && playerIdEl) {
       const player = getLocalPlayer();
       if (player) {
         playerNameEl.textContent = player.name;
+        playerIdEl.textContent = player.id;
         playerContainer.classList.remove('hidden');
         playerContainer.classList.add('flex');
       }

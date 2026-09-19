@@ -17,11 +17,18 @@ export class PlayerRegistrationError extends Error {
 }
 
 export interface LeaderboardEntry {
-  name: string;
+  rank: number;
   playerId: string;
-  gameId: string;
-  score: number;
+  playerName: string;
+  gameCategory: string;
   percentage: number;
+}
+
+export interface GoogleLeaderboards {
+  Combined: LeaderboardEntry[];
+  Description: LeaderboardEntry[];
+  Colour: LeaderboardEntry[];
+  Zoom: LeaderboardEntry[];
 }
 
 export interface GameProgress {
@@ -240,18 +247,43 @@ export async function updateBestScore(playerId: string, gameId: string, currentS
   return true;
 }
 
-/**
- * Fetches the leaderboard data.
- * Falls back to local leaderboard if remote fetch fails.
- */
-export async function getLeaderboard(gameId: string | 'Combined'): Promise<LeaderboardEntry[]> {
-  const result = await fetchFromAppsScript("getLeaderboard", { gameId });
-  if (result && result.success && Array.isArray(result.data)) {
-    return result.data as LeaderboardEntry[];
+/** Fetches all Google Sheets leaderboard categories in one GET request. */
+export async function getGoogleLeaderboards(): Promise<GoogleLeaderboards> {
+  const url = new URL(config.googleAppsScriptUrl);
+  url.search = new URLSearchParams({ action: 'getAllLeaderboard' }).toString();
+
+  let response: Response;
+  try {
+    response = await fetch(url.toString());
+  } catch (error) {
+    console.error('Leaderboard request failed:', error);
+    throw new Error('Unable to reach the leaderboard service.');
   }
-  
-  // Return local storage mock leaderboard as fallback
-  return getLocalLeaderboard(gameId);
+
+  if (!response.ok) {
+    throw new Error(`Leaderboard service returned an error (${response.status}).`);
+  }
+
+  let result: unknown;
+  try {
+    result = await response.json();
+  } catch (error) {
+    console.error('Leaderboard returned invalid JSON:', error);
+    throw new Error('The leaderboard service returned an invalid response.');
+  }
+
+  const data = result as { success?: unknown; leaderboards?: unknown; error?: unknown };
+  if (data?.success !== true || !data.leaderboards || typeof data.leaderboards !== 'object') {
+    throw new Error(typeof data?.error === 'string' ? data.error : 'The leaderboard service returned an unexpected response.');
+  }
+
+  const leaderboards = data.leaderboards as Partial<GoogleLeaderboards>;
+  return {
+    Combined: Array.isArray(leaderboards.Combined) ? leaderboards.Combined : [],
+    Description: Array.isArray(leaderboards.Description) ? leaderboards.Description : [],
+    Colour: Array.isArray(leaderboards.Colour) ? leaderboards.Colour : [],
+    Zoom: Array.isArray(leaderboards.Zoom) ? leaderboards.Zoom : [],
+  };
 }
 
 // -------------------------------------------------------------
@@ -347,25 +379,4 @@ export function clearMiscProgress(gameId: string): void {
 export function getMiscProgress(gameId: string): string[] {
   const store = getProgressStore();
   return store.gameProgress[gameId]?.[ "miscellaneous" ]?.playedQuestionId || [];
-}
-
-// -------------------------------------------------------------
-// Local Best-score Leaderboard Fallback
-// -------------------------------------------------------------
-
-export function getLocalLeaderboard(gameId: string | 'Combined'): LeaderboardEntry[] {
-  const player = getLocalPlayer();
-  if (!player) return [];
-
-  const bestScores = getLocalBestScores();
-  if (gameId === 'Combined') {
-    const score = (bestScores.Description + bestScores.Colour + bestScores.Zoom) / 300;
-    if (score === 0) return [];
-    return [{ name: player.name, playerId: player.id, gameId: 'Combined', score, percentage: Math.round(score * 100) }];
-  }
-
-  const category = scoreCategoryFor(gameId);
-  const percentage = category ? bestScores[category] : 0;
-  if (percentage === 0) return [];
-  return [{ name: player.name, playerId: player.id, gameId, score: percentage / 100, percentage }];
 }

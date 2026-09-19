@@ -2,11 +2,17 @@
 // Leaderboard page
 import Layout from '../layouts/Layout.astro';
 import gamescategory from '../../database/gamescategory.json';
-import { getLeaderboard } from '../utils/api';
 
-const gameCategories = [
+const legacyGameCategories = [
   { id: 'Combined', name: 'Combined', icon: '🏆' },
   ...gamescategory.filter(g => g.show).map(g => ({ id: g.id, name: g.name, icon: g.id === 'description' ? '📝' : g.id === 'zoomed' ? '🔍' : '🎨' }))
+];
+
+const gameCategories = [
+  { id: 'Combined', name: 'Combined', icon: String.fromCodePoint(0x1F3C6) },
+  { id: 'Description', name: 'Description Game', icon: String.fromCodePoint(0x1F4DD) },
+  { id: 'Colour', name: 'Colour Guessing Game', icon: String.fromCodePoint(0x1F3A8) },
+  { id: 'Zoom', name: 'Zoomed Image Game', icon: String.fromCodePoint(0x1F50D) },
 ];
 ---
 
@@ -30,7 +36,7 @@ const gameCategories = [
           <div class="relative w-full max-w-xs">
             <select
               id="category-select"
-              class="w-full px-6 py-3 rounded-full bg-white bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] font-semibold appearance-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 pr-10"
+              class="w-full px-6 py-3 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] text-white font-semibold appearance-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 pr-10"
             >
               {gameCategories.map((cat) => (
                 <option value={cat.id}>
@@ -54,13 +60,13 @@ const gameCategories = [
               class={`leaderboard-panel ${index !== 0 ? 'hidden' : ''}`}
             >
               <div id={`leaderboard-content-${cat.id}`} class="card overflow-hidden">
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto rounded-xl border border-[var(--color-border)]">
                   <table class="w-full" role="table" aria-label={`${cat.name} leaderboard`}>
                     <thead>
                       <tr class="bg-[var(--color-bg)] bg-[var(--color-border)] border-b border-[var(--color-border)] border-[var(--color-border)]">
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Rank</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Player</th>
-                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Score</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Player ID</th>
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Percentage</th>
                       </tr>
                     </thead>
@@ -130,8 +136,19 @@ const gameCategories = [
 </Layout>
 
 <script>
+  import { getGoogleLeaderboards, type GoogleLeaderboards } from '../utils/api';
+
   // Leaderboard state
   let currentCategory = 'Combined';
+  let leaderboards: GoogleLeaderboards | null = null;
+  let leaderboardLoad: Promise<GoogleLeaderboards> | null = null;
+  let leaderboardError = false;
+  const apiCategoryByDropdown: Record<string, keyof GoogleLeaderboards> = {
+    Combined: 'Combined',
+    Description: 'Description',
+    Colour: 'Colour',
+    Zoom: 'Zoom',
+  };
   const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
   const leaderboardPanels = document.querySelectorAll('.leaderboard-panel');
 
@@ -168,11 +185,11 @@ const gameCategories = [
       }
     });
 
-    // Load leaderboard data
-    await loadLeaderboard(category);
+    // All categories were fetched on page load; switching only re-renders local data.
+    renderLeaderboard(category);
   }
 
-  async function loadLeaderboard(category: string) {
+  async function loadLeaderboard(category: string, fetchIfMissing = true) {
     const tbody = document.getElementById(`leaderboard-body-${category}`);
     const emptyState = document.getElementById(`leaderboard-empty-${category}`);
     const content = document.getElementById(`leaderboard-content-${category}`);
@@ -194,9 +211,17 @@ const gameCategories = [
     content?.classList.remove('hidden');
 
     try {
-      // Dynamic import to avoid circular dependency
-      const { getLeaderboard } = await import('../utils/api.js');
-      const entries = await getLeaderboard(category);
+      // The complete Google Sheets response is requested once per page load.
+      if (!leaderboards) {
+        if (!fetchIfMissing) {
+          if (leaderboardError) showLeaderboardError(category);
+          return;
+        }
+        leaderboardLoad ??= getGoogleLeaderboards();
+        leaderboards = await leaderboardLoad;
+      }
+      const apiCategory = apiCategoryByDropdown[category];
+      const entries = apiCategory ? leaderboards[apiCategory] : [];
 
       if (entries.length === 0) {
         content?.classList.add('hidden');
@@ -205,24 +230,47 @@ const gameCategories = [
       }
 
       // Render leaderboard
-      tbody.innerHTML = entries.map((entry, index) => {
-        const rank = index + 1;
-        const rankClass = rank === 1 ? 'text-yellow-500' : rank === 2 ? 'text-gray-400' : rank === 3 ? 'text-amber-700' : 'text-[var(--color-text-muted)]';
-        const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#';
+      tbody.innerHTML = entries.map((entry) => {
+      const rank = entry.rank;
+      const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#';
+      const rowTone = rank === 1
+        ? { row: 'bg-amber-300/40', light: 'bg-yellow-200', text: 'text-amber-950', name: 'text-amber-100', shadow: 'shadow-amber-200/50' }
+        : rank === 2
+          ? { row: 'bg-slate-500/90', light: 'bg-slate-200', text: 'text-slate-900', name: 'text-slate-100', shadow: 'shadow-slate-200/50' }
+          : rank === 3
+            ? { row: 'bg-orange-700/60', light: 'bg-orange-200', text: 'text-orange-950', name: 'text-orange-100', shadow: 'shadow-orange-200/50' }
+            : rank <= 10
+              ? { row: 'bg-blue-600/40', light: 'bg-blue-200', text: 'text-blue-950', name: 'text-blue-100', shadow: 'shadow-blue-200/50' }
+              : { row: 'bg-slate-800/50', light: 'bg-zinc-200', text: 'text-zinc-950', name: 'text-zinc-100', shadow: 'shadow-zinc-200/50' };
+      const rankLabel = rank <= 3 ? `${rankIcon} ${rank}` : `#${rank}`;
 
-        return `
-          <tr class="hover:bg-[var(--color-bg)] hover:bg-[var(--color-bg)] transition-colors ${rank <= 3 ? 'bg-gradient-to-r from-[var(--color-primary)]/5 to-[var(--color-secondary)]/5' : ''}">
-            <td class="px-4 py-4 font-bold ${rankClass}">${rankIcon} ${rank}</td>
-            <td class="px-4 py-4 font-medium text-[var(--color-text)] text-[var(--color-text)]">${escapeHtml(entry.name)}</td>
-            <td class="px-4 py-4 text-right font-mono text-[var(--color-text-muted)] text-[var(--color-text-muted)]">${entry.score.toFixed(2)}</td>
-            <td class="px-4 py-4 text-right font-bold gradient-text">${entry.percentage}%</td>
+      return `
+          <tr class="transition-[filter] hover:brightness-125 ${rowTone.row}">
+            <td class="px-4 py-4">
+              <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-full px-2 font-black ${rowTone.light} ${rowTone.text} shadow-lg ${rowTone.shadow}">${rankLabel}</span>
+            </td>
+            <td class="px-4 py-4 font-bold ${rowTone.name}">${escapeHtml(entry.playerName)}</td>
+            <td class="px-4 py-4 font-bold ${rowTone.name}">${escapeHtml(entry.playerId)}</td>
+            <td class="px-4 py-4 text-right">
+              <span class="inline-flex rounded-full px-3 py-1 font-black ${rowTone.light} ${rowTone.text}">${entry.percentage}%</span>
+            </td>
           </tr>
         `;
       }).join('');
 
     } catch (error) {
       console.error('Failed to load leaderboard:', error);
-      tbody.innerHTML = `
+      leaderboardLoad = null;
+      leaderboardError = true;
+      showLeaderboardError(category);
+    }
+  }
+
+  function showLeaderboardError(category: string) {
+    const tbody = document.getElementById(`leaderboard-body-${category}`);
+    if (!tbody) return;
+
+    tbody.innerHTML = `
         <tr>
           <td colspan="4" class="px-4 py-12 text-center text-red-500">
             <div class="flex flex-col items-center gap-3">
@@ -235,7 +283,11 @@ const gameCategories = [
           </td>
         </tr>
       `;
-    }
+  }
+
+  function renderLeaderboard(category: string) {
+    // Dropdown changes only render the cached response; they never fetch.
+    loadLeaderboard(category, false);
   }
 
   function escapeHtml(text: string): string {

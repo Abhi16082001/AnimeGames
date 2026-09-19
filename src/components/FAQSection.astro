@@ -1,17 +1,19 @@
 ---
 // FAQSection.astro - FAQ section
+type FAQ = { q: string; a: string };
+const suppliedFaqs = Astro.props.faqs as FAQ[] | undefined;
 ---
 
 <section class="py-12 md:py-20 bg-[var(--color-bg)]" aria-labelledby="faq-title">
   <div class="section-container">
     <div class="text-center mb-12 md:mb-16">
-      <h2 id="faq-title" class="section-title mb-4">Frequently Asked Questions</h2>
-      <p class="section-subtitle">Everything you need to know about Anime Realm</p>
+      <h2 id="faq-title" class="section-title mb-4">{Astro.props.title ?? 'Frequently Asked Questions'}</h2>
+      <p class="section-subtitle">{Astro.props.subtitle ?? 'Everything you need to know about Anime Realm'}</p>
     </div>
     
     <div class="max-w-xl mx-auto">
-      <dl class="space-y-4" role="list">
-        {[
+      <dl class="space-y-2" role="list">
+        {(suppliedFaqs ?? [
           {
             q: "Do I need to create an account to play?",
             a: "No! You only need to enter a nickname on your first visit. Your identity is stored locally in your browser, and a unique Player ID is generated via our secure backend. No email, no password, no hassle."
@@ -44,9 +46,9 @@
             q: "Can I play on mobile?",
             a: "Absolutely! The site is fully responsive and works great on mobile devices. All game modes are touch-friendly with appropriate controls for each platform."
           }
-        ].map((faq, index) => (
-          <div class="card group" role="listitem">
-            <dt class="flex items-center justify-between gap-4 p-4 md:p-6 cursor-pointer" 
+        ]).map((faq, index) => (
+          <div class="card group !p-0" role="listitem">
+            <dt class="flex items-center justify-between gap-4 p-3 cursor-pointer"
               onclick="this.parentElement.classList.toggle('open')"
               onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.parentElement.classList.toggle('open'); } }}
               tabindex="0"
@@ -61,7 +63,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
             </dt>
-            <dd id={`faq-answer-${index}`} class="hidden group-data-[open=true]:block px-4 md:px-6 pb-6 pt-0 text-[var(--color-text-muted)] leading-relaxed animate-slide-down">
+            <dd id={`faq-answer-${index}`} class="hidden group-data-[open=true]:block px-3 pb-3 pt-0 text-[var(--color-text-muted)] leading-relaxed animate-slide-down">
               {faq.a}
             </dd>
           </div>

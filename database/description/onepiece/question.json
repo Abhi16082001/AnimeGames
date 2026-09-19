@@ -9,7 +9,7 @@
       "I am known for using techniques called Gears."
     ],
     "answer": "Monkey D. Luffy",
-    "image": "https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=600&auto=format&fit=crop",
+    "image": "/sample.png",
     "troll": false
   },
   {
@@ -22,7 +22,7 @@
       "My name is..."
     ],
     "answer": "Roronoa Zoro",
-    "image": "https://images.unsplash.com/photo-1580477667995-2b94f01c9516?q=80&w=600&auto=format&fit=crop",
+    "image": "/sample.png",
     "troll": false
   },
   {
@@ -35,7 +35,7 @@
       "My family name is Vinsmoke."
     ],
     "answer": "Vinsmoke Sanji",
-    "image": "https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=600&auto=format&fit=crop",
+    "image": "/sample.png",
     "troll": false
   },
   {
@@ -48,7 +48,7 @@
       "Wait, no, I am actually a legendary sky-island melon-headed god of comedy."
     ],
     "answer": "Gan Fall",
-    "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop",
+    "image": "/sample.png",
     "troll": true
   },
   {
@@ -61,7 +61,7 @@
       "Just kidding, I am a green-haired moss ball that Zoro resembles."
     ],
     "answer": "Marimo",
-    "image": "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=600&auto=format&fit=crop",
+    "image": "/sample.png",
     "troll": true
   }
 ]

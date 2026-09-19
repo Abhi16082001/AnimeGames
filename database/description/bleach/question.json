@@ -9,7 +9,7 @@
       "I have bright orange hair."
     ],
     "answer": "Ichigo Kurosaki",
-    "image": "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?q=80&w=600&auto=format&fit=crop",
+    "image": "/sample.png",
     "troll": false
   },
   {
@@ -22,7 +22,7 @@
       "My name is..."
     ],
     "answer": "Toshiro Hitsugaya",
-    "image": "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=600&auto=format&fit=crop",
+    "image": "/sample.png",
     "troll": false
   },
   {
@@ -35,7 +35,7 @@
       "I live for the thrill of a good battle."
     ],
     "answer": "Kenpachi Zaraki",
-    "image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600&auto=format&fit=crop",
+    "image": "/sample.png",
     "troll": false
   },
   {
@@ -48,7 +48,7 @@
       "Bow down before the almighty pen!"
     ],
     "answer": "Tite Kubo's Pen",
-    "image": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=600&auto=format&fit=crop",
+    "image": "/sample.png",
     "troll": true
   },
   {
@@ -61,7 +61,7 @@
       "My name is..."
     ],
     "answer": "Kon",
-    "image": "https://images.unsplash.com/photo-1559251606-c623743a6d76?q=80&w=600&auto=format&fit=crop",
+    "image": "/sample.png",
     "troll": true
   }
 ]

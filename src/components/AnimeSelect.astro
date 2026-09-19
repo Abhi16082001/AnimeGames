@@ -2,9 +2,9 @@
 // AnimeSelect.astro - Shared anime selection component for game pages
 import Layout from '../layouts/Layout.astro';
 import TrollModeToggle from './TrollModeToggle.astro';
+import FAQSection from './FAQSection.astro';
 import gamescategory from '../../database/gamescategory.json';
 import animecategory from '../../database/animecategory.json';
-import { navItems } from '../config';
 
 interface Props {
   gameId: string;
@@ -67,9 +67,8 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
           {supportedAnime.map((anime) => (
-            <article class="card group relative overflow-hidden h-full" style="--anime-bg: {anime.bgimage};">
-              <div class="absolute inset-0 bg-[var(--anime-bg)] opacity-10 group-hover:opacity-20 transition-opacity duration-300" aria-hidden="true"></div>
-              <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-300" aria-hidden="true"></div>
+            <article class="card group relative aspect-square overflow-hidden bg-cover bg-center !p-0" style="background-image: url('/sample.png');">
+              <div class="absolute inset-0 bg-blue-950/60 transition-colors duration-300 group-hover:bg-blue-950/45" aria-hidden="true"></div>
               
               <div class="relative h-full flex flex-col">
                 <div class="flex-1 flex items-end p-6">
@@ -95,7 +94,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
           ))}
           
           <!-- Miscellaneous Option -->
-          <article class="card group relative overflow-hidden h-full gradient-border">
+          <article class="card group relative aspect-square overflow-hidden gradient-border">
             <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-[var(--color-secondary)]/10 group-hover:from-[var(--color-primary)]/20 group-hover:to-[var(--color-secondary)]/20 transition-all duration-300" aria-hidden="true"></div>
             
             <div class="relative h-full flex flex-col items-center justify-center text-center p-8">
@@ -163,5 +162,16 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
         </div>
       </div>
     </section>
+
+    <FAQSection
+      title={`${gameName} FAQ`}
+      subtitle="Helpful details for this game mode."
+      faqs={[
+        { q: 'How many questions are in a session?', a: `Each ${gameName} session includes ${questionLimit} questions.` },
+        { q: 'Can I choose a different anime?', a: 'Yes. Select any anime card above, or choose Miscellaneous for a mixed question set.' },
+        { q: 'Is my progress saved?', a: 'Yes. Your question progress and best scores are saved in your browser automatically.' },
+        { q: 'Does Troll Mode work here?', a: 'Yes. Enable it with the global toggle to play the alternate troll-question set where available.' },
+      ]}
+    />
   </main>
 </Layout>
