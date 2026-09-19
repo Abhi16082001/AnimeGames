@@ -172,6 +172,51 @@ export async function registerPlayer(name: string): Promise<Player> {
   return player;
 }
 
+export interface ContactFormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+/** Sends a contact message to the existing Google Apps Script web app. */
+export async function submitContactForm(data: ContactFormData): Promise<string> {
+  let response: Response;
+  try {
+    response = await fetch(config.googleAppsScriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        action: 'contact',
+        name: data.name,
+        email: data.email,
+        message: data.message,
+      }).toString(),
+    });
+  } catch (error) {
+    console.error('Contact request failed:', error);
+    throw new Error('Unable to send your message. Please check your connection and try again.');
+  }
+
+  if (!response.ok) {
+    throw new Error(`Contact service returned an error (${response.status}). Please try again.`);
+  }
+
+  let result: unknown;
+  try {
+    result = await response.json();
+  } catch (error) {
+    console.error('Contact response returned invalid JSON:', error);
+    throw new Error('The contact service returned an invalid response. Please try again.');
+  }
+
+  const responseData = result as { success?: unknown; message?: unknown };
+  if (responseData.success !== true) {
+    throw new Error(typeof responseData.message === 'string' ? responseData.message : 'Unable to send your message. Please try again.');
+  }
+
+  return typeof responseData.message === 'string' ? responseData.message : 'Contact form submitted successfully';
+}
+
 // -------------------------------------------------------------
 // Local Best Scores and Score Sync
 // -------------------------------------------------------------

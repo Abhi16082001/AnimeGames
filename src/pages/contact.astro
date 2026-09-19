@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact - Anime Realm">
+  <main class="flex-grow">
+    <section class="bg-gradient-to-br from-[var(--color-primary)]/15 to-[var(--color-secondary)]/15 py-16 md:py-24">
+      <div class="section-container text-center">
+        <h1 class="gradient-text text-4xl font-black tracking-tight md:text-5xl lg:text-6xl">Contact Us</h1>
+        <p class="mx-auto mt-5 max-w-2xl text-lg md:text-xl">Have a question, feedback, or an idea for Anime Realm? Send us a message.</p>
+      </div>
+    </section>
+
+    <section class="py-12 md:py-20">
+      <div class="section-container">
+        <div class="mx-auto grid max-w-5xl gap-8 lg:grid-cols-5">
+          <aside class="card lg:col-span-2">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-accent-lavender)] text-2xl" aria-hidden="true">✉️</div>
+            <h2 class="mb-3 text-2xl font-bold text-[var(--color-text)]">We'd love to hear from you</h2>
+            <p class="text-base">Use the form to share feedback, report an issue, or suggest a new game feature.</p>
+          </aside>
+
+          <form id="contact-form" class="card space-y-5 lg:col-span-3" novalidate>
+            <div>
+              <label for="contact-name" class="mb-2 block text-sm font-bold text-[var(--color-text)]">Name <span aria-hidden="true">*</span></label>
+              <input id="contact-name" name="name" type="text" required autocomplete="name" class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3 text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]" placeholder="Your name" />
+            </div>
+            <div>
+              <label for="contact-email" class="mb-2 block text-sm font-bold text-[var(--color-text)]">Email <span aria-hidden="true">*</span></label>
+              <input id="contact-email" name="email" type="email" required autocomplete="email" class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3 text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]" placeholder="you@example.com" />
+            </div>
+            <div>
+              <label for="contact-message" class="mb-2 block text-sm font-bold text-[var(--color-text)]">Message <span aria-hidden="true">*</span></label>
+              <textarea id="contact-message" name="message" required rows="6" class="w-full resize-y rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3 text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]" placeholder="How can we help?"></textarea>
+            </div>
+            <p id="contact-status" class="hidden text-sm font-medium" role="status" aria-live="polite"></p>
+            <button id="contact-submit" type="submit" class="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  import { submitContactForm } from '../utils/api';
+
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const submitButton = document.getElementById('contact-submit') as HTMLButtonElement | null;
+  const status = document.getElementById('contact-status') as HTMLParagraphElement | null;
+
+  function showStatus(message: string, isError: boolean) {
+    if (!status) return;
+    status.textContent = message;
+    status.classList.remove('hidden', 'text-red-400', 'text-green-400');
+    status.classList.add(isError ? 'text-red-400' : 'text-green-400');
+  }
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const formData = new FormData(form);
+    const data = {
+      action: 'contact',
+      name: String(formData.get('name') ?? '').trim(),
+      email: String(formData.get('email') ?? '').trim(),
+      message: String(formData.get('message') ?? '').trim(),
+    };
+
+    submitButton?.setAttribute('disabled', 'true');
+    showStatus('Sending your message...', false);
+
+    try {
+      const message = await submitContactForm(data);
+      showStatus(message, false);
+      form.reset();
+    } catch (error) {
+      showStatus(error instanceof Error ? error.message : 'Unable to send your message. Please try again.', true);
+    } finally {
+      submitButton?.removeAttribute('disabled');
+    }
+  });
+</script>
