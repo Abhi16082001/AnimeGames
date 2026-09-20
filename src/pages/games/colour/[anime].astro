@@ -70,15 +70,15 @@ const hasQuestions = allQuestions.length > 0;
 <Layout title={`${animeName} - Colour Guessing Game - Anime Realm`}>
   <main class="flex-grow min-h-screen">
     <!-- Game Header -->
-    <header class="sticky top-16 z-30 bg-white/80 bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--color-border)] border-[var(--color-border)] px-4 py-4 md:px-6">
-      <div class="section-container flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div class="flex items-center gap-3">
+    <header class="sticky top-16 z-30 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 py-3 backdrop-blur-md md:py-4">
+          <div class="section-container flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div class="flex min-w-0 items-center gap-3">
           <a href="/games/colour" class="p-2 rounded-lg text-[var(--color-text-muted)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] hover:bg-[var(--color-bg)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]" aria-label="Back to Colour Guessing Game">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
           </a>
-          <div>
+          <div class="min-w-0">
             <h1 class="text-xl md:text-2xl font-black gradient-text">{animeName}</h1>
             <p class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Colour Guessing Game • <span id="session-question-count">{totalQuestions}</span> question<span id="session-question-plural">{totalQuestions !== 1 ? 's' : ''}</span></p>
           </div>
@@ -96,8 +96,8 @@ const hasQuestions = allQuestions.length > 0;
     {hasQuestions ? (
       <>
         <!-- Game Area -->
-        <section class="py-6 md:py-8 px-4 md:px-6" aria-label="Game Area">
-          <div class="section-container max-w-6xl">
+        <section class="py-6 md:py-8" aria-label="Game Area">
+          <div class="section-container max-w-6xl min-w-0">
             <!-- Question Card -->
             <article id="question-card" class="card relative overflow-hidden p-3 sm:p-6 md:p-8" data-question-index="0" role="region" aria-label="Question 1 of {totalQuestions}">
               <div class="absolute top-4 right-4 flex gap-2" aria-hidden="true">
@@ -267,7 +267,7 @@ const hasQuestions = allQuestions.length > 0;
             <!-- Score Summary (shown at end) -->
             <div id="score-summary" class="hidden mt-6 card gradient-border text-center">
               <h2 class="text-2xl font-bold text-[var(--color-text)] text-[var(--color-text)] mb-4">Session Complete!</h2>
-              <div class="grid grid-cols-3 gap-4 mb-6">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                 <div class="p-4 rounded-xl bg-[var(--color-accent-lavender)]/50 bg-[var(--color-primary)]/20">
                   <div class="text-3xl font-bold gradient-text" id="final-correct">0</div>
                   <div class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Correct</div>
@@ -291,9 +291,9 @@ const hasQuestions = allQuestions.length > 0;
       </>
     ) : (
       // No questions available
-      <section class="py-16 md:py-24 px-4 md:px-6">
+      <section class="py-16 md:py-24">
         <div class="section-container max-w-md mx-auto text-center">
-          <div class="card gradient-border p-12">
+          <div class="card gradient-border !p-6 sm:!p-12">
             <div class="text-6xl mb-4" aria-hidden="true">😔</div>
             <h2 class="text-2xl font-bold text-[var(--color-text)] text-[var(--color-text)] mb-4">No Questions Available</h2>
             <p class="text-[var(--color-text-muted)] text-[var(--color-text-muted)] mb-6">

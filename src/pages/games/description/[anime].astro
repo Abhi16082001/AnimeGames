@@ -72,15 +72,15 @@ const hasQuestions = allQuestions.length > 0;
 <Layout title={`${animeName} - Description Game - Anime Realm`}>
   <main class="flex-grow min-h-screen">
     <!-- Game Header -->
-    <header class="sticky top-16 z-30 bg-white/80 bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--color-border)] border-[var(--color-border)] px-4 py-4 md:px-6">
-      <div class="section-container flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div class="flex items-center gap-3">
+    <header class="sticky top-16 z-30 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 py-3 backdrop-blur-md md:py-4">
+          <div class="section-container flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div class="flex min-w-0 items-center gap-3">
           <a href="/games/description" class="p-2 rounded-lg text-[var(--color-text-muted)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] hover:bg-[var(--color-bg)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]" aria-label="Back to Description Game">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
           </a>
-          <div>
+          <div class="min-w-0">
             <h1 class="text-xl md:text-2xl font-black gradient-text">{animeName}</h1>
             <p class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Description Game • <span id="session-question-count">{totalQuestions}</span> question<span id="session-question-plural">{totalQuestions !== 1 ? 's' : ''}</span></p>
           </div>
@@ -98,10 +98,10 @@ const hasQuestions = allQuestions.length > 0;
     {hasQuestions ? (
       <>
         <!-- Game Area -->
-        <section class="py-8 md:py-12 px-4 md:px-6" aria-label="Game Area">
-          <div class="section-container max-w-3xl">
+        <section class="py-8 md:py-12" aria-label="Game Area">
+          <div class="section-container max-w-3xl min-w-0">
             <!-- Question Card -->
-            <article id="question-card" class="card relative" data-question-index="0" role="region" aria-label="Question 1 of {totalQuestions}">
+            <article id="question-card" class="card relative !p-4 sm:!p-6 md:!p-8" data-question-index="0" role="region" aria-label="Question 1 of {totalQuestions}">
               <div class="absolute top-4 right-4 flex gap-2" aria-hidden="true">
                 <span class="px-3 py-1 text-xs font-semibold rounded-full bg-[var(--color-accent-lavender)] bg-[var(--color-primary)]/20 text-[var(--color-primary)] text-[var(--color-accent-lavender)]">
                   Q<span id="current-q-num">1</span>
@@ -109,12 +109,12 @@ const hasQuestions = allQuestions.length > 0;
               </div>
               
               <!-- Front: Descriptions -->
-              <div id="card-front" class="p-6 md:p-8">
+              <div id="card-front">
                 <div class="mb-6">
                   <h2 class="text-lg font-semibold text-[var(--color-text-muted)] text-[var(--color-text-muted)] mb-4">Clues</h2>
                   <div id="descriptions-container" class="space-y-3" role="list" aria-label="Progressive clues">
                     {sessionQuestions[0]?.descriptions?.map((description: string, index: number) => (
-                      <div class:list={['clue-line', 'flex items-start gap-3 p-3 rounded-lg', index === 0 ? 'bg-[var(--color-accent-lavender)]/30 border border-[var(--color-primary)]/20' : 'hidden']} role="listitem">
+                      <div class:list={['clue-line', 'flex items-start gap-2.5 p-2.5 sm:gap-3 sm:p-3 rounded-lg', index === 0 ? 'bg-[var(--color-accent-lavender)]/30 border border-[var(--color-primary)]/20' : 'hidden']} role="listitem">
                         <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[var(--color-primary)] text-white text-xs font-bold flex items-center justify-center">{index + 1}</span>
                         <span class="text-[var(--color-text)] leading-relaxed">{description}</span>
                       </div>
@@ -154,7 +154,7 @@ const hasQuestions = allQuestions.length > 0;
               </div>
               
               <!-- Back: reveal correct guesses, keep incorrect answers hidden -->
-              <div id="card-back" class="absolute inset-0 p-6 md:p-8 hidden flex-col items-center justify-center text-center cursor-pointer">
+              <div id="card-back" class="absolute inset-0 p-4 sm:p-6 md:p-8 hidden flex-col items-center justify-center text-center cursor-pointer">
                 <div class="relative w-full max-w-md">
                   <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/90 text-white font-bold text-sm shadow-lg" id="question-score">
                     +<span id="earned-score">1.0</span>
@@ -163,7 +163,7 @@ const hasQuestions = allQuestions.length > 0;
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true"></div>
                     <h3 id="revealed-name" class="absolute bottom-4 left-4 right-4 text-left text-2xl font-bold text-white drop-shadow-lg"></h3>
                   </div>
-                  <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-12">
+                  <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6 sm:p-12">
                     <p id="result-status" class="text-2xl md:text-3xl font-bold text-[var(--color-text)]">Correct</p>
                     <p class="mt-2 text-sm text-[var(--color-text-muted)]">Tap to return to the clues</p>
                   </div>
@@ -189,7 +189,7 @@ const hasQuestions = allQuestions.length > 0;
             <!-- Score Summary (shown at end) -->
             <div id="score-summary" class="hidden mt-6 card gradient-border text-center">
               <h2 class="text-2xl font-bold text-[var(--color-text)] text-[var(--color-text)] mb-4">Session Complete!</h2>
-              <div class="grid grid-cols-3 gap-4 mb-6">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                 <div class="p-4 rounded-xl bg-[var(--color-accent-lavender)]/50 bg-[var(--color-primary)]/20">
                   <div class="text-3xl font-bold gradient-text" id="final-correct">0</div>
                   <div class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Correct</div>
@@ -213,9 +213,9 @@ const hasQuestions = allQuestions.length > 0;
       </>
     ) : (
       // No questions available
-      <section class="py-16 md:py-24 px-4 md:px-6">
+      <section class="py-16 md:py-24">
         <div class="section-container max-w-md mx-auto text-center">
-          <div class="card gradient-border p-12">
+          <div class="card gradient-border !p-6 sm:!p-12">
             <div class="text-6xl mb-4" aria-hidden="true">😔</div>
             <h2 class="text-2xl font-bold text-[var(--color-text)] text-[var(--color-text)] mb-4">No Questions Available</h2>
             <p class="text-[var(--color-text-muted)] text-[var(--color-text-muted)] mb-6">
@@ -362,9 +362,9 @@ const hasQuestions = allQuestions.length > 0;
       line.setAttribute('role', 'listitem');
       line.setAttribute('aria-hidden', idx > currentLineIndex ? 'true' : 'false');
       line.innerHTML = `
-        <div class="flex items-start gap-3">
+        <div class="flex min-w-0 items-start gap-2.5 sm:gap-3">
           <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-white text-sm font-bold" aria-hidden="true">${idx + 1}</span>
-          <p class="flex-1 text-[var(--color-text)] text-[var(--color-text)] leading-relaxed">${desc}</p>
+          <p class="min-w-0 flex-1 text-[var(--color-text)] text-[var(--color-text)] leading-relaxed">${desc}</p>
         </div>
       `;
       descriptionsContainer.appendChild(line);

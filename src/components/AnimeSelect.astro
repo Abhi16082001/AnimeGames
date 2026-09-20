@@ -26,13 +26,13 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
     <section class="py-16 md:py-24 bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-red)]/50">
       <div class="section-container">
         <div class="max-w-3xl">
-          <div class="flex items-center gap-4 mb-4">
+          <div class="flex items-start gap-3 sm:items-center sm:gap-4 mb-4">
             <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-3xl" aria-hidden="true">
               {gameIcon}
             </div>
-            <div>
-              <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight gradient-text">{gameName}</h1>
-              <p class="text-lg md:text-xl text-[var(--color-text-muted)] mt-1">{gameDescription}</p>
+            <div class="min-w-0">
+              <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight gradient-text">{gameName}</h1>
+              <p class="text-base sm:text-lg md:text-xl text-[var(--color-text-muted)] mt-1">{gameDescription}</p>
             </div>
           </div>
           
@@ -94,7 +94,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
           ))}
           
           <!-- Miscellaneous Option -->
-          <article class="card group relative aspect-square overflow-hidden gradient-border">
+          <article class="card group relative aspect-square overflow-hidden gradient-border !p-5 sm:!p-8">
             <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-[var(--color-secondary)]/10 group-hover:from-[var(--color-primary)]/20 group-hover:to-[var(--color-secondary)]/20 transition-all duration-300" aria-hidden="true"></div>
             
             <div class="relative h-full flex flex-col items-center justify-center text-center p-8">

@@ -48,7 +48,7 @@ const suppliedFaqs = Astro.props.faqs as FAQ[] | undefined;
           }
         ]).map((faq, index) => (
           <div class="card group !p-0" role="listitem">
-            <dt class="flex items-center justify-between gap-4 p-3 cursor-pointer"
+            <dt class="flex items-center justify-between gap-3 p-3 cursor-pointer"
               onclick="this.parentElement.classList.toggle('open')"
               onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.parentElement.classList.toggle('open'); } }}
               tabindex="0"
@@ -56,7 +56,7 @@ const suppliedFaqs = Astro.props.faqs as FAQ[] | undefined;
               aria-expanded="false"
               aria-controls={`faq-answer-${index}`}
             >
-              <span class="font-semibold text-[var(--color-text)] text-balance flex-1 pr-4">
+              <span class="min-w-0 font-semibold text-[var(--color-text)] text-balance flex-1">
                 {faq.q}
               </span>
               <svg class="flex-shrink-0 w-5 h-5 text-[var(--color-text-muted)] transition-transform duration-300 group-data-[open=true]:rotate-180" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">

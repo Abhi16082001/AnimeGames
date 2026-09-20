@@ -20,11 +20,11 @@ import Layout from '../layouts/Layout.astro';
         <div class="space-y-12 md:space-y-16">
           <!-- What is Anime Realm -->
           <article class="card gradient-border">
-            <div class="flex gap-6 md:gap-8">
+            <div class="flex items-start gap-4 sm:gap-6 md:gap-8">
               <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-3xl" aria-hidden="true">
                 🎮
               </div>
-              <div>
+              <div class="min-w-0">
                 <h2 class="text-2xl font-bold text-[var(--color-text)] mb-4">What is Anime Realm?</h2>
                 <p class="text-[var(--color-text-muted)] leading-relaxed mb-4">
                   Anime Realm is a lightweight, browser-based anime quiz platform featuring three unique game modes. Built as a static site with Astro, it requires no database, no server, and no complex infrastructure — just pure client-side fun with localStorage persistence and Google Sheets for global leaderboards.
@@ -78,7 +78,7 @@ import Layout from '../layouts/Layout.astro';
                   <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-secondary)]/20 flex items-center justify-center text-2xl" aria-hidden="true">
                     {feature.icon}
                   </div>
-                  <div>
+                  <div class="min-w-0">
                     <h3 class="text-lg font-bold text-[var(--color-text)] mb-1">{feature.title}</h3>
                     <p class="text-[var(--color-text-muted)]">{feature.desc}</p>
                   </div>
@@ -154,11 +154,11 @@ import Layout from '../layouts/Layout.astro';
                 { status: 'planned', title: 'Player Profiles', desc: 'Detailed stats, achievement badges, and personal history pages' },
                 { status: 'planned', title: 'Multiplayer Modes', desc: 'Real-time head-to-head battles and cooperative play' }
               ].map((item) => (
-                <div class="flex gap-4 p-4 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)]">
+                <div class="flex min-w-0 gap-4 p-4 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)]">
                   <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold {item.status === 'planned' ? 'bg-[var(--color-primary)]/20 text-[var(--color-primary)]' : 'bg-green-100 bg-green-900/30 text-green-600 text-green-400'}">
                     {item.status === 'planned' ? '📋' : '✅'}
                   </div>
-                  <div>
+                  <div class="min-w-0">
                     <h3 class="font-semibold text-[var(--color-text)]">{item.title}</h3>
                     <p class="text-sm text-[var(--color-text-muted)]">{item.desc}</p>
                   </div>

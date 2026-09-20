@@ -10,17 +10,17 @@
   aria-modal="true"
   aria-labelledby="registration-title"
 >
-  <div class="relative w-full max-w-md overflow-hidden rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl">
+  <div class="relative min-w-0 w-full max-w-md overflow-hidden rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl">
     <!-- Visual Gradient Top Bar -->
     <div class="h-2 w-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]" aria-hidden="true"></div>
 
-    <div class="p-6 md:p-8">
+    <div class="p-5 sm:p-6 md:p-8">
       <!-- Icon/Header -->
       <div class="flex flex-col items-center text-center mb-6">
         <div class="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-[var(--color-accent-lavender)] to-[var(--color-accent-red)] mb-3 text-2xl" aria-hidden="true">
           🎮
         </div>
-        <h2 id="registration-title" class="text-2xl font-bold tracking-tight text-[var(--color-text)]">Welcome to Anime Realm!</h2>
+        <h2 id="registration-title" class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-text)]">Welcome to Anime Realm!</h2>
         <p class="text-sm text-[var(--color-text-muted)] mt-1">Enter your name to register and start climbing the leaderboard!</p>
       </div>
 
@@ -55,7 +55,7 @@
       </form>
 
       <!-- Security / Info Badges -->
-      <div class="mt-6 pt-5 border-t border-[var(--color-border)] flex justify-around text-[11px] font-medium text-[var(--color-text-muted)]">
+      <div class="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2 border-t border-[var(--color-border)] pt-5 text-center text-[11px] font-medium text-[var(--color-text-muted)]">
         <span class="flex items-center gap-1">⚡ Free to Play</span>
         <span class="flex items-center gap-1">🔒 No Sign Up Required</span>
         <span class="flex items-center gap-1">🏆 Global Standings</span>
