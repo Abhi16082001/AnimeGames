@@ -3,7 +3,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import gamescategory from '../../../../database/gamescategory.json';
 import animecategory from '../../../../database/animecategory.json';
-import { filterQuestionsByTrollMode, getPrimaryAnswer, selectSessionQuestions } from '../../../utils/gameSession';
+import { filterQuestionsByTrollMode, selectSessionQuestions } from '../../../utils/gameSession';
 import { getAnimeProgress, getMiscProgress } from '../../../utils/api';
 
 export async function getStaticPaths() {
@@ -96,7 +96,7 @@ const hasQuestions = allQuestions.length > 0;
     {hasQuestions ? (
       <>
         <!-- Game Area -->
-        <section class="py-8 md:py-12 px-4 md:px-6" aria-label="Game Area">
+        <section class="py-5 md:py-8 px-4 md:px-6" aria-label="Game Area">
           <div class="section-container max-w-3xl">
             <!-- Question Card -->
             <article id="question-card" class="card relative overflow-hidden" data-question-index="0" role="region" aria-label="Question 1 of {totalQuestions}">
@@ -107,7 +107,7 @@ const hasQuestions = allQuestions.length > 0;
               </div>
               
               <!-- Zoomed Image View -->
-              <div id="zoomed-view" class="relative aspect-square rounded-xl overflow-hidden bg-[var(--color-bg)] bg-[var(--color-border)] mb-6" style="background-image: url('{sessionQuestions[0].image}'); background-size: cover; background-position: center;">
+              <div id="zoomed-view" class="relative mx-auto w-full max-w-2xl aspect-[4/3] max-h-[42vh] lg:max-w-[22rem] lg:aspect-square lg:max-h-none rounded-xl overflow-hidden bg-[var(--color-bg)] bg-[var(--color-border)] mb-4" style="background-image: url('{sessionQuestions[0].image}'); background-size: cover; background-position: center;">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" aria-hidden="true"></div>
                 <div class="absolute bottom-4 left-4 right-4 flex flex-col gap-2">
                   <p class="text-white/90 text-sm font-medium text-center">Who is this character?</p>
@@ -115,7 +115,7 @@ const hasQuestions = allQuestions.length > 0;
               </div>
               
               <!-- Answer Input -->
-              <div class="space-y-4 mb-6">
+              <div class="space-y-3 mb-4">
                 <label for="answer-input" class="block text-sm font-semibold text-[var(--color-text)] text-[var(--color-text)]">
                   Your Answer
                 </label>
@@ -146,13 +146,11 @@ const hasQuestions = allQuestions.length > 0;
               
               <!-- Result View (shown after answer) -->
               <div id="result-view" class="hidden">
-                <div class="relative aspect-square rounded-xl overflow-hidden bg-[var(--color-bg)] bg-[var(--color-border)] mb-4" style="background-image: url('{sessionQuestions[0].image}'); background-size: cover; background-position: center;" id="full-image">
+                <div class="relative aspect-square rounded-xl overflow-hidden bg-[var(--color-bg)] bg-[var(--color-border)] mb-4 hidden" style="background-image: url('{sessionQuestions[0].image}'); background-size: cover; background-position: center;" id="full-image">
                   <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" aria-hidden="true"></div>
-                  <div class="absolute bottom-4 left-4 right-4">
-                    <h3 class="text-2xl font-bold text-white drop-shadow-lg" id="revealed-name">{getPrimaryAnswer(sessionQuestions[0].answer)}</h3>
-                    <p class="text-white/80 text-sm" id="result-message"></p>
-                  </div>
+                  <p id="correct-name" class="absolute bottom-4 left-4 rounded-lg bg-black/60 px-3 py-2 text-lg font-bold text-white shadow-lg backdrop-blur-sm"></p>
                 </div>
+                <p id="result-message" class="mb-4 text-center text-sm font-semibold" aria-live="polite"></p>
                 <div class="flex justify-center gap-4">
                   <button
                     id="next-question-btn"
@@ -246,11 +244,11 @@ const hasQuestions = allQuestions.length > 0;
   const sessionQuestionCount = document.getElementById('session-question-count');
   const sessionQuestionPlural = document.getElementById('session-question-plural');
   const currentQNum = document.getElementById('current-q-num');
-  const revealedName = document.getElementById('revealed-name');
   const resultMessage = document.getElementById('result-message');
   const nextQuestionBtn = document.getElementById('next-question-btn');
   const resultView = document.getElementById('result-view');
   const fullImage = document.getElementById('full-image');
+  const correctName = document.getElementById('correct-name');
   const scoreSummary = document.getElementById('score-summary');
   const finalCorrect = document.getElementById('final-correct');
   const finalWrong = document.getElementById('final-wrong');
@@ -358,6 +356,7 @@ const hasQuestions = allQuestions.length > 0;
     
     // Hide result view, show zoomed view
     resultView?.classList.add('hidden');
+    fullImage?.classList.add('hidden');
     zoomedView?.classList.remove('hidden');
     
     // Apply zoom for this question
@@ -367,11 +366,10 @@ const hasQuestions = allQuestions.length > 0;
       zoomedView.style.backgroundImage = `url('${q.image}')`;
     }
     
-    // Update revealed name for result view
-    if (revealedName) revealedName.textContent = getPrimaryAnswer(q.answer);
     if (fullImage && q.image) {
       fullImage.style.backgroundImage = `url('${q.image}')`;
     }
+    if (correctName) correctName.textContent = getPrimaryAnswer(q.answer);
   }
 
   function submitAnswer() {
@@ -387,8 +385,6 @@ const hasQuestions = allQuestions.length > 0;
     answerInput.disabled = true;
     submitBtn.disabled = true;
     
-    // Always zoom out to reveal full image
-    zoomOut();
     
     if (isCorrect) {
       // Correct answer
@@ -396,25 +392,30 @@ const hasQuestions = allQuestions.length > 0;
       scores.push(1.0);
       playedQuestionIds.push(question.id);
       
-      showFeedback('Correct! 🎉', 'success');
-      resultMessage.textContent = 'Correct!';
-      resultMessage.className = 'text-white/80 text-sm text-green-300';
+      showFeedback(`Amazing! Your guess “${answer}” is right — 1 point!`, 'success');
+      resultMessage.textContent = 'Correct · 1 point';
+      resultMessage.className = 'mb-4 text-center text-sm font-semibold text-green-300';
+      zoomOut();
+      fullImage?.classList.remove('hidden');
+
+      // Only correct answers reveal the full image after zooming out.
+      setTimeout(() => {
+        zoomedView?.classList.add('hidden');
+        resultView?.classList.remove('hidden');
+      }, 1000);
     } else {
       // Wrong answer
       wrongCount++;
       scores.push(0);
       playedQuestionIds.push(question.id);
       
-      showFeedback(`Wrong! The answer was: ${getPrimaryAnswer(question.answer)}`, 'error');
-      resultMessage.textContent = `Wrong! The answer was: ${getPrimaryAnswer(question.answer)}`;
-      resultMessage.className = 'text-white/80 text-sm text-red-300';
+      showFeedback('Wrong! Score: 0 points.', 'error');
+      resultMessage.textContent = 'Wrong · 0 points';
+      resultMessage.className = 'mb-4 text-center text-sm font-semibold text-red-300';
+      // Incorrect answers keep the existing zoomed-in image visible.
+      resultView?.classList.remove('hidden');
     }
     
-    // Show result view after zoom animation
-    setTimeout(() => {
-      zoomedView?.classList.add('hidden');
-      resultView?.classList.remove('hidden');
-    }, 1000);
   }
 
   function nextQuestion() {

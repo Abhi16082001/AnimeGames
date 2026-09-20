@@ -96,18 +96,19 @@ const hasQuestions = allQuestions.length > 0;
     {hasQuestions ? (
       <>
         <!-- Game Area -->
-        <section class="py-8 md:py-12 px-4 md:px-6" aria-label="Game Area">
-          <div class="section-container max-w-3xl">
+        <section class="py-6 md:py-8 px-4 md:px-6" aria-label="Game Area">
+          <div class="section-container max-w-6xl">
             <!-- Question Card -->
-            <article id="question-card" class="card relative overflow-hidden" data-question-index="0" role="region" aria-label="Question 1 of {totalQuestions}">
+            <article id="question-card" class="card relative overflow-hidden p-3 sm:p-6 md:p-8" data-question-index="0" role="region" aria-label="Question 1 of {totalQuestions}">
               <div class="absolute top-4 right-4 flex gap-2" aria-hidden="true">
                 <span class="px-3 py-1 text-xs font-semibold rounded-full bg-[var(--color-accent-lavender)] bg-[var(--color-primary)]/20 text-[var(--color-primary)] text-[var(--color-accent-lavender)]">
                   Q<span id="current-q-num">1</span>
                 </span>
               </div>
               
-              <!-- Transparent Image with Color Background -->
-              <div class="relative mb-6">
+              <div class="grid gap-3 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.8fr)] lg:items-center">
+                <!-- Transparent Image with Color Background -->
+                <div class="relative mx-auto w-full max-w-52 sm:max-w-72 lg:max-w-none">
                 <div 
                   id="color-display" 
                   class="relative aspect-square rounded-xl overflow-hidden bg-[var(--color-bg)] bg-[var(--color-border)]"
@@ -125,26 +126,35 @@ const hasQuestions = allQuestions.length > 0;
                     class="absolute inset-0 w-full h-full object-cover opacity-90"
                     aria-hidden="true"
                   />
-                  <!-- Color indicator -->
-                  <div class="absolute bottom-4 left-4 right-4">
-                    <div class="flex items-center justify-center gap-3">
-                      <div id="current-color-swatch" class="w-10 h-10 rounded-full border-2 border-white/50 shadow-lg" style="background-color: hsl(0, 100%, 50%);" aria-hidden="true"></div>
-                      <span id="current-color-value" class="text-white/90 text-sm font-mono font-semibold px-3 py-1 rounded bg-black/50">HSL(0, 100%, 50%)</span>
-                    </div>
+                  <!-- Correct reference, shown over the player's selected-colour image after submission -->
+                  <div id="correct-overlay" class="hidden pointer-events-none absolute inset-0">
+                    <img
+                      id="correct-image"
+                      src="{sessionQuestions[0].correctImage || sessionQuestions[0].image}"
+                      width="600"
+                      height="600"
+                      alt="Correct color reference"
+                      class="absolute inset-0 w-full h-full object-cover"
+                    />
                   </div>
                 </div>
-              </div>
-              
-              <!-- Color Controls -->
-              <div class="space-y-6 mb-6" role="group" aria-label="Color controls">
+                <!-- Live color value, kept outside the question image for clarity -->
+                <div class="mt-2 flex items-center justify-center gap-2 text-sm font-mono text-[var(--color-text-muted)]" aria-live="polite">
+                  <div id="current-color-swatch" class="h-6 w-6 rounded-full border border-white/50 shadow-sm" style="background-color: hsl(0, 100%, 50%);" aria-hidden="true"></div>
+                  <span id="current-color-value">HSL(0, 100%, 50%)</span>
+                </div>
+                </div>
+
+                <!-- Color Controls -->
+                <div class="space-y-3 sm:space-y-5" role="group" aria-label="Color controls">
                 <!-- Hue Picker (Circular) -->
                 <div>
-                  <label for="hue-picker" class="block text-sm font-semibold text-[var(--color-text)] text-[var(--color-text)] mb-3 flex items-center gap-2">
+                  <label for="hue-picker" class="block text-sm font-semibold text-[var(--color-text)] text-[var(--color-text)] mb-2 sm:mb-3 flex items-center gap-2">
                     <span class="w-4 h-4 rounded-full" style="background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);" aria-hidden="true"></span>
                     Hue
                     <span id="hue-value" class="text-sm font-mono text-[var(--color-text-muted)] text-[var(--color-text-muted)]">0°</span>
                   </label>
-                  <div id="hue-wheel" class="relative mx-auto h-48 w-48 touch-none rounded-full p-7" role="slider" tabindex="0" aria-label="Hue picker" aria-valuemin="0" aria-valuemax="360" aria-valuenow="0" style="background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);">
+                  <div id="hue-wheel" class="relative mx-auto h-28 w-28 touch-none rounded-full p-4 sm:h-40 sm:w-40 sm:p-6 lg:h-48 lg:w-48 lg:p-7" role="slider" tabindex="0" aria-label="Hue picker" aria-valuemin="0" aria-valuemax="360" aria-valuenow="0" style="background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);">
                     <div class="h-full w-full rounded-full bg-[var(--color-surface)]" aria-hidden="true"></div>
                     <input
                       type="range"
@@ -159,110 +169,81 @@ const hasQuestions = allQuestions.length > 0;
                       aria-valuemax="360"
                       aria-valuenow="0"
                     />
-                    <div id="hue-thumb" class="absolute left-1/2 top-[8%] h-4 w-4 rounded-full border-2 border-[var(--color-primary)] bg-white shadow-lg pointer-events-none" aria-hidden="true"></div>
+                    <div id="hue-thumb" class="absolute left-1/2 top-[8%] h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--color-primary)] bg-white shadow-lg pointer-events-none" aria-hidden="true"></div>
                   </div>
                 </div>
                 
                 <!-- Saturation Slider -->
                 <div>
-                  <label for="saturation-slider" class="block text-sm font-semibold text-[var(--color-text)] text-[var(--color-text)] mb-3 flex items-center gap-2">
+                  <label for="saturation-slider" class="block text-sm font-semibold text-[var(--color-text)] text-[var(--color-text)] mb-2 sm:mb-3 flex items-center gap-2">
                     <span class="w-4 h-4 rounded" style="background: linear-gradient(90deg, hsl(0, 0%, 50%), hsl(0, 100%, 50%));" aria-hidden="true"></span>
                     Saturation
                     <span id="saturation-value" class="text-sm font-mono text-[var(--color-text-muted)] text-[var(--color-text-muted)]">100%</span>
                   </label>
-                  <div class="relative flex h-6 items-center">
+                  <div class="relative flex h-7 items-center">
                     <input
                       type="range"
                       id="saturation-slider"
                       min="0"
                       max="100"
                       value="100"
-                      class="relative z-10 h-6 w-full cursor-pointer appearance-none bg-transparent"
+                      class="absolute inset-0 z-10 h-7 cursor-pointer appearance-none bg-transparent"
                       aria-label="Saturation slider"
                       aria-valuemin="0"
                       aria-valuemax="100"
                       aria-valuenow="100"
                     />
-                    <div id="saturation-track" class="pointer-events-none absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full" style="background: linear-gradient(90deg, hsl(0, 0%, 50%), hsl(0, 100%, 50%));" aria-hidden="true"></div>
-                    <div id="saturation-thumb" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-[var(--color-secondary)] shadow-lg pointer-events-none transition-transform duration-100" style="left: 100%; transform: translate(-50%, -50%);" aria-hidden="true"></div>
+                    <div id="saturation-track" class="pointer-events-none absolute inset-x-2 top-1/2 h-2 -translate-y-1/2 rounded-full" style="background: linear-gradient(90deg, hsl(0, 0%, 50%), hsl(0, 100%, 50%));" aria-hidden="true"></div>
+                    <div id="saturation-thumb" class="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--color-secondary)] bg-white shadow-lg pointer-events-none" style="left: calc(100% - 0.5rem);" aria-hidden="true"></div>
                   </div>
                 </div>
                 
                 <!-- Brightness Slider -->
                 <div>
-                  <label for="brightness-slider" class="block text-sm font-semibold text-[var(--color-text)] text-[var(--color-text)] mb-3 flex items-center gap-2">
+                  <label for="brightness-slider" class="block text-sm font-semibold text-[var(--color-text)] text-[var(--color-text)] mb-2 sm:mb-3 flex items-center gap-2">
                     <span class="w-4 h-4 rounded" style="background: linear-gradient(90deg, black, white);" aria-hidden="true"></span>
                     Brightness
                     <span id="brightness-value" class="text-sm font-mono text-[var(--color-text-muted)] text-[var(--color-text-muted)]">50%</span>
                   </label>
-                  <div class="relative flex h-6 items-center">
+                  <div class="relative flex h-7 items-center">
                     <input
                       type="range"
                       id="brightness-slider"
                       min="0"
                       max="100"
                       value="50"
-                      class="relative z-10 h-6 w-full cursor-pointer appearance-none bg-transparent"
+                      class="absolute inset-0 z-10 h-7 cursor-pointer appearance-none bg-transparent"
                       aria-label="Brightness slider"
                       aria-valuemin="0"
                       aria-valuemax="100"
                       aria-valuenow="50"
                     />
-                    <div class="pointer-events-none absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full bg-gradient-to-r from-black to-white" aria-hidden="true"></div>
-                    <div id="brightness-thumb" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-[var(--color-primary)] shadow-lg pointer-events-none transition-transform duration-100" style="left: 50%; transform: translate(-50%, -50%);" aria-hidden="true"></div>
+                    <div class="pointer-events-none absolute inset-x-2 top-1/2 h-2 -translate-y-1/2 rounded-full bg-gradient-to-r from-black to-white" aria-hidden="true"></div>
+                    <div id="brightness-thumb" class="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--color-primary)] bg-white shadow-lg pointer-events-none" style="left: 50%;" aria-hidden="true"></div>
                   </div>
                 </div>
-              </div>
-              
-              <!-- Submit Button -->
-              <div class="mb-6">
-                <button
-                  type="button"
-                  id="submit-answer"
-                  class="btn-primary w-full"
-                  aria-label="Submit color match"
-                >
-                  Submit Match
-                </button>
+                  <!-- Submit Button -->
+                  <div class="pt-1">
+                    <button
+                      type="button"
+                      id="submit-answer"
+                      class="btn-primary w-full px-6 py-2"
+                      aria-label="Submit color match"
+                    >
+                      Submit Match
+                    </button>
+                  </div>
+                </div>
               </div>
               
               <!-- Feedback -->
-              <div id="feedback" class="hidden mb-4 p-4 rounded-lg" role="alert" aria-live="polite"></div>
+              <div id="feedback" class="hidden mt-4 mb-4 p-4 rounded-lg" role="alert" aria-live="polite"></div>
               
               <!-- Result View (shown after answer) -->
               <div id="result-view" class="hidden">
-                <div class="relative aspect-square rounded-xl overflow-hidden bg-[var(--color-bg)] bg-[var(--color-border)] mb-4">
-                  <!-- Player's result -->
-                  <div id="player-result" class="absolute inset-0" style="background-color: hsl(0, 100%, 50%);">
-                    <img 
-                      src="{sessionQuestions[0].image}" 
-                      width="600"
-                      height="600"
-                      alt="" 
-                      class="absolute inset-0 w-full h-full object-cover opacity-90"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <!-- Correct image overlay -->
-                  <div id="correct-overlay" class="absolute inset-0">
-                    <img 
-                      id="correct-image" 
-                      src="{sessionQuestions[0].correctImage || sessionQuestions[0].image}" 
-                      width="600"
-                      height="600"
-                      alt="Correct color reference" 
-                      class="absolute inset-0 w-full h-full object-cover"
-                    />
-                  </div>
-                  <div class="absolute bottom-4 left-4 right-4">
-                    <h3 class="text-2xl font-bold text-white drop-shadow-lg" id="revealed-name">{getPrimaryAnswer(sessionQuestions[0].answer)}</h3>
-                    <p class="text-white/80 text-sm" id="match-percentage">Match: 0%</p>
-                  </div>
-                </div>
-                
                 <!-- Comparison instruction -->
                 <p class="text-center text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)] mb-4">
-                  Hold / hover on the image to compare with correct answer
+                  Hold or hover over the image above to reveal your selected colour for comparison.
                 </p>
                 
                 <div class="flex justify-center gap-4">
@@ -382,7 +363,6 @@ const hasQuestions = allQuestions.length > 0;
   const matchPercentage = document.getElementById('match-percentage');
   const nextQuestionBtn = document.getElementById('next-question-btn');
   const resultView = document.getElementById('result-view');
-  const playerResult = document.getElementById('player-result');
   const correctOverlay = document.getElementById('correct-overlay');
   const correctImage = document.getElementById('correct-image');
   const scoreSummary = document.getElementById('score-summary');
@@ -517,7 +497,6 @@ const hasQuestions = allQuestions.length > 0;
     if (colorDisplay) colorDisplay.style.backgroundColor = hslColor;
     if (currentColorSwatch) currentColorSwatch.style.backgroundColor = hslColor;
     if (currentColorValue) currentColorValue.textContent = `HSL(${currentHue}, ${currentSaturation}%, ${currentBrightness}%)`;
-    if (playerResult) playerResult.style.backgroundColor = hslColor;
     
     // Update saturation track gradient
     updateSaturationTrack();
@@ -539,27 +518,29 @@ const hasQuestions = allQuestions.length > 0;
   }
 
   function updateHueThumb() {
-    if (hueThumb) {
+    if (hueThumb && hueWheel) {
       const angle = (currentHue - 90) * Math.PI / 180;
-      const radius = 42;
-      hueThumb.style.left = `${50 + Math.cos(angle) * radius}%`;
-      hueThumb.style.top = `${50 + Math.sin(angle) * radius}%`;
+      const wheelSize = hueWheel.clientWidth;
+      const ringRadius = wheelSize / 2 - (wheelSize >= 192 ? 14 : wheelSize >= 160 ? 12 : 8);
+      hueThumb.style.left = `${wheelSize / 2 + Math.cos(angle) * ringRadius}px`;
+      hueThumb.style.top = `${wheelSize / 2 + Math.sin(angle) * ringRadius}px`;
     }
     hueWheel?.setAttribute('aria-valuenow', String(currentHue));
   }
 
   function updateSaturationThumb() {
-    if (saturationThumb) {
-      const percent = currentSaturation;
-      saturationThumb.style.left = `${percent}%`;
-    }
+    setLinearThumbPosition(saturationThumb, currentSaturation);
   }
 
   function updateBrightnessThumb() {
-    if (brightnessThumb) {
-      const percent = currentBrightness;
-      brightnessThumb.style.left = `${percent}%`;
-    }
+    setLinearThumbPosition(brightnessThumb, currentBrightness);
+  }
+
+  function setLinearThumbPosition(thumb: HTMLElement | null, value: number) {
+    if (!thumb?.parentElement) return;
+    const inset = 8;
+    const trackWidth = Math.max(0, thumb.parentElement.clientWidth - inset * 2);
+    thumb.style.left = `${inset + (value / 100) * trackWidth}px`;
   }
 
   function updateSaturationTrack() {
@@ -568,23 +549,33 @@ const hasQuestions = allQuestions.length > 0;
     }
   }
 
+  window.addEventListener('resize', updateColorDisplay);
+
   function setupComparison() {
     if (comparisonReady) return;
-    const resultImageContainer = document.querySelector('#result-view .relative.aspect-square');
-    if (!resultImageContainer) return;
+    if (!colorDisplay) return;
     comparisonReady = true;
     
     // Mouse events
-    resultImageContainer.addEventListener('mouseenter', () => hideCorrectImage());
-    resultImageContainer.addEventListener('mouseleave', () => showCorrectImage());
+    colorDisplay.addEventListener('mouseenter', () => {
+      if (answerSubmitted) hideCorrectImage();
+    });
+    colorDisplay.addEventListener('mouseleave', () => {
+      if (answerSubmitted) showCorrectImage();
+    });
     
     // Touch events
-    resultImageContainer.addEventListener('touchstart', (e) => {
+    colorDisplay.addEventListener('touchstart', (e) => {
+      if (!answerSubmitted) return;
       e.preventDefault();
-       hideCorrectImage();
-     }, { passive: false });
-     resultImageContainer.addEventListener('touchend', () => showCorrectImage());
-     resultImageContainer.addEventListener('touchcancel', () => showCorrectImage());
+      hideCorrectImage();
+    }, { passive: false });
+    colorDisplay.addEventListener('touchend', () => {
+      if (answerSubmitted) showCorrectImage();
+    });
+    colorDisplay.addEventListener('touchcancel', () => {
+      if (answerSubmitted) showCorrectImage();
+    });
   }
 
   function showCorrectImage() {
@@ -665,14 +656,12 @@ const hasQuestions = allQuestions.length > 0;
     
     if (matchPct >= 90) {
       correctCount++;
-      showFeedback(`Excellent match! ${matchPct}%`, 'success');
     } else if (matchPct >= 50) {
       correctCount++; // Count as correct for scoring purposes
-      showFeedback(`Good match! ${matchPct}%`, 'success');
     } else {
       wrongCount++;
-      showFeedback(`Match: ${matchPct}%`, 'error');
     }
+    showFeedback(getMatchFeedback(matchPct), matchPct >= 50 ? 'success' : 'error');
     
     // Show result view
     if (matchPercentage) matchPercentage.textContent = `Match: ${matchPct}%`;
@@ -695,6 +684,22 @@ const hasQuestions = allQuestions.length > 0;
     // Weighted average: hue 50%, saturation 25%, brightness 25%
     const totalScore = (hueScore * 0.5) + (satScore * 0.25) + (briScore * 0.25);
     return Math.round(Math.max(0, Math.min(100, totalScore * 100)));
+  }
+
+  function getMatchFeedback(matchPct: number): string {
+    if (matchPct < 25) {
+      return `${matchPct}% match — Oof! Are you kidding ! Keep trying! 😅`;
+    }
+    if (matchPct < 50) {
+      return `${matchPct}% match — You are warming up! 💪.`;
+    }
+    if (matchPct < 80) {
+      return `${matchPct}% match — Nice instinct! You are officially in the right color path 🛣️.`;
+    }
+    if (matchPct < 90) {
+      return `${matchPct}% match — You were this 🤏 close to being Perfect !.`;
+    }
+    return `${matchPct}% match — Color wizardry 👌! That was an impressively sharp match 💯.`;
   }
 
   function hexToHue(hex: string): number {
@@ -764,7 +769,7 @@ const hasQuestions = allQuestions.length > 0;
 
   function showFeedback(message: string, type: 'success' | 'error') {
     feedback.textContent = message;
-    feedback.className = `mb-4 p-4 rounded-lg ${type === 'success' 
+    feedback.className = `mt-4 mb-4 p-4 rounded-lg ${type === 'success'
       ? 'bg-green-100 bg-green-900/30 text-green-800 text-green-300 border border-green-300 border-green-700' 
       : 'bg-red-100 bg-red-900/30 text-red-800 text-red-300 border border-red-300 border-red-700'}`;
     feedback.classList.remove('hidden');
@@ -782,17 +787,33 @@ const hasQuestions = allQuestions.length > 0;
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 0;
-    height: 0;
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+    cursor: grab;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 8px;
+    background: transparent;
   }
   
   input[type="range"]::-moz-range-thumb {
-    width: 0;
-    height: 0;
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+    cursor: grab;
+  }
+
+  input[type="range"]::-moz-range-track {
+    height: 8px;
+    background: transparent;
   }
   
   input[type="range"]:focus-visible {
-    outline: none;
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 9999px;
   }
   
   input[type="range"]:focus-visible + .absolute .w-4.h-4,

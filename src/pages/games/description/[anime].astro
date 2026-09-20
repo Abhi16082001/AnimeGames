@@ -3,7 +3,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import gamescategory from '../../../../database/gamescategory.json';
 import animecategory from '../../../../database/animecategory.json';
-import { filterQuestionsByTrollMode, getPrimaryAnswer, selectSessionQuestions } from '../../../utils/gameSession';
+import { filterQuestionsByTrollMode, selectSessionQuestions } from '../../../utils/gameSession';
 import { getAnimeProgress, getMiscProgress } from '../../../utils/api';
 
 export async function getStaticPaths() {
@@ -153,17 +153,20 @@ const hasQuestions = allQuestions.length > 0;
                 <div id="feedback" class="hidden mt-4 p-4 rounded-lg" role="alert" aria-live="polite"></div>
               </div>
               
-              <!-- Back: Character Reveal -->
+              <!-- Back: reveal correct guesses, keep incorrect answers hidden -->
               <div id="card-back" class="absolute inset-0 p-6 md:p-8 hidden flex-col items-center justify-center text-center cursor-pointer">
                 <div class="relative w-full max-w-md">
-                  <div id="reveal-image" class="aspect-square rounded-xl overflow-hidden bg-[var(--color-bg)] bg-[var(--color-border)] mb-6 relative" style={`background-image: url('${sessionQuestions[0].image}'); background-size: cover; background-position: center;`}>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true"></div>
-                  </div>
                   <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/90 text-white font-bold text-sm shadow-lg" id="question-score">
                     +<span id="earned-score">1.0</span>
                   </div>
-                  <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg mb-2" id="revealed-name">{getPrimaryAnswer(sessionQuestions[0].answer)}</h3>
-                  <p class="text-white/80 text-sm mb-6">Tap the image to flip back</p>
+                  <div id="reveal-image" class="relative hidden aspect-square overflow-hidden rounded-xl bg-[var(--color-bg)] bg-[var(--color-border)]" style={`background-image: url('${sessionQuestions[0].image}'); background-size: cover; background-position: center;`}>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true"></div>
+                    <h3 id="revealed-name" class="absolute bottom-4 left-4 right-4 text-left text-2xl font-bold text-white drop-shadow-lg"></h3>
+                  </div>
+                  <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-12">
+                    <p id="result-status" class="text-2xl md:text-3xl font-bold text-[var(--color-text)]">Correct</p>
+                    <p class="mt-2 text-sm text-[var(--color-text-muted)]">Tap to return to the clues</p>
+                  </div>
                   <div class="flex justify-center gap-4">
                     <button
                       id="next-question-btn"
@@ -262,8 +265,9 @@ const hasQuestions = allQuestions.length > 0;
   const sessionQuestionCount = document.getElementById('session-question-count');
   const sessionQuestionPlural = document.getElementById('session-question-plural');
   const currentQNum = document.getElementById('current-q-num');
-  const revealedName = document.getElementById('revealed-name');
+  const resultStatus = document.getElementById('result-status');
   const revealImage = document.getElementById('reveal-image');
+  const revealedName = document.getElementById('revealed-name');
   const earnedScore = document.getElementById('earned-score');
   const questionScore = document.getElementById('question-score');
   const nextQuestionBtn = document.getElementById('next-question-btn');
@@ -386,11 +390,9 @@ const hasQuestions = allQuestions.length > 0;
     feedback.textContent = '';
     feedback.className = 'hidden mt-4 p-4 rounded-lg';
 
-    // Update revealed name and image
-    if (revealedName) revealedName.textContent = getPrimaryAnswer(q.answer);
-    if (revealImage && q.image) {
-      revealImage.style.backgroundImage = `url('${q.image}')`;
-    }
+    resultStatus.textContent = 'Correct';
+    resultStatus.className = 'text-2xl md:text-3xl font-bold text-green-300';
+    revealImage?.classList.add('hidden');
 
     // Reset flipped state and visibility
     questionAnswered = false;
@@ -423,6 +425,13 @@ const hasQuestions = allQuestions.length > 0;
       if (questionScore) {
         questionScore.className = 'absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/90 text-white font-bold text-sm shadow-lg';
       }
+      resultStatus.textContent = 'Correct';
+      resultStatus.className = 'text-2xl md:text-3xl font-bold text-green-300';
+      if (revealImage && question.image) {
+        revealImage.style.backgroundImage = `url('${question.image}')`;
+        revealImage.classList.remove('hidden');
+      }
+      if (revealedName) revealedName.textContent = getPrimaryAnswer(question.answer);
 
       // Disable input after correct answer
       answerInput.disabled = true;
@@ -445,7 +454,7 @@ const hasQuestions = allQuestions.length > 0;
         playedQuestionIds.push(question.id);
         questionAnswered = true;
 
-        showFeedback(`Wrong! The answer was: ${getPrimaryAnswer(question.answer)}`, 'error');
+        showFeedback('Wrong! Score: 0 points.', 'error');
         revealAllLines();
 
         // Update score display on card back (0 points)
@@ -453,6 +462,9 @@ const hasQuestions = allQuestions.length > 0;
         if (questionScore) {
           questionScore.className = 'absolute top-4 right-4 px-3 py-1 rounded-full bg-red-500/90 text-white font-bold text-sm shadow-lg';
         }
+        resultStatus.textContent = 'Wrong';
+        resultStatus.className = 'text-2xl md:text-3xl font-bold text-red-300';
+        revealImage?.classList.add('hidden');
 
         // Disable input
         answerInput.disabled = true;
