@@ -7,4 +7,5 @@ export const navItems = [
   { name: "Browse Games", path: "/games" },
   { name: "Leaderboard", path: "/leaderboard" },
   { name: "Contact", path: "/contact" },
+  { name: "About", path: "/about" },
 ];
