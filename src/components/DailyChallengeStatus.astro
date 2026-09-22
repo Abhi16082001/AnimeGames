@@ -1,0 +1,19 @@
+---
+---
+
+<div id="daily-notice" class="hidden break-words bg-[#fa8072] px-4 py-3 text-center font-semibold text-[#7f0000]" role="status"></div>
+
+<script>
+  import { getDailyChallengeInfo } from '../utils/api';
+
+  const info = await getDailyChallengeInfo();
+  if (info) {
+    (window as Window & { dailyChallengeInfo?: typeof info }).dailyChallengeInfo = info;
+    window.dispatchEvent(new CustomEvent('dailyChallengeInfo', { detail: info }));
+    const notice = document.getElementById('daily-notice');
+    if (notice && typeof info.notice === 'string' && info.notice !== 'false') {
+      notice.textContent = info.notice;
+      notice.classList.remove('hidden');
+    }
+  }
+</script>

@@ -14,21 +14,23 @@ export async function getStaticPaths() {
     }
   }
   paths.push({ params: { anime: 'miscellaneous' } });
+  paths.push({ params: { anime: 'daily' } });
   return paths;
 }
 
 const { anime } = Astro.params;
 const gameId = 'description';
+const isDailyChallenge = anime === 'daily';
 const isMiscellaneous = anime === 'miscellaneous';
 const isMiscellaneousStr = isMiscellaneous ? 'true' : 'false';
 
 const gameConfig = gamescategory.find(g => g.id === gameId);
 const questionLimit = gameConfig?.questionLimit ?? 0;
 
-let animeName = 'Miscellaneous';
+let animeName = isDailyChallenge ? 'Surprise Daily Challenge' : 'Miscellaneous';
 let animeBg = 'linear-gradient(135deg, #7C3AED 0%, #EF4444 100%)';
 
-if (!isMiscellaneous) {
+if (!isMiscellaneous && !isDailyChallenge) {
   const animeData = animecategory.find(a => a.id === anime);
   if (animeData) {
     animeName = animeData.name;
@@ -38,8 +40,11 @@ if (!isMiscellaneous) {
 
 // Load the documented static data source at build time.
 let allQuestions: any[] = [];
+const dailyQuestion = import.meta.glob('../../../../database/description/dailyquestion.json', { eager: true, import: 'default' });
 const questionFiles = import.meta.glob('../../../../database/description/*/question.json', { eager: true, import: 'default' });
-if (isMiscellaneous) {
+if (isDailyChallenge) {
+  allQuestions = Object.values(dailyQuestion).flatMap((question) => Array.isArray(question) ? question : [question]) as any[];
+} else if (isMiscellaneous) {
   allQuestions = Object.entries(questionFiles).flatMap(([path, questions]) => {
     const animeId = path.split('/').at(-2) || '';
     return (questions as any[]).map((question) => ({ ...question, _animeId: animeId }));
@@ -49,8 +54,8 @@ if (isMiscellaneous) {
   if (questionFile) allQuestions = questionFile as any[];
 }
 
-const filteredQuestions = filterQuestionsByTrollMode(allQuestions, false);
-const selectedSessionQuestions = selectSessionQuestions(
+const filteredQuestions = isDailyChallenge ? allQuestions : filterQuestionsByTrollMode(allQuestions, false);
+const selectedSessionQuestions = isDailyChallenge ? allQuestions : selectSessionQuestions(
   filteredQuestions,
   gameId,
   anime,
@@ -62,7 +67,7 @@ const selectedSessionQuestions = selectSessionQuestions(
 
 // The browser reselects this pool using the saved Troll Mode/progress state.
 // Keep a renderable fallback for a pool containing only troll questions.
-const sessionQuestions = selectedSessionQuestions.length
+const sessionQuestions = isDailyChallenge ? allQuestions : selectedSessionQuestions.length
   ? selectedSessionQuestions
   : allQuestions.slice(0, questionLimit);
 const totalQuestions = sessionQuestions.length;
@@ -170,7 +175,7 @@ const hasQuestions = allQuestions.length > 0;
                   <div class="mt-4 flex justify-center gap-4">
                     <button
                       id="next-question-btn"
-                      class="btn-primary hidden"
+                      class:list={['btn-primary hidden', isDailyChallenge && 'hidden']}
                       aria-label="Next question"
                     >
                       Next Question
@@ -205,7 +210,7 @@ const hasQuestions = allQuestions.length > 0;
               </div>
               <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href={`/games/description/${anime}`} class="btn-secondary">Play Again</a>
-                <a href="/leaderboard" class="btn-primary">View Leaderboard</a>
+                <a href={isDailyChallenge ? '/leaderboard?category=Daily' : '/leaderboard'} class="btn-primary">{isDailyChallenge ? 'View Daily Leaderboard' : 'View Leaderboard'}</a>
               </div>
             </div>
           </div>
@@ -231,15 +236,16 @@ const hasQuestions = allQuestions.length > 0;
   </main>
 </Layout>
 
-<script id="game-session-data" type="application/json" set:html={JSON.stringify({ initialQuestions: sessionQuestions, allQuestions, questionLimit, isMiscellaneous: isMiscellaneousStr, gameId, animeId: anime })}></script>
+<script id="game-session-data" type="application/json" set:html={JSON.stringify({ initialQuestions: sessionQuestions, allQuestions, questionLimit, isMiscellaneous: isMiscellaneousStr, isDailyChallenge, gameId, animeId: anime })}></script>
 
 <script>
   import { getClientSessionQuestions, loadCurrentClientQuestions, saveClientSession } from '../../../utils/gameClient';
+  import { submitDailyScoreOnce } from '../../../utils/api';
   import { getPrimaryAnswer, isAnswerInList } from '../../../utils/gameSession';
 
   const sessionData = document.getElementById('game-session-data')?.textContent;
   if (!sessionData) throw new Error('Missing game session data');
-  const { initialQuestions, allQuestions, questionLimit, isMiscellaneous, gameId, animeId } = JSON.parse(sessionData);
+  const { initialQuestions, allQuestions, questionLimit, isMiscellaneous, isDailyChallenge, gameId, animeId } = JSON.parse(sessionData);
 
   // Game state
   let sessionQuestions = initialQuestions;
@@ -278,6 +284,7 @@ const hasQuestions = allQuestions.length > 0;
   const runtimeNoQuestions = document.getElementById('runtime-no-questions');
 
   async function applyClientSession(): Promise<boolean> {
+    if (isDailyChallenge) return sessionQuestions.length === 1;
     const currentQuestions = await loadCurrentClientQuestions(
       allQuestions,
       gameId,
@@ -415,7 +422,7 @@ const hasQuestions = allQuestions.length > 0;
       const earnedPoints = calculateDescriptionScore(currentLineIndex);
       correctCount++;
       scores.push(earnedPoints);
-      playedQuestionIds.push(question.id);
+      if (!isDailyChallenge) playedQuestionIds.push(question.id);
       questionAnswered = true;
 
       showFeedback(`Correct! 🎉 Score: ${earnedPoints.toFixed(1)} point${earnedPoints === 1 ? '' : 's'}`, 'success');
@@ -438,8 +445,12 @@ const hasQuestions = allQuestions.length > 0;
       answerInput.disabled = true;
       submitBtn.disabled = true;
 
-      nextQuestionBtn?.classList.remove('hidden');
-      setTimeout(() => flipCard(true), 800);
+      if (isDailyChallenge) {
+        setTimeout(endGame, 800);
+      } else {
+        nextQuestionBtn?.classList.remove('hidden');
+        setTimeout(() => flipCard(true), 800);
+      }
     } else {
       // Wrong answer - reveal next line
       if (currentLineIndex < question.descriptions.length - 1) {
@@ -451,7 +462,7 @@ const hasQuestions = allQuestions.length > 0;
         // Wrong on last line - game over for this question
         wrongCount++;
         scores.push(0);
-        playedQuestionIds.push(question.id);
+        if (!isDailyChallenge) playedQuestionIds.push(question.id);
         questionAnswered = true;
 
         showFeedback('Wrong! Score: 0 points.', 'error');
@@ -470,8 +481,12 @@ const hasQuestions = allQuestions.length > 0;
         answerInput.disabled = true;
         submitBtn.disabled = true;
 
-        nextQuestionBtn?.classList.remove('hidden');
-        setTimeout(() => flipCard(true), 1500);
+        if (isDailyChallenge) {
+          setTimeout(endGame, 1500);
+        } else {
+          nextQuestionBtn?.classList.remove('hidden');
+          setTimeout(() => flipCard(true), 1500);
+        }
       }
     }
   }
@@ -541,6 +556,10 @@ const hasQuestions = allQuestions.length > 0;
   }
 
   function saveProgressAndResult(percentage, averageScore) {
+    if (isDailyChallenge) {
+      submitDailyScoreOnce(percentage).catch((error) => console.error('Failed to submit Daily Challenge score:', error));
+      return;
+    }
     saveClientSession(
       gameId,
       animeId,

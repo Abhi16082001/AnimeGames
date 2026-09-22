@@ -1,0 +1,78 @@
+---
+---
+
+<section id="daily-challenge" class="hidden bg-[var(--color-surface)] py-12 md:py-20" aria-labelledby="daily-challenge-title">
+  <div class="section-container text-center">
+    <h2 id="daily-challenge-title" class="section-title mb-4">Surprise Daily Challenge</h2>
+    <p id="daily-challenge-message" class="mx-auto mb-6 max-w-2xl text-lg text-[var(--color-text-muted)]"></p>
+    <a id="daily-challenge-play" class="btn-primary pointer-events-none opacity-50" aria-disabled="true">Play Daily Challenge</a>
+    <p id="daily-challenge-summary" class="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[var(--color-text-muted)]"></p>
+  </div>
+</section>
+
+<script>
+  type DailyInfo = {
+    timer: boolean;
+    duration: number | null;
+    dailypath: string | null;
+    challengeStart: string | null;
+    challengeEnd: string | null;
+  };
+  const section = document.getElementById('daily-challenge');
+  const message = document.getElementById('daily-challenge-message');
+  const play = document.getElementById('daily-challenge-play') as HTMLAnchorElement | null;
+  const summary = document.getElementById('daily-challenge-summary');
+  const submissionKey = 'animegames_daily_score_submitted';
+
+  function routeFor(path: string) {
+    return path === 'zoom' ? 'zoomed' : path;
+  }
+
+  function formatKolkataTime(time: string | null): string {
+    if (!time) return 'to be announced';
+    const match = time.match(/(?:T|\s)?(\d{1,2}):(\d{2})(?::\d{2})?/);
+    if (!match) return time;
+    const hour = Number(match[1]);
+    const minutes = match[2];
+    const period = hour >= 12 ? 'PM' : 'AM';
+    return `${hour % 12 || 12}:${minutes} ${period}`;
+  }
+
+  function show(info: DailyInfo) {
+    if (!info.timer || !section || !message || !play) return;
+    section.classList.remove('hidden');
+    if (summary) {
+      summary.textContent = `One surprise question, available daily from ${formatKolkataTime(info.challengeStart)} to ${formatKolkataTime(info.challengeEnd)} IST (Kolkata). You can replay while it is active, but only your first score counts on the Daily Leaderboard.`;
+    }
+    const canPlay = typeof info.dailypath === 'string' && info.dailypath.length > 0;
+    if (canPlay) play.href = `/games/${routeFor(info.dailypath!)}/daily?daily=1`;
+    if (info.duration === null) {
+      message.textContent = 'Surprise Daily Challenge is active, play and rank leaderboard';
+      play.classList.remove('pointer-events-none', 'opacity-50');
+      play.removeAttribute('aria-disabled');
+      return;
+    }
+
+    localStorage.removeItem(submissionKey);
+    const endAt = Date.now() + info.duration * 60_000;
+    const tick = () => {
+      const remaining = Math.max(0, endAt - Date.now());
+      const hours = Math.floor(remaining / 3_600_000);
+      const minutes = Math.floor((remaining % 3_600_000) / 60_000);
+      const seconds = Math.floor((remaining % 60_000) / 1000);
+      message.textContent = `Surprise Daily Challenge will be available in ${String(hours).padStart(2, '0')} hrs ${String(minutes).padStart(2, '0')} min ${String(seconds).padStart(2, '0')} sec`;
+      if (remaining === 0) {
+        message.textContent = 'Surprise Daily Challenge is active, play and rank leaderboard';
+        play.classList.remove('pointer-events-none', 'opacity-50');
+        play.removeAttribute('aria-disabled');
+      } else {
+        window.setTimeout(tick, 1000);
+      }
+    };
+    tick();
+  }
+
+  const current = (window as Window & { dailyChallengeInfo?: DailyInfo }).dailyChallengeInfo;
+  if (current) show(current);
+  window.addEventListener('dailyChallengeInfo', (event) => show((event as CustomEvent<DailyInfo>).detail), { once: true });
+</script>

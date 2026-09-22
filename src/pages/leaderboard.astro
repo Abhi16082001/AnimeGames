@@ -13,6 +13,7 @@ const gameCategories = [
   { id: 'Description', name: 'Description Game', icon: String.fromCodePoint(0x1F4DD) },
   { id: 'Colour', name: 'Colour Guessing Game', icon: String.fromCodePoint(0x1F3A8) },
   { id: 'Zoom', name: 'Zoomed Image Game', icon: String.fromCodePoint(0x1F50D) },
+  { id: 'Daily', name: 'Daily Challenge', icon: String.fromCodePoint(0x1F381) },
 ];
 ---
 
@@ -148,13 +149,21 @@ const gameCategories = [
     Description: 'Description',
     Colour: 'Colour',
     Zoom: 'Zoom',
+    Daily: 'Daily',
   };
   const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
   const leaderboardPanels = document.querySelectorAll('.leaderboard-panel');
 
   // Initialize
   document.addEventListener('DOMContentLoaded', () => {
-    loadLeaderboard('Combined');
+    const requestedCategory = new URLSearchParams(window.location.search).get('category');
+    const initialCategory = requestedCategory && apiCategoryByDropdown[requestedCategory]
+      ? requestedCategory
+      : 'Combined';
+    currentCategory = initialCategory;
+    if (categorySelect) categorySelect.value = initialCategory;
+    leaderboardPanels.forEach(panel => panel.classList.toggle('hidden', panel.id !== `leaderboard-${initialCategory}`));
+    loadLeaderboard(initialCategory);
 
     // Dropdown change handler
     if (categorySelect) {

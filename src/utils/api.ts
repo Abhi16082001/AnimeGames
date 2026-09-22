@@ -29,6 +29,59 @@ export interface GoogleLeaderboards {
   Description: LeaderboardEntry[];
   Colour: LeaderboardEntry[];
   Zoom: LeaderboardEntry[];
+  Daily: LeaderboardEntry[];
+}
+
+export interface DailyChallengeInfo {
+  success: true;
+  timer: boolean;
+  duration: number | null;
+  notice: string | false;
+  dailypath: string | null;
+  challengeStart: string | null;
+  challengeEnd: string | null;
+}
+
+export async function getDailyChallengeInfo(): Promise<DailyChallengeInfo | null> {
+  const url = new URL(config.googleAppsScriptUrl);
+  url.search = new URLSearchParams({ action: 'getDailyChallengeInfo' }).toString();
+  try {
+    const response = await fetch(url.toString());
+    if (!response.ok) return null;
+    const data = await response.json() as Partial<DailyChallengeInfo>;
+    if (data.success !== true || typeof data.timer !== 'boolean') return null;
+    return {
+      success: true,
+      timer: data.timer,
+      duration: typeof data.duration === 'number' ? data.duration : null,
+      notice: typeof data.notice === 'string' ? data.notice : false,
+      dailypath: typeof data.dailypath === 'string' && data.dailypath.trim() ? data.dailypath : null,
+      challengeStart: typeof data.challengeStart === 'string' ? data.challengeStart : null,
+      challengeEnd: typeof data.challengeEnd === 'string' ? data.challengeEnd : null,
+    };
+  } catch (error) {
+    console.error('Daily Challenge request failed:', error);
+    return null;
+  }
+}
+
+export async function submitDailyScore(playerId: string, playerName: string, score: number): Promise<boolean> {
+  const response = await fetchFromAppsScript('addDailyScore', { playerId, playerName, score });
+  return response?.success === true;
+}
+
+const DAILY_SCORE_SUBMITTED_KEY = 'animegames_daily_score_submitted';
+
+/** Sends a Daily Challenge result once for the current challenge period. */
+export async function submitDailyScoreOnce(score: number): Promise<boolean> {
+  if (typeof window === 'undefined' || localStorage.getItem(DAILY_SCORE_SUBMITTED_KEY) === 'true') return false;
+
+  const player = getLocalPlayer();
+  if (!player?.id || !player.name) return false;
+
+  const submitted = await submitDailyScore(player.id, player.name, score);
+  if (submitted) localStorage.setItem(DAILY_SCORE_SUBMITTED_KEY, 'true');
+  return submitted;
 }
 
 export interface GameProgress {
@@ -328,6 +381,7 @@ export async function getGoogleLeaderboards(): Promise<GoogleLeaderboards> {
     Description: Array.isArray(leaderboards.Description) ? leaderboards.Description : [],
     Colour: Array.isArray(leaderboards.Colour) ? leaderboards.Colour : [],
     Zoom: Array.isArray(leaderboards.Zoom) ? leaderboards.Zoom : [],
+    Daily: Array.isArray(leaderboards.Daily) ? leaderboards.Daily : [],
   };
 }
 
