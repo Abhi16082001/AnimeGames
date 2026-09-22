@@ -311,11 +311,12 @@ const hasQuestions = allQuestions.length > 0;
   async function initializeGame() {
     if (!await applyClientSession()) return;
 
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    requestAnimationFrame(() => window.scrollTo(0, 0));
+
     // Render first question descriptions
     updateQuestionDisplay();
-
-    // Focus answer input
-    answerInput?.focus();
 
     // Event listeners
     submitBtn?.addEventListener('click', submitAnswer);
@@ -446,7 +447,6 @@ const hasQuestions = allQuestions.length > 0;
         updateQuestionDisplay();
         showFeedback('Not quite! Next clue revealed.', 'error');
         answerInput.value = '';
-        answerInput.focus();
       } else {
         // Wrong on last line - game over for this question
         wrongCount++;
@@ -521,7 +521,6 @@ const hasQuestions = allQuestions.length > 0;
     } else {
       // Next question
       updateQuestionDisplay();
-      answerInput?.focus();
     }
   }
 

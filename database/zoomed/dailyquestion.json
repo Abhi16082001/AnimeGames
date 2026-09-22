@@ -1,0 +1,7 @@
+ {
+    "id": "daily-zoomed",
+    "answer": "Serperior",
+    "image": "/sample.png",
+    "troll": true,
+    "zoom": { "scale": 4, "position": { "x": 20, "y": 40 } }
+  }

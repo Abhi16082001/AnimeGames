@@ -1,0 +1,13 @@
+  {
+    "id": "daily-description",
+    "descriptions": [
+      "I am the Grass Type",
+      "I am the Starter Pokemon",
+      "I can use Coil.",
+      "I usually found in Unova",
+      "I am the Superior Serpent !"
+    ],
+    "answer": "Serperior",
+    "image": "/sample.png",
+    "troll": false
+  }

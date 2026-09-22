@@ -288,9 +288,10 @@ const hasQuestions = allQuestions.length > 0;
 
   async function initializeGame() {
     if (!await applyClientSession()) return;
-    
-    // Focus answer input
-    answerInput?.focus();
+
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    requestAnimationFrame(() => window.scrollTo(0, 0));
     
     // Event listeners
     submitBtn?.addEventListener('click', submitAnswer);
@@ -428,7 +429,6 @@ const hasQuestions = allQuestions.length > 0;
     } else {
       // Next question
       updateQuestionDisplay();
-      answerInput?.focus();
     }
   }
 
