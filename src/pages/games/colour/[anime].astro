@@ -254,10 +254,10 @@ const hasQuestions = allQuestions.length > 0;
                 <div class="flex justify-center gap-4">
                   <button
                     id="next-question-btn"
-                    class:list={['btn-primary', isDailyChallenge && 'hidden']}
+                    class="btn-primary"
                     aria-label="Next question"
                   >
-                    Next Question
+                    {isDailyChallenge ? 'See Result' : 'Next Question'}
                   </button>
                 </div>
               </div>
@@ -419,7 +419,10 @@ const hasQuestions = allQuestions.length > 0;
     
     // Event listeners
     submitBtn?.addEventListener('click', submitAnswer);
-    nextQuestionBtn?.addEventListener('click', nextQuestion);
+    nextQuestionBtn?.addEventListener('click', () => {
+      if (isDailyChallenge) endGame();
+      else nextQuestion();
+    });
   }
 
   if (document.readyState === 'loading') {
@@ -677,7 +680,6 @@ const hasQuestions = allQuestions.length > 0;
     
     // Setup comparison for this result
     setupComparison();
-    if (isDailyChallenge) window.setTimeout(endGame, 800);
   }
 
   function calculateColorMatch(h1: number, s1: number, b1: number, h2: number, s2: number, b2: number): number {

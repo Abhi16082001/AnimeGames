@@ -159,10 +159,10 @@ const hasQuestions = allQuestions.length > 0;
                 <div class="flex justify-center gap-4">
                   <button
                     id="next-question-btn"
-                    class:list={['btn-primary', isDailyChallenge && 'hidden']}
+                    class="btn-primary"
                     aria-label="Next question"
                   >
-                    Next Question
+                    {isDailyChallenge ? 'See Result' : 'Next Question'}
                   </button>
                 </div>
               </div>
@@ -309,7 +309,10 @@ const hasQuestions = allQuestions.length > 0;
       }
     });
     
-    nextQuestionBtn?.addEventListener('click', nextQuestion);
+    nextQuestionBtn?.addEventListener('click', () => {
+      if (isDailyChallenge) endGame();
+      else nextQuestion();
+    });
     
     updateQuestionDisplay();
   }
@@ -410,7 +413,6 @@ const hasQuestions = allQuestions.length > 0;
       setTimeout(() => {
         zoomedView?.classList.add('hidden');
         resultView?.classList.remove('hidden');
-        if (isDailyChallenge) endGame();
       }, 1000);
     } else {
       // Wrong answer
@@ -423,7 +425,6 @@ const hasQuestions = allQuestions.length > 0;
       resultMessage.className = 'mb-4 text-center text-sm font-semibold text-red-300';
       // Incorrect answers keep the existing zoomed-in image visible.
       resultView?.classList.remove('hidden');
-      if (isDailyChallenge) endGame();
     }
     
   }

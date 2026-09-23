@@ -175,10 +175,10 @@ const hasQuestions = allQuestions.length > 0;
                   <div class="mt-4 flex justify-center gap-4">
                     <button
                       id="next-question-btn"
-                      class:list={['btn-primary hidden', isDailyChallenge && 'hidden']}
+                      class="btn-primary hidden"
                       aria-label="Next question"
                     >
-                      Next Question
+                      {isDailyChallenge ? 'See Result' : 'Next Question'}
                     </button>
                   </div>
                 </div>
@@ -336,7 +336,8 @@ const hasQuestions = allQuestions.length > 0;
 
     nextQuestionBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
-      nextQuestion();
+      if (isDailyChallenge) endGame();
+      else nextQuestion();
     });
 
     // Toggle the card face on click/tap, but only once the question is answered
@@ -446,7 +447,10 @@ const hasQuestions = allQuestions.length > 0;
       submitBtn.disabled = true;
 
       if (isDailyChallenge) {
-        setTimeout(endGame, 800);
+        setTimeout(() => {
+          flipCard(true);
+          nextQuestionBtn?.classList.remove('hidden');
+        }, 800);
       } else {
         nextQuestionBtn?.classList.remove('hidden');
         setTimeout(() => flipCard(true), 800);
@@ -482,7 +486,10 @@ const hasQuestions = allQuestions.length > 0;
         submitBtn.disabled = true;
 
         if (isDailyChallenge) {
-          setTimeout(endGame, 1500);
+          setTimeout(() => {
+            flipCard(true);
+            nextQuestionBtn?.classList.remove('hidden');
+          }, 1500);
         } else {
           nextQuestionBtn?.classList.remove('hidden');
           setTimeout(() => flipCard(true), 1500);
