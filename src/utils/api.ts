@@ -40,6 +40,7 @@ export interface DailyChallengeInfo {
   dailypath: string | null;
   challengeStart: string | null;
   challengeEnd: string | null;
+  challengeStartDate: string | null;
 }
 
 export async function getDailyChallengeInfo(): Promise<DailyChallengeInfo | null> {
@@ -58,6 +59,7 @@ export async function getDailyChallengeInfo(): Promise<DailyChallengeInfo | null
       dailypath: typeof data.dailypath === 'string' && data.dailypath.trim() ? data.dailypath : null,
       challengeStart: typeof data.challengeStart === 'string' ? data.challengeStart : null,
       challengeEnd: typeof data.challengeEnd === 'string' ? data.challengeEnd : null,
+      challengeStartDate: typeof data.challengeStartDate === 'string' ? data.challengeStartDate : null,
     };
   } catch (error) {
     console.error('Daily Challenge request failed:', error);
@@ -67,20 +69,64 @@ export async function getDailyChallengeInfo(): Promise<DailyChallengeInfo | null
 
 export async function submitDailyScore(playerId: string, playerName: string, score: number): Promise<boolean> {
   const response = await fetchFromAppsScript('addDailyScore', { playerId, playerName, score });
-  return response?.success === true;
+  return response?.success === true
+    || response?.success === 'true'
+    || response?.status === 'success';
 }
 
 const DAILY_SCORE_SUBMITTED_KEY = 'animegames_daily_score_submitted';
 
+interface DailyScoreSubmission {
+  challengeStartDate: string;
+  played: boolean;
+}
+
+function getDailyScoreSubmission(): DailyScoreSubmission | null {
+  if (typeof window === 'undefined') return null;
+  const stored = localStorage.getItem(DAILY_SCORE_SUBMITTED_KEY);
+  if (!stored) return null;
+  try {
+    const data = JSON.parse(stored) as Partial<DailyScoreSubmission>;
+    if (typeof data.challengeStartDate !== 'string' || typeof data.played !== 'boolean') return null;
+    return { challengeStartDate: data.challengeStartDate, played: data.played };
+  } catch {
+    return null;
+  }
+}
+
+/** Synchronizes Daily Challenge submission state with the current API challenge period. */
+export function syncDailyScoreSubmission(duration: number | null, challengeStartDate: string | null): void {
+  if (typeof window === 'undefined') return;
+
+  if (duration !== null) {
+    localStorage.removeItem(DAILY_SCORE_SUBMITTED_KEY);
+    return;
+  }
+
+  if (!challengeStartDate) return;
+  const stored = getDailyScoreSubmission();
+  if (stored?.challengeStartDate !== challengeStartDate) {
+    localStorage.removeItem(DAILY_SCORE_SUBMITTED_KEY);
+    localStorage.setItem(DAILY_SCORE_SUBMITTED_KEY, JSON.stringify({ challengeStartDate, played: false }));
+  }
+}
+
 /** Sends a Daily Challenge result once for the current challenge period. */
 export async function submitDailyScoreOnce(score: number): Promise<boolean> {
-  if (typeof window === 'undefined' || localStorage.getItem(DAILY_SCORE_SUBMITTED_KEY) === 'true') return false;
+  if (typeof window === 'undefined') return false;
+  const submission = getDailyScoreSubmission();
+  if (submission?.played) return false;
 
   const player = getLocalPlayer();
   if (!player?.id || !player.name) return false;
 
   const submitted = await submitDailyScore(player.id, player.name, score);
-  if (submitted) localStorage.setItem(DAILY_SCORE_SUBMITTED_KEY, 'true');
+  if (submitted) {
+    localStorage.setItem(DAILY_SCORE_SUBMITTED_KEY, JSON.stringify({
+      challengeStartDate: submission?.challengeStartDate ?? '',
+      played: true,
+    }));
+  }
   return submitted;
 }
 

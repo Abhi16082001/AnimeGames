@@ -1,6 +1,6 @@
  {
     "id": "daily-colour",
-    "image": "/sample.png",
+    "image": "/goku.jpeg",
     "troll": false,
     "color": { "hex": "#FF8C00", "saturation": 100, "brightness": 50 },
     "correctImage": "/sample.png",

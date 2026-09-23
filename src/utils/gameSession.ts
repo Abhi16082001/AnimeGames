@@ -74,11 +74,12 @@ export function filterQuestionsByTrollMode(questions: Question[], trollMode: boo
   return questions.filter(q => q.troll === trollMode);
 }
 
-/** Checks an exact lower-case user answer against the accepted answers in question.json. */
+/** Checks trimmed, case-insensitive answers against the accepted answers in question.json. */
 export function isAnswerInList(userAnswer: string, configuredAnswers: string[] | string): boolean {
-  // Keep existing single-string question files playable while new files use lower-case arrays.
-  const acceptedAnswers = Array.isArray(configuredAnswers) ? configuredAnswers : [configuredAnswers.toLowerCase()];
-  return acceptedAnswers.includes(userAnswer.toLowerCase());
+  const normalizeAnswer = (answer: string) => answer.trim().toLowerCase();
+  const normalizedUserAnswer = normalizeAnswer(userAnswer);
+  const acceptedAnswers = Array.isArray(configuredAnswers) ? configuredAnswers : [configuredAnswers];
+  return acceptedAnswers.some((answer) => normalizeAnswer(answer) === normalizedUserAnswer);
 }
 
 /** Uses the primary accepted answer when revealing a question. */

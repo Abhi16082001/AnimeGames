@@ -11,18 +11,20 @@
 </section>
 
 <script>
+  import { syncDailyScoreSubmission } from '../utils/api';
+
   type DailyInfo = {
     timer: boolean;
     duration: number | null;
     dailypath: string | null;
     challengeStart: string | null;
     challengeEnd: string | null;
+    challengeStartDate: string | null;
   };
   const section = document.getElementById('daily-challenge');
   const message = document.getElementById('daily-challenge-message');
   const play = document.getElementById('daily-challenge-play') as HTMLAnchorElement | null;
   const summary = document.getElementById('daily-challenge-summary');
-  const submissionKey = 'animegames_daily_score_submitted';
 
   function routeFor(path: string) {
     return path === 'zoom' ? 'zoomed' : path;
@@ -39,7 +41,9 @@
   }
 
   function show(info: DailyInfo) {
-    if (!info.timer || !section || !message || !play) return;
+    if (!section || !message || !play) return;
+    if (info.duration !== null) syncDailyScoreSubmission(info.duration, info.challengeStartDate);
+    if (!info.timer) return;
     section.classList.remove('hidden');
     if (summary) {
       summary.textContent = `One surprise question, available daily from ${formatKolkataTime(info.challengeStart)} to ${formatKolkataTime(info.challengeEnd)} IST (Kolkata). You can replay while it is active, but only your first score counts on the Daily Leaderboard.`;
@@ -47,13 +51,13 @@
     const canPlay = typeof info.dailypath === 'string' && info.dailypath.length > 0;
     if (canPlay) play.href = `/games/${routeFor(info.dailypath!)}/daily?daily=1`;
     if (info.duration === null) {
+      syncDailyScoreSubmission(info.duration, info.challengeStartDate);
       message.textContent = 'Surprise Daily Challenge is active, play and rank leaderboard';
       play.classList.remove('pointer-events-none', 'opacity-50');
       play.removeAttribute('aria-disabled');
       return;
     }
 
-    localStorage.removeItem(submissionKey);
     const endAt = Date.now() + info.duration * 60_000;
     const tick = () => {
       const remaining = Math.max(0, endAt - Date.now());
@@ -62,6 +66,7 @@
       const seconds = Math.floor((remaining % 60_000) / 1000);
       message.textContent = `Surprise Daily Challenge will be available in ${String(hours).padStart(2, '0')} hrs ${String(minutes).padStart(2, '0')} min ${String(seconds).padStart(2, '0')} sec`;
       if (remaining === 0) {
+        syncDailyScoreSubmission(null, info.challengeStartDate);
         message.textContent = 'Surprise Daily Challenge is active, play and rank leaderboard';
         play.classList.remove('pointer-events-none', 'opacity-50');
         play.removeAttribute('aria-disabled');
