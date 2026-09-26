@@ -1,129 +1,42 @@
 ---
-// FAQSection.astro - FAQ section
 type FAQ = { q: string; a: string };
 const suppliedFaqs = Astro.props.faqs as FAQ[] | undefined;
+const defaultFaqs: FAQ[] = [
+  { q: 'Do I need to create an account to play?', a: 'No! You only need to enter a nickname on your first visit. Your identity is stored locally in your browser, and a unique Player ID is generated via our secure backend. No email, no password, no hassle.' },
+  { q: 'How does the scoring work?', a: 'Each question awards 0–1 point depending on the game mode. Description Game rewards earlier correct guesses (1.0 → 0.2). Zoomed Image gives 1.0 for correct, 0 for wrong. Colour Guessing scores by color matching percentage. Your best score per game category is used for the leaderboard.' },
+  { q: 'What is Troll Mode?', a: "Troll Mode toggles between normal questions and 'troll' questions — fun, silly, or misleading ones. Turn it on for a laugh, off for serious play. Progress is tracked separately for each mode." },
+  { q: 'What is the Miscellaneous category?', a: 'Miscellaneous combines questions from all anime supported by the selected game. Questions are shuffled across series, and progress is tracked independently. Great for testing your broad anime knowledge!' },
+  { q: 'How is the Combined score calculated?', a: 'Your Combined score is the average of your best scores across all three game categories (Description, Zoomed Image, Colour Guessing). Each category contributes equally regardless of which anime you played.' },
+  { q: 'Is my progress saved if I close the browser?', a: 'Yes! Your player identity, question progress, and best scores are stored in localStorage. They persist across browser sessions. Clearing browser data will reset everything.' },
+  { q: 'How often are new questions added?', a: "New questions are manually added to the top of question files regularly. Since progress tracks by question ID (not position), you'll automatically encounter new questions after completing a cycle." },
+  { q: 'Can I play on mobile?', a: 'Absolutely! The site is fully responsive and works great on mobile devices. All game modes are touch-friendly with appropriate controls for each platform.' },
+];
+const faqs = suppliedFaqs ?? defaultFaqs;
+const faqSchema = { '@context': 'https://schema.org', '@type': 'QAPage', mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.q, text: faq.q, answerCount: 1, acceptedAnswer: { '@type': 'Answer', text: faq.a } })) };
 ---
 
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 <section class="py-12 md:py-20 bg-[var(--color-bg)]" aria-labelledby="faq-title">
   <div class="section-container">
     <div class="text-center mb-12 md:mb-16">
       <h2 id="faq-title" class="section-title mb-4">{Astro.props.title ?? 'Frequently Asked Questions'}</h2>
-      <p class="section-subtitle">{Astro.props.subtitle ?? 'Everything you need to know about Anime Realm'}</p>
+      <p class="section-subtitle">{Astro.props.subtitle ?? 'Everything you need to know about Otaku Blitz'}</p>
     </div>
-    
-    <div class="max-w-xl mx-auto">
-      <dl class="space-y-2" role="list">
-        {(suppliedFaqs ?? [
-          {
-            q: "Do I need to create an account to play?",
-            a: "No! You only need to enter a nickname on your first visit. Your identity is stored locally in your browser, and a unique Player ID is generated via our secure backend. No email, no password, no hassle."
-          },
-          {
-            q: "How does the scoring work?",
-            a: "Each question awards 0–1 point depending on the game mode. Description Game rewards earlier correct guesses (1.0 → 0.2). Zoomed Image gives 1.0 for correct, 0 for wrong. Colour Guessing scores by color matching percentage. Your best score per game category is used for the leaderboard."
-          },
-          {
-            q: "What is Troll Mode?",
-            a: "Troll Mode toggles between normal questions and 'troll' questions — fun, silly, or misleading ones. Turn it on for a laugh, off for serious play. Progress is tracked separately for each mode."
-          },
-          {
-            q: "What is the Miscellaneous category?",
-            a: "Miscellaneous combines questions from all anime supported by the selected game. Questions are shuffled across series, and progress is tracked independently. Great for testing your broad anime knowledge!"
-          },
-          {
-            q: "How is the Combined score calculated?",
-            a: "Your Combined score is the average of your best scores across all three game categories (Description, Zoomed Image, Colour Guessing). Each category contributes equally regardless of which anime you played."
-          },
-          {
-            q: "Is my progress saved if I close the browser?",
-            a: "Yes! Your player identity, question progress, and best scores are stored in localStorage. They persist across browser sessions. Clearing browser data will reset everything."
-          },
-          {
-            q: "How often are new questions added?",
-            a: "New questions are manually added to the top of question files regularly. Since progress tracks by question ID (not position), you'll automatically encounter new questions after completing a cycle."
-          },
-          {
-            q: "Can I play on mobile?",
-            a: "Absolutely! The site is fully responsive and works great on mobile devices. All game modes are touch-friendly with appropriate controls for each platform."
-          }
-        ]).map((faq, index) => (
-          <div class="card group !p-0" role="listitem">
-            <dt class="flex items-center justify-between gap-3 p-3 cursor-pointer"
-              onclick="this.parentElement.classList.toggle('open')"
-              onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.parentElement.classList.toggle('open'); } }}
-              tabindex="0"
-              role="button"
-              aria-expanded="false"
-              aria-controls={`faq-answer-${index}`}
-            >
-              <span class="min-w-0 font-semibold text-[var(--color-text)] text-balance flex-1">
-                {faq.q}
-              </span>
-              <svg class="flex-shrink-0 w-5 h-5 text-[var(--color-text-muted)] transition-transform duration-300 group-data-[open=true]:rotate-180" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-              </svg>
-            </dt>
-            <dd id={`faq-answer-${index}`} class="hidden group-data-[open=true]:block px-3 pb-3 pt-0 text-[var(--color-text-muted)] leading-relaxed animate-slide-down">
-              {faq.a}
-            </dd>
-          </div>
-        ))}
-      </dl>
-    </div>
+    <div class="max-w-xl mx-auto"><div class="space-y-2" role="list">
+      {faqs.map((faq, index) => (
+        <details class="faq-item card group !p-0" role="listitem">
+          <summary class="flex list-none items-center justify-between gap-3 p-3 cursor-pointer [&::-webkit-details-marker]:hidden">
+            <span class="min-w-0 font-semibold text-[var(--color-text)] text-balance flex-1">{faq.q}</span>
+            <svg class="flex-shrink-0 w-5 h-5 text-[var(--color-text-muted)] transition-transform duration-300 group-data-[open=true]:rotate-180" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+          </summary>
+          <dd id={`faq-answer-${index}`} class="faq-answer hidden px-3 pb-3 pt-0 text-[var(--color-text-muted)] leading-relaxed">{faq.a}</dd>
+        </details>
+      ))}
+    </div></div>
   </div>
-
-  <style>
-    @keyframes slide-down {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-slide-down {
-      animation: slide-down 0.3s ease-out forwards;
-    }
-    dl > div[data-open="true"] dd {
-      display: block !important;
-    }
-  </style>
 </section>
 
-<script>
-  // Initialize FAQ accordion functionality
-  document.addEventListener('DOMContentLoaded', () => {
-    const faqItems = document.querySelectorAll('dl > div');
-    
-    faqItems.forEach((item) => {
-      const dt = item.querySelector('dt');
-      const dd = item.querySelector('dd');
-      
-      if (dt && dd) {
-        dt.addEventListener('click', () => {
-          const isOpen = item.hasAttribute('data-open');
-          
-          // Close all other items
-          faqItems.forEach(other => {
-            if (other !== item) {
-              other.removeAttribute('data-open');
-              other.querySelector('dt')?.setAttribute('aria-expanded', 'false');
-            }
-          });
-          
-          // Toggle current item
-          if (isOpen) {
-            item.removeAttribute('data-open');
-            dt.setAttribute('aria-expanded', 'false');
-          } else {
-            item.setAttribute('data-open', 'true');
-            dt.setAttribute('aria-expanded', 'true');
-          }
-        });
-        
-        dt.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            dt.click();
-          }
-        });
-      }
-    });
-  });
-</script>
+<style>
+  .faq-item[open] .faq-answer { display: block; }
+  .faq-item[open] summary svg { transform: rotate(180deg); }
+</style>

@@ -1,8 +1,8 @@
  {
     "id": "daily-colour",
-    "image": "/goku.jpeg",
+    "image": "/goku2.png",
     "troll": false,
     "color": { "hex": "#FF8C00", "saturation": 100, "brightness": 50 },
-    "correctImage": "/sample.png",
+    "correctImage": "/goku.jpeg",
     "answer": "Naruto Uzumaki"
   }

@@ -28,7 +28,7 @@ const gameConfig = gamescategory.find(g => g.id === gameId);
 const questionLimit = gameConfig?.questionLimit ?? 0;
 
 let animeName = isDailyChallenge ? 'Surprise Daily Challenge' : 'Miscellaneous';
-let animeBg = 'linear-gradient(135deg, #7C3AED 0%, #EF4444 100%)';
+let animeBg = 'linear-gradient(135deg, #7C3AED 0%, #14B8A6 100%)';
 
 if (!isMiscellaneous && !isDailyChallenge) {
   const animeData = animecategory.find(a => a.id === anime);
@@ -70,9 +70,10 @@ const sessionQuestions = isDailyChallenge ? allQuestions : selectedSessionQuesti
   : allQuestions.slice(0, questionLimit);
 const totalQuestions = sessionQuestions.length;
 const hasQuestions = allQuestions.length > 0;
+const seoDescription = `Play the ${animeName} Colour Guessing Game at Otaku Blitz. Match hue, saturation, and brightness in this anime colour challenge.`;
 ---
 
-<Layout title={`${animeName} - Colour Guessing Game - Anime Realm`}>
+<Layout title={`${animeName} Colour Guessing Game | Otaku Blitz`} description={seoDescription}>
   <main class="flex-grow min-h-screen">
     <!-- Game Header -->
     <header class="sticky top-16 z-30 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 py-3 backdrop-blur-md md:py-4">
@@ -277,8 +278,8 @@ const hasQuestions = allQuestions.length > 0;
                   <div class="text-3xl font-bold gradient-text" id="final-correct">0</div>
                   <div class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Correct</div>
                 </div>
-                <div class="p-4 rounded-xl bg-red-100/50 bg-red-900/20">
-                  <div class="text-3xl font-bold text-red-600 text-red-400" id="final-wrong">0</div>
+                <div class="p-4 rounded-xl bg-teal-100/50 bg-teal-900/20">
+                  <div class="text-3xl font-bold text-teal-600 text-teal-400" id="final-wrong">0</div>
                   <div class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Wrong</div>
                 </div>
                 <div class="p-4 rounded-xl bg-[var(--color-bg)] bg-[var(--color-border)]">
@@ -785,7 +786,7 @@ const hasQuestions = allQuestions.length > 0;
     feedback.textContent = message;
     feedback.className = `mt-4 mb-4 p-4 rounded-lg ${type === 'success'
       ? 'bg-green-100 bg-green-900/30 text-green-800 text-green-300 border border-green-300 border-green-700' 
-      : 'bg-red-100 bg-red-900/30 text-red-800 text-red-300 border border-red-300 border-red-700'}`;
+      : 'bg-teal-100 bg-teal-900/30 text-teal-800 text-teal-300 border border-teal-300 border-teal-700'}`;
     feedback.classList.remove('hidden');
   }
 </script>

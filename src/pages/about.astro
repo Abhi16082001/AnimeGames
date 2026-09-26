@@ -1,13 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import animecategory from '../../database/animecategory.json';
+import gamescategory from '../../database/gamescategory.json';
 ---
 
-<Layout title="About - Anime Realm">
+<Layout title="About - Otaku Blitz">
   <main class="flex-grow min-h-screen">
     <!-- Page Header -->
-    <header class="py-16 md:py-24 bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-red)]/50">
+    <header class="py-16 md:py-24 bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-teal)]/50">
       <div class="section-container text-center">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight gradient-text mb-6">About Anime Realm</h1>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight gradient-text mb-6">About Otaku Blitz</h1>
         <p class="text-lg md:text-xl text-[var(--color-text-muted)] max-w-2xl mx-auto leading-relaxed">
           A static anime quiz playground built with modern web technologies
         </p>
@@ -18,16 +20,16 @@ import Layout from '../layouts/Layout.astro';
     <section class="py-16 md:py-24">
       <div class="section-container max-w-4xl">
         <div class="space-y-12 md:space-y-16">
-          <!-- What is Anime Realm -->
+          <!-- What is Otaku Blitz -->
           <article class="card gradient-border">
             <div class="flex items-start gap-4 sm:gap-6 md:gap-8">
               <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-3xl" aria-hidden="true">
                 🎮
               </div>
               <div class="min-w-0">
-                <h2 class="text-2xl font-bold text-[var(--color-text)] mb-4">What is Anime Realm?</h2>
+                <h2 class="text-2xl font-bold text-[var(--color-text)] mb-4">What is Otaku Blitz?</h2>
                 <p class="text-[var(--color-text-muted)] leading-relaxed mb-4">
-                  Anime Realm is a lightweight, browser-based anime quiz platform featuring three unique game modes. Built as a static site with Astro, it requires no database, no server, and no complex infrastructure — just pure client-side fun with localStorage persistence and Google Sheets for global leaderboards.
+                  Otaku Blitz is a lightweight, browser-based anime quiz platform featuring three unique game modes. Built as a static site with Astro, it requires no database, no server, and no complex infrastructure — just pure client-side fun with localStorage persistence and Google Sheets for global leaderboards.
                 </p>
                 <p class="text-[var(--color-text-muted)] leading-relaxed">
                   Whether you're a casual fan or a hardcore otaku, there's a challenge waiting for you. Test your knowledge, climb the leaderboards, and discover new anime along the way!
@@ -124,22 +126,21 @@ import Layout from '../layouts/Layout.astro';
           <article class="card gradient-border">
             <h2 class="text-2xl font-bold text-[var(--color-text)] mb-6">Supported Anime</h2>
             <p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
-              Currently featuring three iconic anime series, with more planned:
+              Browse every anime series currently available at Otaku Blitz:
             </p>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {[
-                { name: 'Naruto', desc: 'Ninja adventures in the Hidden Leaf Village', color: 'from-orange-500 to-red-500', games: 'All 3 modes' },
-                { name: 'One Piece', desc: 'Pirate journey for the ultimate treasure', color: 'from-blue-500 to-indigo-700', games: 'All 3 modes' },
-                { name: 'Bleach', desc: 'Soul Reapers protecting the living world', color: 'from-gray-500 to-gray-900', games: 'All 3 modes' }
-              ].map((anime) => (
-                <div class="p-6 rounded-xl bg-gradient-to-br {anime.color} text-white relative overflow-hidden">
+              {animecategory.map((anime) => {
+                const supportedGames = gamescategory.filter((game) => anime.gameCategoryIds.includes(game.id) && game.show);
+                return (
+                <a href={`/games/${supportedGames[0]?.id ?? 'description'}/${anime.id}`} class="block p-6 rounded-xl text-white relative overflow-hidden transition-transform hover:-translate-y-1" style={`background: ${anime.bgimage}`}>
                   <h3 class="text-xl font-bold mb-2">{anime.name}</h3>
-                  <p class="text-white/80 mb-3">{anime.desc}</p>
+                  <p class="text-white/80 mb-3">Play character and anime quiz challenges from this series.</p>
                   <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-white/20 backdrop-blur-sm">{anime.games}</span>
+                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-white/20 backdrop-blur-sm">{supportedGames.length} game {supportedGames.length === 1 ? 'mode' : 'modes'}</span>
                   </div>
-                </div>
-              ))}
+                </a>
+                );
+              })}
             </div>
           </article>
           

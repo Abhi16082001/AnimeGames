@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  /* Single dark theme: black, very dark blue, lavender, and red */
-  --color-primary: #dc2626;
+  /* Single dark theme: black, very dark blue, lavender, and teal */
+  --color-primary: #0f766e;
   --color-secondary: #7c3aed;
   --color-accent-lavender: #a78bfa;
-  --color-accent-red: #ef4444;
+  --color-accent-teal: #14b8a6;
   --color-bg: #0a0a0f;
   --color-surface: #0f0f1a;
   --color-text: #fafafa;

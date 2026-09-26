@@ -6,13 +6,13 @@ import TrollModeToggle from '../../components/TrollModeToggle.astro';
 import FAQSection from '../../components/FAQSection.astro';
 ---
 
-<Layout title="Browse Games - Anime Realm">
+<Layout title="Anime Quiz Games | Description, Zoom & Colour Games | Otaku Blitz" description="Choose an Otaku Blitz anime quiz game: clue-based character guessing, zoomed image puzzles, and colour hue matching challenges.">
   <main class="flex-grow">
-    <section class="bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-red)]/50 py-16 from-[var(--color-primary)]/10 to-[var(--color-secondary)]/10 md:py-24">
+    <section class="bg-gradient-to-br from-[var(--color-accent-lavender)]/50 to-[var(--color-accent-teal)]/50 py-16 from-[var(--color-primary)]/10 to-[var(--color-secondary)]/10 md:py-24">
       <div class="section-container text-center">
-        <h1 class="mb-6 text-4xl font-black tracking-tight gradient-text md:text-5xl lg:text-6xl">Browse Games</h1>
+        <h1 class="mb-6 text-4xl font-black tracking-tight gradient-text md:text-5xl lg:text-6xl">Anime Quiz Games</h1>
         <p class="mx-auto max-w-2xl text-lg leading-relaxed text-[var(--color-text-muted)] text-[var(--color-text-muted)] md:text-xl">
-          Choose a game mode, open its panel, and pick an anime to start playing.
+          Choose a game mode, pick an anime, and test your character knowledge.
         </p>
 
         <div class="mt-8 flex flex-wrap items-center justify-center gap-3" aria-label="Troll Mode settings">
@@ -93,6 +93,17 @@ import FAQSection from '../../components/FAQSection.astro';
               </div>
             </article>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="py-12 md:py-16" aria-labelledby="anime-game-guide-title">
+      <div class="section-container max-w-4xl">
+        <h2 id="anime-game-guide-title" class="section-title mb-5">Choose Your Anime Guessing Game</h2>
+        <div class="space-y-4 leading-relaxed text-[var(--color-text-muted)]">
+          <p>The Description Game is a hint game for players who like to reason from progressive clues: answer early to earn more points. The Zoomed Image Game, also known as a zoom game, asks you to guess the anime character from a close-up before more of the image is revealed. Both are quick quiz game formats built around visual memory and anime knowledge.</p>
+          <p>For a different challenge, explore our colour games. The Colour Guessing Game is a colour hue game where you adjust hue, saturation, and brightness to match the image. It is a colour guessing game that rewards careful observation rather than a single typed answer. Choose Naruto, Bleach, One Piece, or Pokémon where available, or select Miscellaneous to mix supported series in one session.</p>
+          <p>Each mode is a practical way to test your anime IQ. Pick a category below, then select the series you know best to begin.</p>
         </div>
       </div>
     </section>

@@ -2,12 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Contact - Anime Realm">
+<Layout title="Contact - Otaku Blitz">
   <main class="flex-grow">
     <section class="bg-gradient-to-br from-[var(--color-primary)]/15 to-[var(--color-secondary)]/15 py-16 md:py-24">
       <div class="section-container text-center">
         <h1 class="gradient-text text-4xl font-black tracking-tight md:text-5xl lg:text-6xl">Contact Us</h1>
-        <p class="mx-auto mt-5 max-w-2xl text-lg md:text-xl">Have a question, feedback, or an idea for Anime Realm? Send us a message.</p>
+        <p class="mx-auto mt-5 max-w-2xl text-lg md:text-xl">Have a question, feedback, or an idea for Otaku Blitz? Send us a message.</p>
       </div>
     </section>
 
@@ -52,8 +52,8 @@ import Layout from '../layouts/Layout.astro';
   function showStatus(message: string, isError: boolean) {
     if (!status) return;
     status.textContent = message;
-    status.classList.remove('hidden', 'text-red-400', 'text-green-400');
-    status.classList.add(isError ? 'text-red-400' : 'text-green-400');
+    status.classList.remove('hidden', 'text-teal-400', 'text-green-400');
+    status.classList.add(isError ? 'text-teal-400' : 'text-green-400');
   }
 
   form?.addEventListener('submit', async (event) => {

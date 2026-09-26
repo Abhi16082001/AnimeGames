@@ -1,7 +1,7 @@
-# Anime Realm Design System
+# Otaku Blitz Design System
 
 ## Overview
-This design system establishes UI consistency for the Anime Realm anime quiz website. The system is **specifically tailored** to the project's anime/game identity and **must not resemble Vercel** or other SaaS platforms.
+This design system establishes UI consistency for the Otaku Blitz anime quiz website. The system is **specifically tailored** to the project's anime/game identity and **must not resemble Vercel** or other SaaS platforms.
 
 ## Color Palette
 

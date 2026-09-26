@@ -1,0 +1,4 @@
+[mcp_servers.astro-docs]
+startup_timeout_sec=60
+command = "npx"
+args = ["-y", "mcp-remote", "https://mcp.docs.astro.build/mcp"]

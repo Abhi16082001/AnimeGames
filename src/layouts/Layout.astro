@@ -3,34 +3,58 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PlayerRegistration from '../components/PlayerRegistration.astro';
+import { site } from '../config';
 
 interface Props {
-	title?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
 }
 
-const { title = "Anime Realm 🎮 - Dynamic Anime Games Playground" } = Astro.props;
+const {
+  title = 'Otaku Blitz | Free Anime Games Online',
+  description = 'Play free anime games online at Otaku Blitz, including character guessing, image zoom, and colour quiz challenges.',
+  image = site.defaultImage,
+  noindex = false,
+} = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, site.url).toString();
+const imageUrl = new URL(image, site.url).toString();
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+};
 ---
 
 <!doctype html>
 <html lang="en" class="h-full scroll-smooth">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="theme-color" content="#0a0a0f" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body class="flex min-h-screen flex-col bg-[var(--color-bg)] text-[var(--color-text)]">
-		<!-- Header/Navbar -->
-		<Header />
-
-		<!-- Main Page Content -->
-		<slot />
-
-		<!-- Footer -->
-		<Footer />
-
-		<!-- Player Identity Registration Modal -->
-		{Astro.url.pathname.split('/').filter(Boolean).length >= 3 && <PlayerRegistration />}
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:site_name" content={site.name} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+  </head>
+  <body class="flex min-h-screen flex-col bg-[var(--color-bg)] text-[var(--color-text)]">
+    <Header />
+    <slot />
+    <Footer />
+    {Astro.url.pathname.split('/').filter(Boolean).length >= 3 && <PlayerRegistration />}
+  </body>
 </html>
