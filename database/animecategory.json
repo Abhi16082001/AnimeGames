@@ -3,24 +3,35 @@
     "id": "naruto",
     "name": "Naruto",
     "bgimage": "linear-gradient(135deg, #FF9933 0%, #FF5500 100%)",
-    "gameCategoryIds": ["description", "zoomed", "colour"]
+    "gameCategoryIds": ["description", "zoomed", "colour"],
+    "imagepath": "/animecategory/Naruto.png"
   },
   {
     "id": "onepiece",
     "name": "One Piece",
     "bgimage": "linear-gradient(135deg, #0099FF 0%, #003399 100%)",
-    "gameCategoryIds": ["description", "zoomed", "colour"]
+    "gameCategoryIds": ["description", "zoomed", "colour"],
+    "imagepath": "/animecategory/OnePiece.png"
   },
   {
     "id": "bleach",
     "name": "Bleach",
     "bgimage": "linear-gradient(135deg, #444444 0%, #111111 100%)",
-    "gameCategoryIds": ["description", "zoomed", "colour"]
+    "gameCategoryIds": ["description", "zoomed", "colour"],
+    "imagepath": "/animecategory/Bleach.png"
   },
    {
     "id": "pokemon",
     "name": "Pokemon",
     "bgimage": "linear-gradient(135deg, #448888 0%, #115611 100%)",
-    "gameCategoryIds": ["description","zoomed"]
+    "gameCategoryIds": ["description","zoomed"],
+    "imagepath": "/animecategory/Pokemon.png"
+  },
+    {
+    "id": "dragonballz",
+    "name": "Dragon Ball Z",
+    "bgimage": "linear-gradient(135deg, #448888 0%, #115611 100%)",
+    "gameCategoryIds": ["description","zoomed"],
+    "imagepath": "/animecategory/DragonBall.png"
   }
 ]

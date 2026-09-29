@@ -4,20 +4,23 @@
     "name": "Description Game",
     "show": true,
     "gamepath": "/games/description",
-    "questionLimit": 3
+    "questionLimit": 3,
+    "imagepath": "/gamecategory/description.png"
   },
   {
     "id": "zoomed",
     "name": "Zoomed Image Game",
     "show": true,
     "gamepath": "/games/zoomed",
-    "questionLimit": 3
+    "questionLimit": 3,
+    "imagepath": "/gamecategory/zoom.png"
   },
   {
     "id": "colour",
     "name": "Colour Guessing Game",
     "show": true,
     "gamepath": "/games/colour",
-    "questionLimit": 3
+    "questionLimit": 3,
+    "imagepath": "/gamecategory/colour.png"
   }
 ]
