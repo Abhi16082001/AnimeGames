@@ -159,19 +159,11 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
                 <div id="feedback" class="hidden mt-4 p-4 rounded-lg" role="alert" aria-live="polite"></div>
               </div>
               
-              <!-- Back: reveal correct guesses, keep incorrect answers hidden -->
-              <div id="card-back" class="absolute inset-0 p-4 sm:p-6 md:p-8 hidden flex-col items-center justify-center text-center cursor-pointer">
+              <!-- Back: show only the question result and continue action -->
+              <div id="card-back" class="absolute inset-0 hidden flex-col items-center justify-center bg-[var(--color-bg)] p-4 text-center sm:p-6 md:p-8">
                 <div class="relative w-full max-w-md">
-                  <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/90 text-white font-bold text-sm shadow-lg" id="question-score">
-                    +<span id="earned-score">1.0</span>
-                  </div>
-                  <div id="reveal-image" class="relative hidden aspect-square overflow-hidden rounded-xl bg-[var(--color-bg)] bg-[var(--color-border)]" style={`background-image: url('${sessionQuestions[0].image}'); background-size: cover; background-position: center;`}>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true"></div>
-                    <h3 id="revealed-name" class="absolute bottom-4 left-4 right-4 text-left text-2xl font-bold text-white drop-shadow-lg"></h3>
-                  </div>
                   <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6 sm:p-12">
                     <p id="result-status" class="text-2xl md:text-3xl font-bold text-[var(--color-text)]">Correct</p>
-                    <p class="mt-2 text-sm text-[var(--color-text-muted)]">Tap to return to the clues</p>
                   </div>
                   <div class="mt-4 flex justify-center gap-4">
                     <button
@@ -200,8 +192,8 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
                   <div class="text-3xl font-bold gradient-text" id="final-correct">0</div>
                   <div class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Correct</div>
                 </div>
-                <div class="p-4 rounded-xl bg-teal-100/50 bg-teal-900/20">
-                  <div class="text-3xl font-bold text-teal-600 text-teal-400" id="final-wrong">0</div>
+                <div class="p-4 rounded-xl bg-red-100/50 bg-red-900/20">
+                  <div class="text-3xl font-bold text-red-600 text-red-400" id="final-wrong">0</div>
                   <div class="text-sm text-[var(--color-text-muted)] text-[var(--color-text-muted)]">Wrong</div>
                 </div>
                 <div class="p-4 rounded-xl bg-[var(--color-bg)] bg-[var(--color-border)]">
@@ -242,7 +234,7 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
 <script>
   import { getClientSessionQuestions, loadCurrentClientQuestions, saveClientSession } from '../../../utils/gameClient';
   import { submitDailyScoreOnce } from '../../../utils/api';
-  import { getPrimaryAnswer, isAnswerInList } from '../../../utils/gameSession';
+  import { isAnswerInList } from '../../../utils/gameSession';
 
   const sessionData = document.getElementById('game-session-data')?.textContent;
   if (!sessionData) throw new Error('Missing game session data');
@@ -273,10 +265,6 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
   const sessionQuestionPlural = document.getElementById('session-question-plural');
   const currentQNum = document.getElementById('current-q-num');
   const resultStatus = document.getElementById('result-status');
-  const revealImage = document.getElementById('reveal-image');
-  const revealedName = document.getElementById('revealed-name');
-  const earnedScore = document.getElementById('earned-score');
-  const questionScore = document.getElementById('question-score');
   const nextQuestionBtn = document.getElementById('next-question-btn');
   const scoreSummary = document.getElementById('score-summary');
   const finalCorrect = document.getElementById('final-correct');
@@ -337,15 +325,11 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
 
     nextQuestionBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
+      window.scrollTo(0, 0);
       if (isDailyChallenge) endGame();
       else nextQuestion();
     });
 
-    // Toggle the card face on click/tap, but only once the question is answered
-    questionCard?.addEventListener('click', () => {
-      if (!questionAnswered) return;
-      flipCard(!isFlipped);
-    });
   }
 
   if (document.readyState === 'loading') {
@@ -402,8 +386,6 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
 
     resultStatus.textContent = 'Correct';
     resultStatus.className = 'text-2xl md:text-3xl font-bold text-green-300';
-    revealImage?.classList.add('hidden');
-
     // Reset flipped state and visibility
     questionAnswered = false;
     nextQuestionBtn?.classList.add('hidden');
@@ -430,18 +412,8 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
       showFeedback(`Correct! 🎉 Score: ${earnedPoints.toFixed(1)} point${earnedPoints === 1 ? '' : 's'}`, 'success');
       revealAllLines();
 
-      // Update score display on card back
-      if (earnedScore) earnedScore.textContent = earnedPoints.toFixed(1);
-      if (questionScore) {
-        questionScore.className = 'absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/90 text-white font-bold text-sm shadow-lg';
-      }
       resultStatus.textContent = 'Correct';
       resultStatus.className = 'text-2xl md:text-3xl font-bold text-green-300';
-      if (revealImage && question.image) {
-        revealImage.style.backgroundImage = `url('${question.image}')`;
-        revealImage.classList.remove('hidden');
-      }
-      if (revealedName) revealedName.textContent = getPrimaryAnswer(question.answer);
 
       // Disable input after correct answer
       answerInput.disabled = true;
@@ -473,14 +445,8 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
         showFeedback('Wrong! Score: 0 points.', 'error');
         revealAllLines();
 
-        // Update score display on card back (0 points)
-        if (earnedScore) earnedScore.textContent = '0';
-        if (questionScore) {
-          questionScore.className = 'absolute top-4 right-4 px-3 py-1 rounded-full bg-teal-500/90 text-white font-bold text-sm shadow-lg';
-        }
         resultStatus.textContent = 'Wrong';
-        resultStatus.className = 'text-2xl md:text-3xl font-bold text-teal-300';
-        revealImage?.classList.add('hidden');
+        resultStatus.className = 'text-2xl md:text-3xl font-bold text-red-300';
 
         // Disable input
         answerInput.disabled = true;
@@ -582,7 +548,7 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
     feedback.textContent = message;
     feedback.className = `mt-4 p-4 rounded-lg ${type === 'success'
       ? 'bg-green-100 bg-green-900/30 text-green-800 text-green-300 border border-green-300 border-green-700'
-      : 'bg-teal-100 bg-teal-900/30 text-teal-800 text-teal-300 border border-teal-300 border-teal-700'}`;
+      : 'bg-red-100 bg-red-900/30 text-red-800 text-red-300 border border-red-300 border-red-700'}`;
     feedback.classList.remove('hidden');
   }
 </script>
@@ -601,7 +567,6 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
   #question-card {
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    cursor: pointer;
   }
 
   #question-card.flipped {
