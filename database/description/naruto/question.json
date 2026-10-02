@@ -2,144 +2,260 @@
   {
     "id": "naruto-desc-q1",
     "descriptions": [
-      "I am the main protagonist of my series.",
-      "I love eating Miso Chashu Ramen at Ichiraku.",
-      "I have a nine-tailed beast sealed inside of me.",
-      "My dream is to become the Hokage.",
-      "My signature jutsu is the Rasengan."
+      "They have the rarest blood type in Japan: AB negative.",
+      "They have completed over 800 official military missions for Konoha.",
+      "They are left-handed when prepping their signature elemental attack.",
+      "They received a legendary Sharingan eye as a gift from a dying friend.",
+      "Known globally as the 'Copy Ninja' and leader of Team 7."
     ],
-    "answer": ["Naruto Uzumaki","naruto uzumaki","naruto","uzumaki"],
+    "answer": ["Kakashi", "Kakashi Hatake", "Hatake Kakashi"],
     "image": "/sample.png",
     "troll": false
   },
   {
     "id": "naruto-desc-q2",
     "descriptions": [
-      "I am the last remaining loyal member of the Uchiha clan at the start.",
-      "I seek vengeance against my older brother.",
-      "My eye power is the Sharingan.",
-      "I walked away from the village to gain power from Orochimaru.",
-      "My primary lightning-style jutsu is Chidori."
+      "The only character who wears their forehead protector like a waist belt.",
+      "They belong to a clan famous for mind-alteration techniques.",
+      "They fought aggressively alongside the Akimichi clan in the war.",
+      "They had a fierce childhood rivalry with Sakura over Sasuke.",
+      "The blonde kunoichi daughter of Inoichi from the Yamanaka Clan."
     ],
-    "answer": ["Sasuke Uchiha","sasuke uchiha", "sasuke","uchiha"],
+    "answer": ["Ino", "Ino Yamanaka", "Yamanaka Ino"],
     "image": "/sample.png",
     "troll": false
   },
   {
     "id": "naruto-desc-q3",
     "descriptions": [
-      "I am known as the Copy Ninja.",
-      "I always wear a mask covering my mouth and left eye.",
-      "I love reading 'Make-Out Paradise' books.",
-      "I was the leader of Team 7.",
-      "I became the Sixth Hokage."
+      "Their actual physical body is attached to a multi-legged walker.",
+      "They belong to the Uzumaki lineage, granting them massive life force.",
+      "They controlled a close childhood friend's corpse using chakra receivers.",
+      "They wiped out Konoha with a gravitational blast called Shinra Tensei.",
+      "The tragic founder of the Akatsuki who wielded the Rinnegan."
     ],
-    "answer": ["Kakashi Hatake","kakashi hatake","kakashi","hatake"],
+    "answer": ["Nagato", "Pain", "Nagato Uzumaki"],
     "image": "/sample.png",
     "troll": false
   },
   {
     "id": "naruto-desc-q4",
     "descriptions": [
-      "I am the true mastermind of the entire shinobi world.",
-      "I defeated Madara Uchiha in one hit.",
-      "I served ramen to every major villain and hero without getting scratched.",
-      "I hold the legendary Sage of Six Bowls title.",
-      "I am the owner of Ichiraku Ramen."
+      "They successfully unlocked all five basic elemental nature transformations.",
+      "Their entire anatomy consists of threads holding stolen hearts.",
+      "They served as the permanent Akatsuki partner to the immortal Hidan.",
+      "They lived for generations after surviving a fight with the First Hokage.",
+      "The money-obsessed rogue ninja who fights using four elemental masks."
     ],
-    "answer": "Teuchi",
+    "answer": ["Kakuzu", "Kakuzuu"],
     "image": "/sample.png",
-    "troll": true
+    "troll": false
   },
   {
     "id": "naruto-desc-q5",
     "descriptions": [
-      "I am the most powerful creature in the Naruto universe.",
-      "I can speak human language and run at extreme speeds.",
-      "I have escaped from Team 7 multiple times.",
-      "I am an animal ninja wearing a headband.",
-      "I am a martial-arts-using ninja ostrich."
+      "They belong to a clan that uses insect host symbiosis.",
+      "They keep their lower face completely buried inside a high collar.",
+      "They fight using a dangerous swarm of chakra-draining Kikaichu beetles.",
+      "They felt completely insulted when Naruto failed to recognize them after the timeskip.",
+      "The quiet, sunglasses-wearing tactical member of Team 8."
     ],
-    "answer": "Condor",
+    "answer": ["Shino", "Shino Aburame", "Aburame Shino"],
     "image": "/sample.png",
-    "troll": true
+    "troll": false
   },
   {
     "id": "naruto-desc-q6",
     "descriptions": [
-      "I am the kunoichi with excellent medical ninjutsu.",
-      "I trained under Lady Tsunade.",
-      "I have pink hair and green eyes.",
-      "I am part of Team 7.",
-      "My signature technique is the Hundred Healings Mark."
+      "The only person to survive a physical brawl with Madara without ninjutsu.",
+      "They failed the Academy entry exams because they lacked usable chakra.",
+      "They opened all eight Inner Gates, turning their blood to red steam.",
+      "The eccentric martial artist known as the 'Green Beast of Konoha'.",
+      "The elite Jonin leader of Team Guy and lifelong rival to Kakashi."
     ],
-    "answer": ["Sakura Haruno","sakura haruno","sakura","haruno"],
+    "answer": ["Guy", "Might Guy", "Maito Gai", "Gai"],
     "image": "/sample.png",
     "troll": false
   },
   {
     "id": "naruto-desc-q7",
     "descriptions": [
-      "I am a legendary Sannin known as the Toad Sage.",
-      "I wrote the Make-Out series of books.",
-      "I taught the Fourth Hokage.",
-      "I have white spiky hair and wear a forehead protector with 'Oil' kanji.",
-      "I died fighting Pain in the Hidden Rain Village."
+      "The very first individual in Konoha's history to become a missing-nin.",
+      "They survived a lethal stab wound by using the forbidden Izanagi illusion.",
+      "They orchestrated the Nine-Tails attack on the night Naruto was born.",
+      "They initiated the Infinite Tsukuyomi by unlocking the Rinne Sharingan.",
+      "The legendary ancestor of the Uchiha clan who fought Hashirama Senju."
     ],
-    "answer": ["Jiraiya","jiraiya"],
+    "answer": ["Madara", "Madara Uchiha", "Uchiha Madara"],
     "image": "/sample.png",
     "troll": false
   },
   {
     "id": "naruto-desc-q8",
     "descriptions": [
-      "I am the genius of the Hyuga clan.",
-      "I have the Byakugan eye ability.",
-      "I am shy and admire Naruto deeply.",
-      "My fighting style is Gentle Fist.",
-      "I eventually marry Naruto and become the mother of Boruto."
+      "The only person from the Konoha 11 to pass the Chunin Exams first try.",
+      "Possesses a brilliant, hyper-analytical IQ that sits comfortably over 200.",
+      "Finds everyday tasks completely tedious and routinely sighs 'What a drag'.",
+      "Used shadow manipulation to outsmart and defeat the immortal Hidan.",
+      "The brilliant strategist who became the advisor to the Seventh Hokage."
     ],
-    "answer": ["Hinata Hyuga","hinata hyuga","hinata","hyuga"],
+    "answer": ["Shikamaru", "Shikamaru Nara", "Nara Shikamaru"],
     "image": "/sample.png",
     "troll": false
   },
   {
     "id": "naruto-desc-q9",
     "descriptions": [
-      "I am the strongest creature in existence.",
-      "I can summon meteors with a single hand gesture.",
-      "I possess the legendary Rinnegan in both eyes from birth.",
-      "I defeated all five Kage simultaneously without breaking a sweat.",
-      "I am Sakura's pet goldfish that she named after Sasuke."
+      "This character hates being called fat more than anything else in the world.",
+      "They can convert their body’s calorie reserves directly into raw physical chakra.",
+      "They belong to a noble Konoha clan that controls size-shifting techniques.",
+      "They grew beautiful chakra wings during a death-match against Jirobo.",
+      "Naruto's food-loving, chip-eating teammate who masters the Human Bullet Tank."
     ],
-    "answer": ["Sakura's Goldfish","Sakura","Goldfish"],
+    "answer": ["Choji", "Choji Akimichi", "Akimichi Choji"],
     "image": "/sample.png",
-    "troll": true
+    "troll": false
   },
   {
     "id": "naruto-desc-q10",
     "descriptions": [
-      "I possess the most powerful jutsu in all of shinobi history.",
-      "My technique can instantly defeat any opponent regardless of their power.",
-      "I used this ability to defeat Kaguya Otsutsuki.",
-      "My jutsu is called 'Talk no Jutsu'.",
-      "I am the main character who talks villains into becoming good guys."
+      "This ninja can fight flawlessly while completely unconscious or asleep.",
+      "They are a Taijutsu specialist who is physically incapable of using Ninjutsu or Genjutsu.",
+      "They wear heavy ankle weights that crash like boulders when dropped.",
+      "They master the 'Drunken Fist' style after drinking even a single drop of alcohol.",
+      "The bowl-cut student of Might Guy who values hard work over natural genius."
     ],
-    "answer": "Naruto Uzumaki",
+    "answer": ["Rock Lee", "Lee"],
     "image": "/sample.png",
-    "troll": true
+    "troll": false
   },
   {
     "id": "naruto-desc-q11",
     "descriptions": [
-      "I am the most feared weapon in the ninja world.",
-      "I have taken down countless enemies without mercy.",
-      "My existence terrifies even the strongest shinobi.",
-      "I am wielded by Rock Lee and might break your bones.",
-      "I am a pair of green spandex training weights."
+      "They invented the Shadow Clone Jutsu, the Flying Raijin, and the Reanimation Jutsu.",
+      "They held a deep, lifelong political distrust toward the entire Uchiha Clan.",
+      "They were a master of Water Style who could summon oceans in dry deserts.",
+      "He died in battle during the First Great Ninja War protecting his squad.",
+      "The stern, white-haired Second Hokage of the Hidden Leaf Village."
     ],
-    "answer": "Rock Lee's Leg Weights",
+    "answer": ["Tobirama", "Tobirama Senju", "Senju Tobirama", "Second Hokage"],
     "image": "/sample.png",
-    "troll": true
-  }
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q12",
+    "descriptions": [
+      "They carry a weapon called the Iron Fan that can slice through entire forests.",
+      "They are the oldest child of the Fourth Kazekage, making them Gaara's older sister.",
+      "She saved Shikamaru from Tayuya's flute genjutsu during the Sasuke Retrieval arc.",
+      "She has distinct sand-colored hair tied into four spiky pigtails.",
+      "The fierce Wind Style user from the Sand Village who eventually marries Shikamaru."
+    ],
+    "answer": ["Temari", "Temari Nara"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q13",
+    "descriptions": [
+      "They survived being completely split in half by Madara Uchiha during the war.",
+      "They are known worldwide as the greatest Medical Ninja in history.",
+      "They suffer from an intense phobia of blood due to past psychological trauma.",
+      "They use a physical transformation jutsu to hide their true elderly age.",
+      "The legendary female Sannin who became the Fifth Hokage."
+    ],
+    "answer": ["Tsunade", "Tsunade Senju", "Fifth Hokage"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q14",
+    "descriptions": [
+      "They were genetically engineered by Orochimaru using Hashirama's DNA.",
+      "They served as an elite Captain within the Anbu Black Ops under the code name Tenzo.",
+      "They were assigned to lead Team 7 as Kakashi's temporary replacement.",
+      "They are the only living Leaf ninja who naturally possesses the Wood Release Kekkei Genkai.",
+      "The deadpan shinobi known for scary eyes who keeps Naruto's chakra contained."
+    ],
+    "answer": ["Yamato", "Tenzo"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q15",
+    "descriptions": [
+      "They wear a highly unique orange spiral mask with only one eyehole.",
+      "They spent years acting like a clumsy, high-pitched idiot within the Akatsuki.",
+      "Their physical body is partially composed of a white Zetsu clone matrix.",
+      "They were Kakashi's childhood teammate who was crushed under a massive boulder.",
+      "The true identity of 'Tobi' who helped start the Fourth Great Ninja War."
+    ],
+    "answer": ["Obito", "Obito Uchiha", "Uchiha Obito", "Tobi"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q16",
+    "descriptions": [
+      "They are the only Akatsuki member who does not respect Pain or take missions seriously.",
+      "They are entirely immortal and cannot die from conventional physical injuries.",
+      "They wield a massive, three-bladed red scythe to collect blood samples.",
+      "They worship a dark, bloodthirsty deity known as Jashin through violent rituals.",
+      "The foul-mouthed rogue ninja who killed Asuma Sarutobi."
+    ],
+    "answer": ["Hidan"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q17",
+    "descriptions": [
+      "They graduated from the Academy at age 10 and became a Jonin by age 12.",
+      "They have white hair, carry a small chakra blade, and always wear a face mask.",
+      "He committed suicide after being deeply disgraced for abandoning a mission to save his friends.",
+      "He is the legendary father of Kakashi Hatake.",
+      "The elite shinobi universally feared as 'The White Fang of the Leaf'."
+    ],
+    "answer": ["Sakumo", "Sakumo Hatake", "Hatake Sakumo", "White Fang"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "naruto-desc-q18",
+    "descriptions": [
+      "They have distinct zig-zag whiskers on their cheeks but are not Naruto.",
+      "They are a Cloud Village ninja who wields seven swords simultaneously like a dancer.","They love to speak and communicate exclusively through terrible rap rhymes.",
+"They are a perfect Jinchuriki who is completely best friends with their Tailed Beast.",
+"The powerful host of the Eight-Tails and adoptive brother of the Fourth Raikage."
+],
+"answer": ["Killer B", "Killer Bee", "Killer B"],
+"image": "/sample.png",
+"troll": false
+},
+{
+"id": "naruto-desc-q19",
+"descriptions": [
+"They carry a massive ink scroll and fight using a giant paintbrush.",
+"They were raised as an emotionless assassin in Danzo's secret Root division.",
+"They originally struggled to make friends, often reading books on social skills.",
+"He joined Team 7 as Sasuke Uchiha's official replacement.",
+"The pale, artistic shinobi who can bring his ink drawings to life."
+],
+"answer": ["Sai", "Sai Yamanaka"],
+"image": "/sample.png",
+"troll": false
+},
+{
+"id": "naruto-desc-q20",
+"descriptions": [
+"They wear a unique head protector that frames their face like armor.",
+"They are Gaara's older brother and use a unique purple face paint style.",
+"They fight exclusively using three iconic combat puppets: Crow, Black Ant, and Salamander.",
+"He was completely terrified of his younger brother during their childhood.",
+"The master puppet master from the Sand Village who acts as Gaara's bodyguard."
+],
+"answer": ["Kankuro", "Kankurou"],
+"image": "/sample.png",
+"troll": false
+}
 ]

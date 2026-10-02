@@ -1,21 +1,21 @@
 [
   {
     "id": "naruto-zoomed-q1",
-    "answer": "Naruto Uzumaki",
+    "answer": "naruto",
     "image": "/sample.png",
     "troll": false,
     "zoom": { "scale": 2.5, "position": { "x": 50, "y": 40 } }
   },
   {
     "id": "naruto-zoomed-q2",
-    "answer": "Sasuke Uchiha",
+    "answer": "naruto",
     "image": "/sample.png",
     "troll": false,
     "zoom": { "scale": 2.5, "position": { "x": 50, "y": 45 } }
   },
   {
     "id": "naruto-zoomed-q3",
-    "answer": "Kakashi Hatake",
+    "answer": "naruto",
     "image": "/sample.png",
     "troll": false,
     "zoom": { "scale": 2.5, "position": { "x": 50, "y": 40 } }
@@ -29,35 +29,35 @@
   },
   {
     "id": "naruto-zoomed-q5",
-    "answer": "Condor",
+    "answer": "naruto",
     "image": "/sample.png",
     "troll": false,
     "zoom": { "scale": 3.0, "position": { "x": 50, "y": 50 } }
   },
   {
     "id": "naruto-zoomed-q6",
-    "answer": "Sakura Haruno",
+    "answer": "naruto",
     "image": "/sample.png",
     "troll": false,
     "zoom": { "scale": 2.5, "position": { "x": 50, "y": 40 } }
   },
   {
     "id": "naruto-zoomed-q7",
-    "answer": "Jiraiya",
+    "answer": "naruto",
     "image": "/sample.png",
     "troll": false,
     "zoom": { "scale": 2.5, "position": { "x": 50, "y": 45 } }
   },
   {
     "id": "naruto-zoomed-q8",
-    "answer": "Hinata Hyuga",
+    "answer": "naruto",
     "image": "/sample.png",
     "troll": false,
     "zoom": { "scale": 2.5, "position": { "x": 50, "y": 40 } }
   },
   {
     "id": "naruto-zoomed-q9",
-    "answer": "Sakura's Goldfish",
+    "answer": "naruto",
     "image": "/sample.png",
     "troll": true,
     "zoom": { "scale": 3.0, "position": { "x": 50, "y": 50 } }

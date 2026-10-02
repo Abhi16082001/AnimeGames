@@ -162,6 +162,13 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
               <!-- Back: show only the question result and continue action -->
               <div id="card-back" class="absolute inset-0 hidden flex-col items-center justify-center bg-[var(--color-bg)] p-4 text-center sm:p-6 md:p-8">
                 <div class="relative w-full max-w-md">
+                  <button
+                    id="reveal-image"
+                    type="button"
+                    class="relative mx-auto mb-4 hidden aspect-square w-full max-w-xs overflow-hidden rounded-xl bg-[var(--color-surface)] bg-cover bg-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+                    style={`background-image: url('${sessionQuestions[0].image}');`}
+                    aria-label="Show clues again"
+                  ></button>
                   <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6 sm:p-12">
                     <p id="result-status" class="text-2xl md:text-3xl font-bold text-[var(--color-text)]">Correct</p>
                   </div>
@@ -250,6 +257,7 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
   let isFlipped = false;
   let currentLineIndex = 0;
   let questionAnswered = false;
+  let canReviewCorrectAnswer = false;
   let totalQuestions = sessionQuestions.length;
 
   // DOM Elements
@@ -265,6 +273,7 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
   const sessionQuestionPlural = document.getElementById('session-question-plural');
   const currentQNum = document.getElementById('current-q-num');
   const resultStatus = document.getElementById('result-status');
+  const revealImage = document.getElementById('reveal-image') as HTMLButtonElement | null;
   const nextQuestionBtn = document.getElementById('next-question-btn');
   const scoreSummary = document.getElementById('score-summary');
   const finalCorrect = document.getElementById('final-correct');
@@ -330,6 +339,17 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
       else nextQuestion();
     });
 
+    revealImage?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      if (isFlipped && !revealImage.classList.contains('hidden')) {
+        flipCard(false);
+      }
+    });
+
+    questionCard?.addEventListener('click', () => {
+      if (questionAnswered && canReviewCorrectAnswer && !isFlipped) flipCard(true);
+    });
+
   }
 
   if (document.readyState === 'loading') {
@@ -386,8 +406,10 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
 
     resultStatus.textContent = 'Correct';
     resultStatus.className = 'text-2xl md:text-3xl font-bold text-green-300';
+    revealImage?.classList.add('hidden');
     // Reset flipped state and visibility
     questionAnswered = false;
+    canReviewCorrectAnswer = false;
     nextQuestionBtn?.classList.add('hidden');
     flipCard(false);
   }
@@ -408,12 +430,17 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
       scores.push(earnedPoints);
       if (!isDailyChallenge) playedQuestionIds.push(question.id);
       questionAnswered = true;
+      canReviewCorrectAnswer = true;
 
       showFeedback(`Correct! 🎉 Score: ${earnedPoints.toFixed(1)} point${earnedPoints === 1 ? '' : 's'}`, 'success');
       revealAllLines();
 
       resultStatus.textContent = 'Correct';
       resultStatus.className = 'text-2xl md:text-3xl font-bold text-green-300';
+      if (revealImage && question.image) {
+        revealImage.style.backgroundImage = `url('${question.image}')`;
+        revealImage.classList.remove('hidden');
+      }
 
       // Disable input after correct answer
       answerInput.disabled = true;
@@ -441,12 +468,14 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
         scores.push(0);
         if (!isDailyChallenge) playedQuestionIds.push(question.id);
         questionAnswered = true;
+        canReviewCorrectAnswer = false;
 
         showFeedback('Wrong! Score: 0 points.', 'error');
         revealAllLines();
 
         resultStatus.textContent = 'Wrong';
         resultStatus.className = 'text-2xl md:text-3xl font-bold text-red-300';
+        revealImage?.classList.add('hidden');
 
         // Disable input
         answerInput.disabled = true;
