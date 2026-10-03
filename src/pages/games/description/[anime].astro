@@ -343,12 +343,16 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
     revealImage?.addEventListener('click', (event) => {
       event.stopPropagation();
       if (isFlipped && !revealImage.classList.contains('hidden')) {
+        window.scrollTo(0, 0);
         flipCard(false);
       }
     });
 
     questionCard?.addEventListener('click', () => {
-      if (questionAnswered && canReviewCorrectAnswer && !isFlipped) flipCard(true);
+      if (questionAnswered && canReviewCorrectAnswer && !isFlipped) {
+        window.scrollTo(0, 0);
+        flipCard(true);
+      }
     });
 
   }
@@ -449,12 +453,16 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
 
       if (isDailyChallenge) {
         setTimeout(() => {
+          window.scrollTo(0, 0);
           flipCard(true);
           nextQuestionBtn?.classList.remove('hidden');
         }, 800);
       } else {
         nextQuestionBtn?.classList.remove('hidden');
-        setTimeout(() => flipCard(true), 800);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          flipCard(true);
+        }, 800);
       }
     } else {
       // Wrong answer - reveal next line
@@ -484,12 +492,16 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
 
         if (isDailyChallenge) {
           setTimeout(() => {
+            window.scrollTo(0, 0);
             flipCard(true);
             nextQuestionBtn?.classList.remove('hidden');
           }, 1500);
         } else {
           nextQuestionBtn?.classList.remove('hidden');
-          setTimeout(() => flipCard(true), 1500);
+          setTimeout(() => {
+            window.scrollTo(0, 0);
+            flipCard(true);
+          }, 1500);
         }
       }
     }
