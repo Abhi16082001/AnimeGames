@@ -161,7 +161,7 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
               
               <!-- Back: show only the question result and continue action -->
               <div id="card-back" class="absolute inset-0 hidden flex-col items-center justify-center bg-[var(--color-bg)] p-4 text-center sm:p-6 md:p-8">
-                <div class="relative w-full max-w-md">
+                <div id="result-content" class="relative w-full max-w-md">
                   <button
                     id="reveal-image"
                     type="button"
@@ -264,6 +264,7 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
   const questionCard = document.getElementById('question-card');
   const cardFront = document.getElementById('card-front');
   const cardBack = document.getElementById('card-back');
+  const resultContent = document.getElementById('result-content');
   const answerInput = document.getElementById('answer-input');
   const submitBtn = document.getElementById('submit-answer');
   const feedback = document.getElementById('feedback');
@@ -513,9 +514,11 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
       // Render the back before rotating so it is visible as the card turns
       cardBack?.classList.remove('hidden');
       cardBack?.classList.add('flex');
+      resizeCardToResult();
     } else {
       // Keep the front in normal flow so the card keeps its height when flipped
       cardFront?.classList.remove('hidden');
+      if (questionCard) questionCard.style.height = '';
     }
 
     questionCard?.classList.toggle('flipped', showBack);
@@ -526,6 +529,15 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
         cardBack?.classList.remove('flex');
       }, 300);
     }
+  }
+
+  function resizeCardToResult() {
+    if (!questionCard || !cardBack || !resultContent) return;
+
+    const backStyles = window.getComputedStyle(cardBack);
+    const verticalPadding = parseFloat(backStyles.paddingTop) + parseFloat(backStyles.paddingBottom);
+    const borderHeight = 2;
+    questionCard.style.height = `${Math.ceil(resultContent.offsetHeight + verticalPadding + borderHeight)}px`;
   }
 
   function nextQuestion() {
