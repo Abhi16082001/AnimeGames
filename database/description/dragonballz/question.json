@@ -1,0 +1,261 @@
+[
+  {
+    "id": "db-desc-q1",
+    "descriptions": [
+      "This fighter holds the record for being the very first person onscreen to cut off a Saiyan's tail.",
+      "They started their career as a desert bandit who was terrified of women.",
+      "They are famously mocked by fans for their iconic 'dead in a crater' pose.",
+      "They control a unique physical ki slicing attack called the Spirit Ball.",
+      "The scarred martial artist whose constant companion is a floating blue cat."
+    ],
+    "answer": ["Yamcha", "Yamuya"],
+    "image": "/DescriptionCorrect/DragonBall/yamcha.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q2",
+    "descriptions": [
+      "In the original manga, this character is the only Z-Fighter who never speaks a single word to Piccolo.",
+      "They have a bizarre birth defect where they completely lack a nose.",
+      "They have tragically died more times than almost any other Earthling warrior.",
+      "They surprised everyone by marrying Android 18 in the Majin Buu saga.",
+      "Goku's bald best friend who uses the signature Destructo Disc attack."
+    ],
+    "answer": ["Krillin", "Kuririn", "krilin"],
+    "image": "/DescriptionCorrect/DragonBall/krillin.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q3",
+    "descriptions": [
+      "This character is the only person to ever successfully land a bite on Frieza, Majin Buu, and Beerus in battle.",
+      "This warrior surprisingly possesses a legitimate driver's license on Earth.",
+      "They refuse to use standard Godly Ki but reached a massive form called 'Beast'.",
+      "They famously defeated Cell after unlocking Super Saiyan 2 as a kid.",
+      "Goku's oldest son who was primarily raised and trained by Piccolo."
+    ],
+    "answer": ["Gohan", "Great Saiyaman", "Greatsaiyaman"],
+    "image": "/DescriptionCorrect/DragonBall/gohan.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q4",
+    "descriptions": [
+      "Akira Toriyama revealed in an interview that this character's favorite food is actually water.",
+      "They shed their evil identity by bonding with a young boy named Gohan.",
+      "They routinely regenerate missing limbs during brutal physical fights.",
+      "They permanently fused bodies with both Nail and Kami to gain power.",
+      "The stoic, green-skinned warrior who serves as the tactical brains of the team."
+    ],
+    "answer": ["Piccolo", "Piccolo Jr", "Piccolojr", "Ma Junior", "Majunior"],
+    "image": "/DescriptionCorrect/DragonBall/picolo.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q5",
+    "descriptions": [
+      "This character is legally a princess due to her father's massive fiery kingdom.",
+      "She met her future husband when she accidentally kicked him off a flying cloud.",
+      "She famously terrifies the strongest universe-destroying warriors with her temper.",
+      "She prioritizes her children's academic studies over saving the Earth.",
+      "Goku's fiercely protective wife and the daughter of the Ox-King."
+    ],
+    "answer": ["Chi-Chi", "Chichi", "Princess Chi-Chi", "Princesschichi"],
+    "image": "/DescriptionCorrect/DragonBall/chichi.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q6",
+    "descriptions": [
+      "This character is heavily implied to be the main reason Tien never got a girlfriend, as she chased him away.",
+      "They have a bizarre biological condition where they sneeze to swap personalities.",
+      "Their hair dramatically changes from dark blue to bright blonde when triggered.",
+      "They completely disappeared from the main storyline for the entirety of Dragon Ball Z.",
+      "The dual-personality girl who regularly carries submachine guns."
+    ],
+    "answer": ["Launch", "Ranchu"],
+    "image": "/DescriptionCorrect/DragonBall/launch.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q7",
+    "descriptions": [
+      "This character single-handedly slapped the God of Destruction, Beerus, across the face for ruining her party.",
+      "They are a brilliant mechanical prodigy who built a functioning radar at age sixteen.",
+      "They routinely use the Dragon Balls purely for cosmetic plastic surgery adjustments.",
+      "She is the wealthy heiress of the multi-billion-dollar Capsule Corporation.",
+      "The blue-haired tech genius who has been Goku's companion since day one."
+    ],
+    "answer": ["Bulma", "Bulma Briefs", "Bulmabriefs"],
+    "image": "/DescriptionCorrect/DragonBall/bulma.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q8",
+    "descriptions": [
+      "According to Daizenshuu guides, this warrior belongs to a rare clan of Earthlings descended from aliens.",
+      "They possess a rare physical trait consisting of three fully functional eyes.",
+      "They successfully pinned down Semi-Perfect Cell using a spam of Tri-Beam blasts.",
+      "They maintain a lifelong, inseparable brotherly bond with a small floating mime.",
+      "The tall, disciplined Z-Fighter who famously trains on waterfalls with Chiaotzu."
+    ],
+    "answer": ["Tien", "Tien Shinhan", "Tienshinhan", "Tenshinhan"],
+    "image": "/DescriptionCorrect/DragonBall/Tien.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q9",
+    "descriptions": [
+      "They maintain their extreme lifespan by eating a magical item called the Paradise Herb.",
+      "They spent 50 years mastering a technique that Goku learned in less than a minute.",
+      "They entered the World Tournament under the secret alias 'Jackie Chun'.",
+      "They carry a massive turtle shell on their back and love adult magazines.",
+      "Goku's perverted, elderly first martial arts teacher."
+    ],
+    "answer": ["Master Roshi", "Masterroshi", "Roshi", "Kame Sennin", "Kamesennin", "Jackie Chun", "Jackiechun"],
+    "image": "/DescriptionCorrect/DragonBall/roshi.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q10",
+    "descriptions": [
+      "This entity exists as a primordial magical being that has actually been alive since time immemorial.",
+      "They can instantly convert their enemies into chocolate, candy, or cookies.",
+      "They possess a hyper-regenerative physical body that acts like pink chewing gum.",
+      "They became best friends with Mr. Satan after adopting a stray puppy.",
+      "The chubby, child-like pink entity who loves eating sweets."
+    ],
+    "answer": ["Majin Buu", "Majinbuu", "Good Buu", "Goodbuu", "Fat Buu", "Fatbuu", "Buu"],
+    "image": "/DescriptionCorrect/DragonBall/majinbuu.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q11",
+    "descriptions": [
+      "This character is the only mortal across all universes to win an entire multiversal tournament alone.",
+      "This character is actually a mechanical cyborg originally born human as 'Lapis'.",
+      "They initially died when their internal emergency bomb switch was activated.",
+      "They work as a dedicated wildlife park ranger protecting an island of Minotaurs.",
+      "The cool, scarf-wearing twin brother of Android 18."
+    ],
+    "answer": ["Android 17", "Android17", "Lapis", "Cyborg 17", "Cyborg17"],
+    "image": "/DescriptionCorrect/DragonBall/android17.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q12",
+    "descriptions": [
+      "This character is the only Saiyan hybrid to achieve a form called Super Saiyan Rage.",
+      "They are a time-traveling warrior who arrived in a Capsule Corp time machine.",
+      "They sliced Mecha-Frieza into tiny pieces using a signature broadsword.",
+      "They grew up in a dark, apocalyptic future ruined by cruel androids.",
+      "The lavender-haired son of Vegeta who traveled back to save the past."
+    ],
+    "answer": ["Trunks", "Future Trunks", "Futuretrunks"],
+    "image": "/DescriptionCorrect/DragonBall/futuretrunks.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q13",
+    "descriptions": [
+      "This character managed to achieve a massive power boost by training for the first time ever in their life.",
+      "They belong to an elite, horned alien race known as the Frost Demons.",
+      "They survived being cut in half and caught in Planet Namek's explosion.",
+      "They achieved forms called 'Mecha', 'Golden', and recently 'Black'.",
+      "The ruthless galactic tyrant responsible for wiping out the Saiyan race."
+    ],
+    "answer": ["Frieza", "Freeza"],
+    "image": "/DescriptionCorrect/DragonBall/frezza.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q14",
+    "descriptions": [
+      "This character fused permanently with a witch centuries ago, which drastically altered their appearance and powers.",
+      "This entity is millions of years old but spent centuries trapped inside the Z Sword.",
+      "They unlocked Gohan’s latent potential through a bizarre, hours-long dancing ritual.",
+      "They gave up their own life force so Goku could return to Earth and fight Buu.",
+      "The wrinkly, eccentric deity who leads the higher ranks of the universe."
+    ],
+    "answer": ["Old Kai", "Oldkai", "Elder Kai", "Elderkai", "Rou Kaioshin", "Roukaioshin"],
+    "image": "/DescriptionCorrect/DragonBall/kai.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q15",
+    "descriptions": [
+      "This character once safely absorbed and ingested an entire blast from Super Saiyan Goku without taking damage.",
+      "They live in a massive, floating palace located directly above Korin's Tower.",
+      "They are an immortal, djinn-like entity who serves as the attendant to Kami.",
+      "They meticulously tend to the palace gardens and look after the Dragon Balls.",
+      "The turban-wearing, pitch-black character who serves the Guardian of Earth."
+    ],
+    "answer": ["Mr. Popo", "MrPopo", "Mr Popo", "Popo"],
+    "image": "/DescriptionCorrect/DragonBall/popo.webp",
+    "troll": false
+  },
+  {
+    "id": "db-desc-q16",
+    "descriptions": [
+      "This character wears a rare potara earring on the opposite ear of a typical Supreme Kai.",
+      "They are the direct genetic clone of Goku created from an alternate timeline.",
+      "They despise mortals and launched a systematic slaughter called the 'Zero Mortals Plan'.",
+      "They utilize a signature purple ki blade that manifests directly from their hand.",
+      "The rogue Supreme Kai apprentice Zamasu who stole Goku's physical body."
+    ],
+    "answer": ["Goku Black", "Gokublack", "Black Goku", "Blackgoku", "Goku Burakku", "Gokuburakku"],
+    "image": "/DescriptionCorrect/DragonBall/blackgoku.webp",
+    "troll": false
+  },
+  {"id": "db-desc-q17",
+"descriptions": [
+"This entity's character design was directly inspired by Akira Toriyama's old, hairless Cornish Rex cat.",
+"They are a purple alien deity who absolutely loves gourmet Earth food.",
+"They spent thousands of years asleep until dreaming of a Super Saiyan God.",
+"They can instantly erase targets out of physical existence using the word 'Hakai'.",
+"The temperamental God of Destruction belonging to Universe 7."
+],
+"answer": ["Beerus", "Birusu", "Lord Beerus", "Lordbeerus"],
+"image": "/DescriptionCorrect/DragonBall/beerus.webp",
+"troll": false
+},
+{
+"id": "db-desc-q18",
+"descriptions": [
+"This master martial artist has lived on Earth for over 3000 years in complete isolation.",
+"They are a giant, magical talking cat who resides atop a massive tower.",
+"They are the exclusive grower of the life-saving, stamina-restoring Senzu Beans.",
+"They trained a young Goku by making him chase them to retrieve Holy Water.",
+"The white, sword-carrying martial arts master cat who lives in the clouds."
+],
+"answer": ["Korin", "Karin", "Master Korin", "Masterkorin"],
+"image": "/DescriptionCorrect/DragonBall/korin.webp",
+"troll": false
+},
+{
+"id": "db-desc-q19",
+"descriptions": [
+"This warrior's supreme power is completely derived from absolute, unyielding emotional trauma from their childhood.",
+"They are a massive, muscular alien warrior who belongs to the Pride Troopers.",
+"They meditate constantly in battle to keep their overwhelming power stable.",
+"They fought Goku's Mastered Ultra Instinct in the finale of the Tournament of Power.",
+"The gray, alien-looking ultimate powerhouse champion of Universe 11."
+],
+"answer": ["Jiren", "Jiren the Gray", "Jirenthegray"],
+"image": "/DescriptionCorrect/DragonBall/jiren.webp",
+"troll": false
+},
+{
+"id": "db-desc-q20",
+"descriptions": [
+"When translated literally from Hanzi/Kanji, this character's name means 'God Dragon'.",
+"This entity is a massive, eternal dragon summoned using seven glowing artifacts.",
+"They were temporarily killed when King Piccolo physically blasted them to dust.",
+"They grant wishes but will immediately turn to stone and scatter if completed.",
+"The legendary green Dragon of Earth who famously grants three wishes."
+],
+"answer": ["Shenron", "Shenlong", "Eternal Dragon", "Eternaldragon"],
+"image": "/DescriptionCorrect/DragonBall/shenron.webp",
+"troll": false
+}
+]

@@ -4,23 +4,23 @@
     "name": "Description Game",
     "show": true,
     "gamepath": "/games/description",
-    "questionLimit": 3,
-    "imagepath": "/gamecategory/description.png"
+    "questionLimit": 4,
+    "imagepath": "/gamecategory/description.webp"
   },
   {
     "id": "zoomed",
     "name": "Zoomed Image Game",
     "show": true,
     "gamepath": "/games/zoomed",
-    "questionLimit": 3,
-    "imagepath": "/gamecategory/zoom.png"
+    "questionLimit": 4,
+    "imagepath": "/gamecategory/zoom.webp"
   },
   {
     "id": "colour",
     "name": "Colour Guessing Game",
     "show": true,
     "gamepath": "/games/colour",
-    "questionLimit": 3,
-    "imagepath": "/gamecategory/colour.png"
+    "questionLimit": 4,
+    "imagepath": "/gamecategory/colour.webp"
   }
 ]

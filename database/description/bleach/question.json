@@ -1,67 +1,261 @@
 [
   {
-    "id": "bleach-desc-q1",
+    "id": "bleach-quiz-q1",
     "descriptions": [
-      "I am a high school student who can see ghosts.",
-      "I obtained Soul Reaper powers from Rukia Kuchiki.",
-      "My Zanpakuto's name is Zangetsu.",
-      "My signature attack is Getsuga Tensho.",
-      "I have bright orange hair."
+      "They wear a bell-and-patch limiter to suppress their massive spiritual pressure.",
+      "The only captain to get the job without passing the mandatory Bankai exam.",
+      "Their surname comes from the lawless 80th District of North Rukongai.",
+      "They fought for centuries before learning their sword's name, Nozarashi.",
+      "The scar-faced, battle-hungry Captain of the 11th Division."
     ],
-    "answer": "Ichigo Kurosaki",
+    "answer": ["Kenpachi", "Kenpachi Zaraki", "Zaraki Kenpachi", "Zaraki"],
     "image": "/sample.png",
     "troll": false
   },
   {
-    "id": "bleach-desc-q2",
+    "id": "bleach-quiz-q2",
     "descriptions": [
-      "I am the captain of the 10th Division in the Gotei 13.",
-      "I am the youngest captain in Soul Society history.",
-      "My Zanpakuto is the ice-type Hyorinmaru.",
-      "I have white hair and am often frustrated at being treated like a child.",
-      "My name is..."
+      "Official databooks state their absolute favorite food is Taiyaki.",
+      "They were originally the 6th Seat of the 11th Division before moving up.",
+      "They fought their own Captain during the Soul Society rescue arc.",
+      "Their Zanpakutō, Zabimaru, takes the form of a skeletal snake-sword.",
+      "The red-headed, tattooed Lieutenant of the 6th Division."
     ],
-    "answer": "Toshiro Hitsugaya",
+    "answer": ["Renji", "Renji Abarai", "Abarai Renji", "Abarai"],
     "image": "/sample.png",
     "troll": false
   },
   {
-    "id": "bleach-desc-q3",
+    "id": "bleach-quiz-q3",
     "descriptions": [
-      "I am the captain of the 11th Division.",
-      "I wear an eyepatch that devours my spiritual pressure.",
-      "I have bells in my hair to give my enemies a fair warning.",
-      "I do not know the name of my Zanpakuto for a long time.",
-      "I live for the thrill of a good battle."
+      "The only character whose Shikai and Bankai share the spoken name, Minazuki.",
+      "The release forms are distinguished entirely by writing different Kanji characters.",
+      "They hid a chest scar under their captain's cloak to conceal a past sin.",
+      "They were the first person in history to hold the deadly title of 'Kenpachi'.",
+      "The gentle-looking 4th Division Captain who was secretly an elite killer."
     ],
-    "answer": "Kenpachi Zaraki",
+    "answer": ["Unohana", "Retsu Unohana", "Yachiru Unohana", "Unohana Retsu", "Unohana Yachiru"],
+    "image": "/sample.png",
+    "troll": false
+  },
+ {
+    "id": "bleach-quiz-q4",
+    "descriptions": [
+      "This Quincy was chosen for the Schutzstaffel because Yhwach recognized his unique potential to survive any lethal environment.",
+      "They possess the Schrift letter 'D', granting the ability 'The Deathdealing'.",
+      "They turn harmless substances like blood into lethal poison by drinking it.",
+      "They fought a highly technical battle against Urahara in the Royal Palace.",
+      "The eccentric Sternritter who wears structural safety goggle glasses."
+    ],
+    "answer": ["Askin", "Askin Nakk Le Var", "Askin Nakk LeVaar", "Askin Nakklavaar", "Askin Nak Le Vaar"],
     "image": "/sample.png",
     "troll": false
   },
   {
-    "id": "bleach-desc-q4",
+    "id": "bleach-quiz-q5",
     "descriptions": [
-      "I am the creator of the entire Bleach universe.",
-      "I am a literal drawing utensil.",
-      "I defeated Aizen in one stroke.",
-      "I am the legendary ink pen used by Tite Kubo.",
-      "Bow down before the almighty pen!"
+      "This character's hollow hole is located through their lower neck.",
+      "The only Espada who achieves a secondary release state called Segunda Etapa.",
+      "They represent the aspect of death known as Nihilism.",
+      "They fought Ichigo atop Las Noches, forcing his Full Hollow awakening.",
+      "The pale, green-teardrop masked 4th Espada who throws spears of light."
     ],
-    "answer": "Tite Kubo's Pen",
+    "answer": ["Ulquiorra", "Ulquiorra Cifer", "Ulquiorra Schiffer", "Ulquiorra Ciffer"],
     "image": "/sample.png",
-    "troll": true
+    "troll": false
   },
   {
-    "id": "bleach-desc-q5",
+    "id": "bleach-quiz-q6",
     "descriptions": [
-      "I am the strongest Soul Reaper who ever lived.",
-      "I never fight seriously and always sleep on duty.",
-      "I have a plush body and a lion's mane.",
-      "I am a Mod-Soul trapped in a stuffed lion.",
-      "My name is..."
+      "They love playing classical music and frequently quote artistic poetry in battle.",
+      "A former Captain hollowified by Aizen, forced to hide as a rogue Visored.",
+      "Their Shikai, Kinshara, takes the form of a long golden whip with a flower tip.",
+      "Their complex Bankai utilizes a physical performance of illusionary music dancers.",
+      "The wavy blonde hair soul reaper who returned to lead the 3rd Division."
     ],
-    "answer": "Kon",
+    "answer": ["Rojuro", "Rose", "Rojuro Otoribashi", "Otoribashi Rojuro", "RojuroOtoribashi"],
     "image": "/sample.png",
-    "troll": true
-  }
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q7",
+    "descriptions": [
+      "Their master, Sōken, died because Soul Reapers delayed their rescue.",
+      "They use a high-speed Quincy movement option called Hirenkyaku.",
+      "They defeated Captain Mayuri using a tool called the Sanrei Glove.",
+      "They were appointed by Yhwach to serve as the Wandenreich successor.",
+      "Ichigo's brilliant, glasses-wearing rival who is the main cast Quincy."
+    ],
+    "answer": ["Uryu", "Uryu Ishida", "Ishida Uryu", "Ishida"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q8",
+    "descriptions": [
+      "They spent over a century on Earth running a shady convenience shop.",
+      "The founding president of the Soul Society's Research Institute.",
+      "They invented the highly volatile, reality-warping artifact called the Hōgyoku.",
+      "Their Zanpakutō, Benihime, releases crimson energy shields upon command.",
+      "The brilliant, bucket-hat wearing ex-Captain of the 12th Division."
+    ],
+    "answer": ["Kisuke", "Kisuke Urahara", "Urahara Kisuke", "Urahara"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q9",
+    "descriptions": [
+      "This weapon's real forging lake is hidden deep in the Royal Palace.",
+      "It was structurally shattered by Yamamoto during a past conflict 1,000 years ago.",
+      "Upon activation, it manifests four directional forms: North, South, East, West.",
+      "Its heat evaporates all water vapor in the Soul Society instantly.",
+      "The fire-type Bankai belonging to Captain-Commander Yamamoto, Zanka no Tachi."
+    ],
+    "answer": ["Zanka no Tachi", "Zankanotachi", "Yamamoto Bankai", "YamamotosBankai"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q10",
+    "descriptions": [
+      "The only Quincy in history born completely unable to manipulate Reishi.",
+      "They survived the Holy Selection because Yhwach needed their soul-sharing powers.",
+      "They carry the Schrift letter 'B' and act as the Grand Master.",
+      "They possess a signature, reality-altering shield capability called The Balance.",
+      "The long, blonde-haired elite Sternritter who serves as Yhwach's top proxy."
+    ],
+    "answer": ["Jugram", "Jugram Haschwalth", "Haschwalth Jugram", "Haschwalth"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q11",
+    "descriptions": [
+      "Born inside the prestigious Shihōin clan, inheriting the title Goddess of Flash.",
+      "They spent a century hiding out on Earth disguised as a talking black cat.",
+      "They refuse to use a Zanpakutō, relying on martial arts and Shunko instead.",
+      "She masterminded the secret escape of Urahara and the Visoreds long ago.",
+      "The purple-haired, highly athletic ex-Captain who loves teasing Ichigo."
+    ],
+    "answer": ["Yoruichi", "Yoruichi Shihoin", "Shihoin Yoruichi", "YoruichiShihoin"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q12",
+    "descriptions": [
+      "Their physical spirit identity was hidden deep inside Ichigo under the name Zangetsu.",
+      "The absolute progenitor who gave birth to the entire Quincy race.",
+      "They launched an invasion from a hidden shadow dimension called the Wandenreich.",
+      "They use a multi-eyed divine ocular ability called The Almighty to rewrite timelines.",
+      "The supreme Emperor of the Quincies and main villain of the Blood War arc."
+    ],
+    "answer": ["Yhwach", "Juha Bach", "Juhabach", "Yuhabaaku"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q13",
+    "descriptions": [
+      "The only Visored member who uses a gold-ringed pendulum weapon to fight.",
+      "Their Shikai, Sakanade, creates a mist that flips an opponent's vision upside-down.",
+      "They served as Aizen's direct Captain long ago, completely falling for his illusions.",
+      "They wear a distinct flat cap and have a noticeable bob-cut hairstyle.",
+      "The smooth-talking blonde Shinigami who currently leads the 5th Division."
+    ],
+    "answer": ["Shinji", "Shinji Hirako", "Hirako Shinji", "ShinjiHirako"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q14",
+    "descriptions": [
+      "Their physical body is modified to instantly replace broken internal organs.",
+      "They carry backup organs stored inside their Lieutenant's flesh for serum repair.",
+      "Their Bankai manifests as a colossal, grotesque baby caterpillar that breathes poison.",
+      "They are responsible for performing brutal experiments on Quincy prisoners.",
+      "The terrifying, makeup-wearing mad scientist Captain of the Gotei 13."
+    ],
+    "answer": ["Mayuri", "Mayuri Kurotsuchi", "Kurotsuchi Mayuri", "Kurotsuchi"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q15",
+    "descriptions": [
+      "This weapon's baseline Shikai release command is 'Sit Upon the Frozen Heavens'.",
+      "Celebrated as the most powerful ice-elemental sword in the Soul Society.",
+      "Its Bankai form manifests icy dragon wings on its young wielder's back.",
+      "In the Blood War, it achieved a mature, adult state that flash-freezes all matter.",
+      "The legendary ice blade Hyōrinmaru, wielded by Hitsugaya."
+    ],
+    "answer": ["Hyorinmaru", "Hyouorinmaru", "Hitsugaya Zanpakuto", "HitsugayasSword"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q16",
+    "descriptions": [
+      "The only Fullbringer whose special item lets them insert themselves into memories.",
+      "Their unique ability, Book of the End, treats a sword bookmark as a rewrite tool.",
+      "They shattered Ichigo's mental state by making his friends think they were family.",
+      "They secretly served as a strategic execution puppet for Kūgo Ginjō.",
+      "The calm, book-reading rogue warrior who wears a distinct suspender outfit."
+    ],
+    "answer": ["Tsukishima", "Shukurou Tsukishima", "Shukuro Tsukishima", "ShukurouTsukishima", "ShukuroTsukishima"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "bleach-quiz-q17",
+    "descriptions": [
+      "They were born a Fullbringer after a Hollow spirit attacked their pregnant mother.","They carry affiliation number 001 as the absolute founder of the organization Xcution.",
+"Long before Ichigo, they were issued a badge to serve as the very first Substitute Shinigami.",
+"They use a massive Fullbring broadsword weapon called the Cross of Scaffold.",
+"The rogue leader who manipulated Ichigo in the Lost Agent arc to steal his physical powers."
+],
+"answer": ["Kugo", "Kugo Ginjo", "Ginjo Kugo", "Ginjo"],
+"image": "/sample.png",
+"troll": false
+},
+{
+"id": "bleach-quiz-q18",
+"descriptions": [
+"A Zero Division member carrying the title 'Monk Who Calls the Real Name'.",
+"They are responsible for inventing basic terms like Shikai and Bankai.",
+"Their brush, Ichimonji, sprays black ink that strips a target of its name and power.",
+"They fought Yhwach, nearly erasing his existence by renaming him a black ant.",
+"The massive, bearded leader of the Royal Guard with oversized prayer beads."
+],
+"answer": ["Ichibe", "Ichibe Hyosube", "Hyosube Ichibe", "Ichibei"],
+"image": "/sample.png",
+"troll": false
+},
+{
+"id": "bleach-quiz-q19",
+"descriptions": [
+"This Sternritter possesses the Schrift letter 'F' ability known as 'The Fear'.",
+"They utilize Reishi thorns that cause targets to suffer absolute psychological terror.",
+"During the initial Wandenreich assault, they stole Byakuya Kuchiki's Bankai.",
+"Their face is hidden behind a black leather mask featuring metallic studs.",
+"The eerie Quincy warrior who was eventually incinerated by Rukia's new Bankai."
+],
+"answer": ["As Nodt", "AsNodt", "Aes Nodt", "AesNodt"],
+"image": "/sample.png",
+"troll": false
+},
+{
+"id": "bleach-quiz-q20",
+"descriptions": [
+"An elite Arrancar scientist who constructs custom testing chambers.",
+"They represent the specific aspect of death known as Madness.",
+"They were the 8th Espada, using a special clone ability called Fornicarás.",
+"They died because Mayuri injected a drug slowing their perception of time.",
+"The pink-haired hollow who wears glasses made from mask fragments."
+],
+"answer": ["Szayelaporro", "Szayelaporro Granz", "Szayel", "Szayel Aporro Granz"],
+"image": "/sample.png",
+"troll": false
+}
 ]

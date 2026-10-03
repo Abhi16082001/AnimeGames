@@ -9,7 +9,7 @@
       "Known globally as the 'Copy Ninja' and leader of Team 7."
     ],
     "answer": ["Kakashi", "Kakashi Hatake", "Hatake Kakashi"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/kakashi.webp",
     "troll": false
   },
   {
@@ -22,7 +22,7 @@
       "The blonde kunoichi daughter of Inoichi from the Yamanaka Clan."
     ],
     "answer": ["Ino", "Ino Yamanaka", "Yamanaka Ino"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/genin.webp",
     "troll": false
   },
   {
@@ -35,7 +35,7 @@
       "The tragic founder of the Akatsuki who wielded the Rinnegan."
     ],
     "answer": ["Nagato", "Pain", "Nagato Uzumaki"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/pain.webp",
     "troll": false
   },
   {
@@ -48,16 +48,16 @@
       "The money-obsessed rogue ninja who fights using four elemental masks."
     ],
     "answer": ["Kakuzu", "Kakuzuu"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/kakuzu.webp",
     "troll": false
   },
   {
     "id": "naruto-desc-q5",
     "descriptions": [
-      "They belong to a clan that uses insect host symbiosis.",
-      "They keep their lower face completely buried inside a high collar.",
+      "This specific technique belongs to a specialized branch of jutsu known as Hiden (Secret Traditions).",
+      "They belong to a clan that uses insect host symbiosis to fight.",
+      "They keep their lower face completely buried inside a high jacket collar.",
       "They fight using a dangerous swarm of chakra-draining Kikaichu beetles.",
-      "They felt completely insulted when Naruto failed to recognize them after the timeskip.",
       "The quiet, sunglasses-wearing tactical member of Team 8."
     ],
     "answer": ["Shino", "Shino Aburame", "Aburame Shino"],
@@ -74,7 +74,7 @@
       "The elite Jonin leader of Team Guy and lifelong rival to Kakashi."
     ],
     "answer": ["Guy", "Might Guy", "Maito Gai", "Gai"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/madara.jpg",
     "troll": false
   },
   {
@@ -87,7 +87,7 @@
       "The legendary ancestor of the Uchiha clan who fought Hashirama Senju."
     ],
     "answer": ["Madara", "Madara Uchiha", "Uchiha Madara"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/madara.webp",
     "troll": false
   },
   {
@@ -100,7 +100,7 @@
       "The brilliant strategist who became the advisor to the Seventh Hokage."
     ],
     "answer": ["Shikamaru", "Shikamaru Nara", "Nara Shikamaru"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/shikamaru.webp",
     "troll": false
   },
   {
@@ -113,7 +113,7 @@
       "Naruto's food-loving, chip-eating teammate who masters the Human Bullet Tank."
     ],
     "answer": ["Choji", "Choji Akimichi", "Akimichi Choji"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/choji.webp",
     "troll": false
   },
   {
@@ -126,7 +126,7 @@
       "The bowl-cut student of Might Guy who values hard work over natural genius."
     ],
     "answer": ["Rock Lee", "Lee"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/rocklee.webp",
     "troll": false
   },
   {
@@ -139,7 +139,7 @@
       "The stern, white-haired Second Hokage of the Hidden Leaf Village."
     ],
     "answer": ["Tobirama", "Tobirama Senju", "Senju Tobirama", "Second Hokage"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/tobirama.webp",
     "troll": false
   },
   {
@@ -152,7 +152,7 @@
       "The fierce Wind Style user from the Sand Village who eventually marries Shikamaru."
     ],
     "answer": ["Temari", "Temari Nara"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/temari.webp",
     "troll": false
   },
   {
@@ -165,7 +165,7 @@
       "The legendary female Sannin who became the Fifth Hokage."
     ],
     "answer": ["Tsunade", "Tsunade Senju", "Fifth Hokage"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/sunade.webp",
     "troll": false
   },
   {
@@ -178,7 +178,7 @@
       "The deadpan shinobi known for scary eyes who keeps Naruto's chakra contained."
     ],
     "answer": ["Yamato", "Tenzo"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/yamato.webp",
     "troll": false
   },
   {
@@ -191,7 +191,7 @@
       "The true identity of 'Tobi' who helped start the Fourth Great Ninja War."
     ],
     "answer": ["Obito", "Obito Uchiha", "Uchiha Obito", "Tobi"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/obito.webp",
     "troll": false
   },
   {
@@ -204,7 +204,7 @@
       "The foul-mouthed rogue ninja who killed Asuma Sarutobi."
     ],
     "answer": ["Hidan"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/hidan.webp",
     "troll": false
   },
   {
@@ -217,7 +217,7 @@
       "The elite shinobi universally feared as 'The White Fang of the Leaf'."
     ],
     "answer": ["Sakumo", "Sakumo Hatake", "Hatake Sakumo", "White Fang"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Naruto/sakumo.webp",
     "troll": false
   },
   {
@@ -229,7 +229,7 @@
 "The powerful host of the Eight-Tails and adoptive brother of the Fourth Raikage."
 ],
 "answer": ["Killer B", "Killer Bee", "Killer B"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/Naruto/killerb.webp",
 "troll": false
 },
 {
@@ -242,7 +242,7 @@
 "The pale, artistic shinobi who can bring his ink drawings to life."
 ],
 "answer": ["Sai", "Sai Yamanaka"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/Naruto/sai.webp",
 "troll": false
 },
 {
@@ -255,7 +255,7 @@
 "The master puppet master from the Sand Village who acts as Gaara's bodyguard."
 ],
 "answer": ["Kankuro", "Kankurou"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/Naruto/kankuro.webp",
 "troll": false
 }
 ]

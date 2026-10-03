@@ -1,67 +1,260 @@
 [
   {
-    "id": "op-desc-q1",
+    "id": "onepiece-hard-q1",
     "descriptions": [
-      "I am the captain of the Straw Hat Pirates.",
-      "I ate the Gum-Gum Fruit (Gomu Gomu no Mi).",
-      "I received my straw hat from Red-Haired Shanks.",
-      "My dream is to find the One Piece and become the Pirate King.",
-      "I am known for using techniques called Gears."
+      "The World Government officially renamed this fruit to hide its real identity from history.",
+      "The user spent years unable to throw a functional straight punch without stretching backward.",
+      "It allows its user's physical heart to beat in a specific rhythm known as the Drums of Liberation.",
+      "Its true baseline name is the Mythical Zoan Model: Nika.",
+      "The legendary rubber-based fruit consumed by Monkey D. Luffy."
     ],
-    "answer": "Monkey D. Luffy",
+    "answer": ["Gomu Gomu no Mi", "GomuGomunoMi", "Gum Gum Fruit", "GumGumFruit", "Hito Hito no Mi Model Nika", "HitoHitonoMiModelNika"],
     "image": "/sample.png",
     "troll": false
   },
   {
-    "id": "op-desc-q2",
+    "id": "onepiece-hard-q2",
     "descriptions": [
-      "I am the first member to join Luffy's crew.",
-      "I am a master of the Three Sword Style.",
-      "I have a terrible sense of direction and get lost easily.",
-      "My dream is to become the World's Strongest Swordsman.",
-      "My name is..."
+      "This character's real, biological birth name is officially Alber.",
+      "They are the only known surviving member of the fire-manipulating Lunarian race.",
+      "They possess a flaming back engine that grants them absolute physical invulnerability when active.",
+      "They were broken out of a secure Marine lab by Kaido to serve as his right-hand vanguard.",
+      "The black-winged, masked Lead Performer of the Beast Pirates known as King the Conflagration."
     ],
-    "answer": "Roronoa Zoro",
+    "answer": ["King", "Alber", "King the Conflagration", "KingtheConflagration"],
     "image": "/sample.png",
     "troll": false
   },
   {
-    "id": "op-desc-q3",
+    "id": "onepiece-hard-q3",
     "descriptions": [
-      "I am the ship's cook of the Straw Hat Pirates.",
-      "I only fight using my legs to protect my cooking hands.",
-      "I am deeply chivalrous and refuse to hit any woman.",
-      "I am obsessed with beautiful women and get severe nosebleeds.",
-      "My family name is Vinsmoke."
+      "This specific weapon is sentient and aggressively tests its user by forcefully draining their physical Haki.",
+      "It has a distinct light-violet blade design and belongs to the 21 Great Grade Swords.",
+      "It is the only weapon alongside Ame no Habakiri to ever leave a permanent physical scar on Kaido.",
+      "It was gifted to a Straw Hat pirate by Kozuki Hiyori in exchange for returning Shusui.",
+      "The legendary, Haki-absorbing master sword currently wielded by Roronoa Zoro."
     ],
-    "answer": "Vinsmoke Sanji",
+    "answer": ["Enma"],
     "image": "/sample.png",
     "troll": false
   },
   {
-    "id": "op-desc-q4",
+    "id": "onepiece-hard-q4",
     "descriptions": [
-      "I am the ultimate pirate in the sky.",
-      "I can fly with small pink wings.",
-      "Luffy fought me with gold attached to his arm.",
-      "I am a literal God.",
-      "Wait, no, I am actually a legendary sky-island melon-headed god of comedy."
+      "This entity is a massive, centuries-old relic constructed during the ancient Void Century.",
+      "It launched a solo assault on Mary Geoise 200 years ago before completely running out of energy.",
+      "It fully reactivated on Egghead Island because it recognized the exact heartbeat rhythm of Gear 5 Luffy.",
+      "It carries a massive broken sword on its back and telepathically apologized directly to Joy Boy.",
+      "The ancient mechanical titan officially designated by Dr. Vegapunk as Emet."
     ],
-    "answer": "Gan Fall",
+    "answer": ["Emet", "Iron Giant", "IronGiant", "Ancient Giant Robot", "AncientGiantRobot"],
     "image": "/sample.png",
-    "troll": true
+    "troll": false
   },
   {
-    "id": "op-desc-q5",
+    "id": "onepiece-hard-q5",
     "descriptions": [
-      "I am a legendary sword master.",
-      "My sword is a direct, unmatched weapon of destruction.",
-      "I wear a green stripey shirt and have white hair.",
-      "I am Zoro's greatest rival.",
-      "Just kidding, I am a green-haired moss ball that Zoro resembles."
+      "They are the only member of the Straw Hat crew who was born in the North Blue.",
+      "They spent the two-year timeskip stranded on a highly dangerous culinary territory called Momoiro Island.",
+      "Their genetic modifications awakened on Wano, turning their legs into a blue-flamed Ifrit Jambe.",
+      "They belong to the infamous Vinsmoke royal bloodline but completely disowned their family.",
+      "The cigarette-smoking, black-suited chef of the Straw Hat Pirates known as Black Leg."
     ],
-    "answer": "Marimo",
+    "answer": ["Sanji", "Vinsmoke Sanji", "VinsmokeSanji", "Black Leg", "BlackLeg"],
     "image": "/sample.png",
-    "troll": true
-  }
+    "troll": false
+  },
+  {
+    "id": "onepiece-hard-q6",
+    "descriptions": [
+      "They are the absolute only character in history to have explicitly eaten two different Devil Fruits.",
+      "They started their career as an obscure, low-tier recruit on Whitebeard's second division ship.",
+      "They orchestrated the mass level 6 breakout from Impel Down to recruit their elite crew.",
+      "They control the catastrophic combination of the Yami Yami no Mi and the Gura Gura no Mi.",
+      "The sinister Emperor of the Sea whose real name is Marshall D. Teach."
+    ],
+    "answer": ["Blackbeard", "Teach", "Marshall D Teach", "MarshallDTeach", "Kurohige"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "onepiece-hard-q7",
+    "descriptions": [
+      "This character spent decades serving as the absolute head executioner of the Gotei-like Holy Knights.",
+      "They have a highly noticeable physical silhouette featuring a massive, crescent-moon shaped white hairstyle.",
+      "They were personally appointed by Imu to fill the vacancy left after Jaygarcia Saturn's failure.",
+      "They are a high-ranking Celestial Dragon ruler who represents the ancient Figarland family lineage.",
+      "The ruthless elder warrior who became the new Warrior God of Science and Defense."
+    ],
+    "answer": ["Figarland Garling", "FigarlandGarling", "Garling", "Saint Garling", "SaintGarling"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "onepiece-hard-q8",
+    "descriptions": [
+      "This character is legally a massive 65-year-old human who consumed the Nomi Nomi no Mi.",
+      "They divided their own brain and personality across six autonomous satellite clones.",
+      "They successfully triggered a global post-mortem broadcast revealing that the entire world is sinking.",
+      "They were marked for immediate execution by CP0 for illegally researching the forbidden Void Century history.",
+      "The supreme, apple-headed master scientist of the Navy whose main core unit is Stella."
+    ],
+    "answer": ["Vegapunk", "Dr Vegapunk", "DrVegapunk", "Stella"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "onepiece-hard-q9",
+    "descriptions": [
+      "This elite group possesses functional immortality and can communicate telepathically across whole oceans.",
+      "They do not travel by ship, instead spawning black, numerical magic circles to teleport directly.",
+      "They possess awakened, horrific Mythical Zoan beast forms based on Yokai monsters like the Gyuki and Bakotsu.",
+      "They rule the entire global structure of the World Government from the Room of Authority.",
+      "The cabal of five wrinkly Celestial Dragon overlords who answer only to the secret king, Imu."
+    ],
+    "answer": ["Gorosei", "Five Elders", "FiveElders", "Elder Planets", "ElderPlanets"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "onepiece-hard-q10",
+    "descriptions": [
+      "This warrior belongs to a nearly extinct, physically massive human race known as the Buccaneers.",
+      "They spent their early childhood working as a slave under the absolute abuse of the Celestial Dragons.",
+      "They voluntarily surrendered their own biological free will to keep their daughter, Jewelry Bonney, alive.",
+      "Their physical body serves as the core template for the Navy's cybernetic Pacifista line.",
+      "The gentle-hearted ex-Warlord and Revolutionary army member known as the Tyrant."
+    ],
+    "answer": ["Kuma", "Bartholomew Kuma", "BartholomewKuma"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "onepiece-hard-q11",
+    "descriptions": [
+      "This specific weapon is a giant, airborne sky vessel capable of erasing whole islands instantly.",
+      "It requires an incredibly advanced, glowing liquid resource called the Mother Flame to operate.",
+      "It was successfully utilized by Imu to wipe out Lulusia Kingdom, leaving a massive permanent sea hole.",
+      "It represents one of the three catastrophic tools of mass destruction created during the Void Century.",
+      "The ancient weapon of the sky that sits alongside Pluton and Poseidon."
+    ],
+    "answer": ["Uranus"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "onepiece-hard-q12",
+    "descriptions": [
+      "This location is a massive, unmapped winter wonderland populated exclusively by giant warrior clans.",
+      "It functions as the current hidden storage vault holding all the salvaged book records of Ohara.",
+      "It is ruled over by the mysterious Prince Loki and is the homeland of Dorry and Brogy.",
+      "It is widely celebrated across the New World as the ultimate land of the Giants.",
+      "The major destination island that Luffy and the Straw Hats sail toward immediately after escaping Egghead."
+    ],
+    "answer": ["Elbaf", "Elbaph", "Island of Giants", "IslandofGiants"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "onepiece-hard-q13",
+    "descriptions": [
+      "This marine is an official member of the secret, law-exempt naval detachment known as SWORD.",
+      "They were kidnapped from Amazon Lily by Blackbeard, sparking a full-scale rescue raid on Hachinosu.",
+      "They shocked the world by mastering an advanced, city-destroying Haki punch called Honesty Impact.",
+      "The pink-haired, emotional young marine officer who aims to become an Admiral.",
+      "Luffy's very first companion from the East Blue who trained under Monkey D. Garp."
+    ],
+    "answer": ["Koby", "Coby"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "onepiece-hard-q14",
+    "descriptions": [
+      "This high-ranking traitor clone represents the baseline human personality trait of 'Greed'.",
+      "She leaked Vegapunk's illegal Void Century data directly to the Five Elders via a private transponder snail.",
+      "She systematically shot and deactivated the other Vegapunk satellites to claim a Celestial Dragon spot.",
+      "She sabotaged Egghead's Frontier Dome barrier to trap her allies inside with the Marines.",
+      "The freckled, gluttonous Vegapunk clone designated explicitly as Punk 06."
+    ],
+    "answer": ["York", "Punk 06", "Punk06"],
+    "image": "/sample.png",
+    "troll": false
+  },
+  {
+    "id": "onepiece-hard-q15",
+    "descriptions": [
+      "This legendary marine is the only combatant in history to turn down an Admiral promotion multiple times.","They launched a direct, unauthorized assault on Hachinosu to rescue Koby using their custom warship.",
+"They can completely flatten entire cityscapes using a Haki-fused fist strike called Galaxy Impact.",
+"They serve as the direct biological father of Monkey D. Dragon and grandfather to Luffy.",
+"The legendary, dog-mask wearing Marine Vice Admiral universally celebrated as the Hero."
+],
+"answer": ["Garp", "Monkey D Garp", "MonkeyDGarp", "Hero of the Marines", "HerooftheMarines"],
+"image": "/sample.png",
+"troll": false
+},
+{
+"id": "onepiece-hard-q16",
+"descriptions": [
+"This character is the biological son of the legendary 'King of the Pirates', Gol D. Roger.",
+"They consumed the Logia-type Mera Mera no Mi, granting them total control over fire.",
+"They served as the Commander of the Whitebeard Pirates' Second Division for years.",
+"Their tragic execution at Marineford triggered the absolute largest summit war in modern pirate history.",
+"Luffy's beloved adoptive older brother who was famously known as 'Fire Fist'."
+],
+"answer": ["Ace", "Portgas D Ace", "PortgasDAce", "Gol D Ace", "GolDAce", "Fire Fist Ace", "FireFistAce"],
+"image": "/sample.png",
+"troll": false
+},
+{
+"id": "onepiece-hard-q17",
+"descriptions": [
+"This character is an elite CP0 agent whose physical body was cloned directly from Buckingham Stussy.",
+"They spent years operating as a deep-cover double agent inside the World Government's highest intelligence tier.",
+"They possess bat-like wings and can put targets to sleep instantly by biting their neck with vampire fangs.",
+"They chose to betray their Cipher Pol allies on Egghead because their true core loyalty belongs to Vegapunk.",
+"The fishnet-wearing clone agent who operates as the hidden asset of the Future Island labs."
+],
+"answer": ["Stussy"],
+"image": "/sample.png",
+"troll": false
+},
+{
+"id": "onepiece-hard-q18",
+"descriptions": [
+"This Devil Fruit grants its user a highly unique space-manipulation room capability called 'Chambre'.",
+"The World Government valued this specific fruit at an astronomical price of 5 billion berries.",
+"It grants the user the ability to perform the legendary Perennial Youth Operation at the cost of their own life.",
+"It is a Paramecia-type fruit that allows its user to telekinetically scan and slice objects inside a glowing blue dome.",
+"The medical-based fruit consumed by the 'Surgeon of Death', Trafalgar D. Water Law."
+],
+"answer": ["Ope Ope no Mi", "OpeOpenoMi", "Op Op Fruit", "OpOpFruit"],
+"image": "/sample.png",
+"troll": false
+},
+{
+"id": "onepiece-hard-q19",
+"descriptions": [
+"This legendary Wano country warrior is the only individual who ever naturally tamed the Haki-draining sword, Enma.",
+"They traveled out to sea as a temporary member of both the Whitebeard Pirates and the Roger Pirates.",
+"They danced in the streets of the Flower Capital for five years to protect captured citizens from Orochi.",
+"They met a tragic, legendary death by executing an hour-long execution survival inside a boiling oil pot.",
+"The grand Daimyo of Kuri who wielded the legendary two-sword style and fathered Momonosuke."
+],
+"answer": ["Oden", "Kozuki Oden", "KozukiOden"],
+"image": "/sample.png",
+"troll": false
+},{
+"id": "onepiece-hard-q20",
+"descriptions": [
+"This island was completely erased from all standard maps 38 years ago due to a horrific incident.",
+"It served as the chaotic battlefield where the Rocks Pirates were permanently dismantled.",
+"It hosted a horrific, tournament-style hunting game orchestrated by the Celestial Dragons.",
+"Monkey D. Garp and Gol D. Roger formed a legendary temporary alliance here to protect the slaves.",
+"The vanished historical island where the Rocks Pirates met their ultimate downfall."
+],
+"answer": ["God Valley", "GodValley"],
+"image": "/sample.png",
+"troll": false
+}
 ]

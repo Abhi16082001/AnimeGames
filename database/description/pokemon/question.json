@@ -1,16 +1,261 @@
 [
   {
-    "id": "pokemon-desc-q1",
+    "id": "pokemon-quiz-gen3",
     "descriptions": [
-      "I am the Grass Type",
-      "I am the Starter Pokemon",
-      "I can use Coil.",
-      "I usually found in Unova",
-      "I am the Superior Serpent !"
+      "PokéDex entries state that it is the brutal result of two separate Pokemon achieving physical fusion.",
+      "It possesses a complex neural network of four linked brains, making it smarter than a supercomputer.",
+      "When hunting, it pins prey to the ground under its heavy body and chews using a mouth hidden on its stomach.",
+      "It is a highly celebrated Steel/Psychic type that serves as the ultimate ace partner to the Hoenn Champion, Steven.",
+      "The massive, four-legged metallic powerhouse known as the Iron Leg Pokémon."
     ],
-    "answer": "Serperior",
-    "image": "/sample.png",
+    "answer": ["Metagross", "Mega Metagross", "Megametagross"],
+    "image": "/DescriptionCorrect/Pokemon/Metagross.webp",
     "troll": false
-  }
-
+  },
+   {
+    "id": "pokemon-battle-q1",
+    "descriptions": [
+      "In the original Game Boy games, it shares a completely identical audio cry with Rhydon.",
+      "It was one of the earliest designs illustrated by Ken Sugimori, appearing on the first capsule monsters sketches.",
+      "It requires a Moon Stone to evolve into its final purple, bipedal form.",
+      "It is a classic Generation 1 Poison/Ground type known for its high physical attack.",
+      "The drill-tailed, spike-covered king known as the Poison Pin Pokémon."
+    ],
+    "answer": ["Nidoking", "Nido king"],
+    "image": "/DescriptionCorrect/Pokemon/Nidoking.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-mega",
+    "descriptions": [
+      "Its PokéDex entry states that when it undergoes Mega Evolution, its massive energy causes its single physical pouch to split open completely.",
+      "The mother is filled with intense psychological anxiety because the baby is too small to defend itself.",
+      "It is a pure Normal-type creature that carries its young inside a distinct abdominal pouch.",
+      "Its competitive footprint is legendary due to its signature multi-striking ability, Parental Bond.",
+      "The classic marsupial dinosaur known as the Parent Pokémon."
+    ],
+    "answer": ["Kangaskhan", "Mega Kangaskhan", "Megakangaskhan"],
+    "image": "/DescriptionCorrect/Pokemon/Kangaskhan.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen9",
+    "descriptions": [
+      "According to its PokéDex files, its apparent yellow 'eyeballs' are actually fake, non-functional electricity organs.",
+      "Its true, functioning eyes are located small and flat directly above its massive belly button.",
+      "It is an eccentric, fluid-filled Electric frog that debuted in Generation 9.",
+      "It serves as the signature ace partner used by the Paldean Gym Leader and influencer, Iono.",
+      "The squishy, bumbling creature officially known as the EleFrog Pokémon."
+    ],
+    "answer": ["Bellibolt"],
+    "image": "/DescriptionCorrect/Pokemon/Bellibolt.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen2",
+    "descriptions": [
+      "Its PokéDex files claim that its internal core acts like an active fusion reactor, reaching temperatures over 18,000 degrees Fahrenheit.",
+      "Despite its boiling heat, its fragile volcanic rock shell crumbles instantly if touched.",
+      "It is a slow, heavy dual-type Fire/Rock snail that debuted back in Generation 2.",
+      "Its character name is a direct, creative combination of magma and the French culinary dish escargot.",
+      "The flaming, red-eyed volcanic snail that evolves directly from Slugma."
+    ],
+    "answer": ["Magcargo"],
+    "image": "/DescriptionCorrect/Pokemon/Magcargo.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gmax",
+    "descriptions": [
+      "When it Gigantamaxes, the massive glowing swirl inside its shell mimics a terrifying 36,000-degree whirlpool.",
+      "It is a bulky Generation 8 dual-type Water/Rock turtle that patrols coastal shores.",
+      "Its base form evolves directly from a small, biting snapping turtle called Chewtle.",
+      "It serves as the signature ace powerhouse used by the Galar Gym Leader, Nessa.",
+      "The aggressive, heavy-jawed giant officially known as the Bite Pokémon."
+    ],
+    "answer": ["Drednaw", "Gigantamax Drednaw", "Gigantamaxdrednaw"],
+    "image": "/DescriptionCorrect/Pokemon/Drednaw.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen4",
+    "descriptions": [
+      "This creature is structurally composed of 108 malevolent spirits bound to an ancient stone fissure.",
+      "It cannot be found normally in the wild and requires interacting with an Odd Keystone item.",
+      "It completely lacked any physical type weaknesses prior to the introduction of Fairy-type.",
+      "It enters combat as a glowing, purple ghostly wheel bound to a smiling rock.",
+      "The forbidden Ghost/Dark type Pokémon introduced in Sinnoh."
+    ],
+    "answer": ["Spiritomb"],
+    "image": "/DescriptionCorrect/Pokemon/Spiritomb.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen5",
+    "descriptions": [
+      "PokéDex entries claim it can run completely silent by dampening its own molecular vibrations.",
+      "It requires a highly specific trade mechanic directly involving a Karrablast to trigger evolution.",
+      "It strips off its heavy shell armor to maximize its physical ninja speed.",
+      "It is a pure Bug-type that bases its design on a swift ninja or motorcyclist.",
+      "The shell-less, hyper-fast Shell Out Pokémon introduced in Unova."
+    ],
+    "answer": ["Accelgor"],
+    "image": "/DescriptionCorrect/Pokemon/Accelgor.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen6",
+    "descriptions": [
+      "Its evolutionary method requires the player to physically hold the console upside down in real life.",
+      "It is a deep-sea creature that attacks by manipulating hypnotic lights on its body.",
+      "It evolves directly from a small, innocent-looking squid called Inkay.",
+      "It boasts a rare Dark/Psychic typing that leaves it completely immune to Psychic moves.",
+      "The malicious Overturn Pokémon that resembles an upside-down jellyfish."
+    ],
+    "answer": ["Malamar"],
+    "image": "/DescriptionCorrect/Pokemon/Malamar.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen7",
+    "descriptions": [
+      "According to Alolan PokéDex files, the absolute shock of seeing its true face caused a local scholar to pass away from fright.",
+      "It is a dual Ghost/Fairy type that creates a crude disguise using an old market rag.",
+      "Its custom battle mechanic completely invalidates the damage from the first attack it sustains.",
+      "It spent generations trying to mirror Pikachu to escape its deep loneliness.",
+      "The tragic, rag-wearing Alolan doll known as the Disguise Pokémon."
+    ],
+    "answer": ["Mimikyu", "Mimikyuu"],
+    "image": "/DescriptionCorrect/Pokemon/mimikyu.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen8",
+    "descriptions": [
+      "According to ancient Galar lore, its massive metal armor plate is the result of centuries of direct iron mining consumption.",
+      "It holds an intense, natural territorial rivalry with the airborne predator Mandibuzz.",
+      "It serves as the signature flying taxi system across the entire Galar region map.",
+      "It is a heavy Flying/Steel dual-type raven that evolves directly from Corvisquire.",
+      "The intimidating, steel-feathered titan known as the Raven Pokémon."
+    ],
+    "answer": ["Corviknight"],
+    "image": "/DescriptionCorrect/Pokemon/corviknight.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen9-2",
+    "descriptions": [
+      "PokéDex lore states that it evolved because its critical anger levels became too severe for its physical body to contain.",
+      "It is a highly aggressive Ghost/Fighting dual-type that debuted in the Paldea region.",
+      "It breaks standard conventions by evolving from a classic Generation 1 Pokémon when using Rage Fist.",
+      "Its shaggy, dark gray fur is physically matted with boiling physical rage.",
+      "The furious, broken-shackle warrior that serves as the final evolution of Primeape."
+    ],
+    "answer": ["Annihilape"],
+    "image": "/DescriptionCorrect/Pokemon/Annihilape.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen1-2",
+    "descriptions": [
+      "This creature functions as a unique parasitic fungus that has completely taken over an insect host.",
+      "The massive mushroom on its back controls and dictates all of the creature's thoughts.",
+      "It possesses completely blank, white circular eyes indicating it is a zombie.",
+      "It is a classic Generation 1 Bug/Grass type that suffers from a massive 4x weakness to Fire.",
+      "The pincered mushroom insect that evolves directly from Paras."
+    ],
+    "answer": ["Parasect"],
+    "image": "/DescriptionCorrect/Pokemon/Parasect.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen3-2",
+    "descriptions": [
+      "In the Generation 3 games, it required its trainer to max out its beauty stat to evolve.",
+      "It serves as a direct, majestic visual counterpart to the aggressive Gyarados.",
+      "It is widely celebrated across the Pokémon world as the most beautiful species alive.",
+      "It is an elegant, serpentine pure Water-type covered in colorful blue and pink scales.",
+      "The majestic Tender Pokémon that evolves directly from the pathetic Feebas."
+    ],
+    "answer": ["Milotic"],
+    "image": "/DescriptionCorrect/Pokemon/Milotic.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen5-2",
+    "descriptions": [
+      "Its PokéDex entries reveal that humans can become this specific Pokémon, arising directly from wandering graveyard spirits.",
+      "It carries a heavy gold or clay mask that explicitly used to be its face when it was a living human.",
+      "It is a pure Ghost-type introduced in Unova that frequently looks at its mask and cries.",
+      "It can evolve cleanly into Cofagrigus or a regional variant called Runerigus.",
+      "The wandering, heartbreaking shadow spirit known as the Spirit Pokémon."
+    ],
+    "answer": ["Yamask"],
+    "image": "/DescriptionCorrect/Pokemon/Yamask.webp",
+    "troll": false
+  },
+  {
+    "id": "pokemon-quiz-gen4-2",
+    "descriptions": [
+      "It holds the unique title of being the only Legendary Pokémon with a random 50/50 gender ratio.",
+      "It is an ancient volcanic entity composed entirely of Magma and heavy Steel plates.","It resides in the deepest, boiling core of the Stark Mountain crater.",
+"It is a highly distinct Fire/Steel legendary type that resembles a heavy metal turtle.",
+"The massive Lava Dome Pokémon introduced in Generation 4."
+],
+"answer": ["Heatran"],
+"image": "/DescriptionCorrect/Pokemon/Heatran.webp",
+"troll": false
+},
+{
+"id": "pokemon-quiz-gen6-2",
+"descriptions": [
+"This steel tank can completely alter its stance and base stats mid-fight depending on the move used.",
+"It possesses a signature ability called Stance Change that alters its forms.",
+"It utilizes a signature stance-changing mechanic called Blade Forme and Shield Forme.",
+"It enters combat carrying a massive royal shield and a dangerous glowing blade.",
+"The elite Steel/Ghost type royal sword Pokémon native to Kalos."
+],
+"answer": ["Aegislash", "Gillgard"],
+"image": "/DescriptionCorrect/Pokemon/Aegislash.webp",
+"troll": false
+},
+{
+    "id": "pokemon-desc-q19",
+    "descriptions": [
+      "This creature is structurally the only starter Pokémon to start with a dual typing at stage one in Generation 7.",
+      "It utilizes a highly unique signature move called Spirit Shackle to trap enemies.",
+      "It evolves from a round, leafy owl into a sleek, hooded archer.",
+      "It swaps its flying attribute for a Ghost typing upon reaching its final stage.",
+      "The Grass/Ghost type grass starter belonging to the Alola region."
+    ],
+    "answer": ["Decidueye", "Junaiper"],
+    "image": "/DescriptionCorrect/Pokemon/Decidueye.webp",
+    "troll": false
+  },
+{
+"id": "pokemon-quiz-gen8-2",
+"descriptions": [
+"When it Gigantamaxes, the colossal loop of sand around its body contains over one million tons of high-speed grit.",
+"It is a Ground-type serpent introduced in Generation 8 that lives buried in deserts.",
+"It possesses a unique, signature ability called Sand Spit that automatically kicks up a sandstorm when hit.",
+"Its base form evolves directly from a tiny burrowing sand-worm called Silicobra.",
+"The heavy, coiled desert python known as the Sand Snake Pokémon."
+],
+"answer": ["Sandaconda", "Gigantamax Sandaconda", "Gigantamaxsandaconda"],
+"image": "/DescriptionCorrect/Pokemon/Sandaconda.webp",
+"troll": false
+},
+{
+"id": "pokemon-quiz-gen9-3",
+"descriptions": [
+"Its Paldean PokéDex entry states it dry-cures its prey by spraying salt to completely dehydrate them.",
+"It possesses a highly unique, signature offensive status move called Salt Cure.",
+"It is a blocky, layered rock monster that resembles a mineral-based digital cube.",
+"It is a pure Rock-type that has an evolutionary line consisting of Nacli and Garganacl.",
+"The salt-crusted Generation 9 rock creature known as the Rock Salt Pokémon."
+],
+"answer": ["Naclstack"],
+"image": "/DescriptionCorrect/Pokemon/Naclstack.webp",
+"troll": false
+}
 ]
