@@ -9,7 +9,7 @@
       "The legendary rubber-based fruit consumed by Monkey D. Luffy."
     ],
     "answer": ["Gomu Gomu no Mi", "GomuGomunoMi", "Gum Gum Fruit", "GumGumFruit", "Hito Hito no Mi Model Nika", "HitoHitonoMiModelNika"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/DevilFruit.webp",
     "troll": false
   },
   {
@@ -22,7 +22,7 @@
       "The black-winged, masked Lead Performer of the Beast Pirates known as King the Conflagration."
     ],
     "answer": ["King", "Alber", "King the Conflagration", "KingtheConflagration"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/KingAlber.webp",
     "troll": false
   },
   {
@@ -35,7 +35,7 @@
       "The legendary, Haki-absorbing master sword currently wielded by Roronoa Zoro."
     ],
     "answer": ["Enma"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/Enma.webp",
     "troll": false
   },
   {
@@ -48,7 +48,7 @@
       "The ancient mechanical titan officially designated by Dr. Vegapunk as Emet."
     ],
     "answer": ["Emet", "Iron Giant", "IronGiant", "Ancient Giant Robot", "AncientGiantRobot"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/IronGiant.webp",
     "troll": false
   },
   {
@@ -61,7 +61,7 @@
       "The cigarette-smoking, black-suited chef of the Straw Hat Pirates known as Black Leg."
     ],
     "answer": ["Sanji", "Vinsmoke Sanji", "VinsmokeSanji", "Black Leg", "BlackLeg"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/Sanji.webp",
     "troll": false
   },
   {
@@ -74,7 +74,7 @@
       "The sinister Emperor of the Sea whose real name is Marshall D. Teach."
     ],
     "answer": ["Blackbeard", "Teach", "Marshall D Teach", "MarshallDTeach", "Kurohige"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/BlackBeard.webp",
     "troll": false
   },
   {
@@ -87,7 +87,7 @@
       "The ruthless elder warrior who became the new Warrior God of Science and Defense."
     ],
     "answer": ["Figarland Garling", "FigarlandGarling", "Garling", "Saint Garling", "SaintGarling"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/Garling.webp",
     "troll": false
   },
   {
@@ -100,7 +100,7 @@
       "The supreme, apple-headed master scientist of the Navy whose main core unit is Stella."
     ],
     "answer": ["Vegapunk", "Dr Vegapunk", "DrVegapunk", "Stella"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/DrVegaPunk.webp",
     "troll": false
   },
   {
@@ -113,7 +113,7 @@
       "The cabal of five wrinkly Celestial Dragon overlords who answer only to the secret king, Imu."
     ],
     "answer": ["Gorosei", "Five Elders", "FiveElders", "Elder Planets", "ElderPlanets"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/5elder.webp",
     "troll": false
   },
   {
@@ -126,7 +126,7 @@
       "The gentle-hearted ex-Warlord and Revolutionary army member known as the Tyrant."
     ],
     "answer": ["Kuma", "Bartholomew Kuma", "BartholomewKuma"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/Kuma.webp",
     "troll": false
   },
   {
@@ -139,7 +139,7 @@
       "The ancient weapon of the sky that sits alongside Pluton and Poseidon."
     ],
     "answer": ["Uranus"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/Uranus.webp",
     "troll": false
   },
   {
@@ -152,7 +152,7 @@
       "The major destination island that Luffy and the Straw Hats sail toward immediately after escaping Egghead."
     ],
     "answer": ["Elbaf", "Elbaph", "Island of Giants", "IslandofGiants"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/Elbaph.webp",
     "troll": false
   },
   {
@@ -165,7 +165,7 @@
       "Luffy's very first companion from the East Blue who trained under Monkey D. Garp."
     ],
     "answer": ["Koby", "Coby"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/Koby.webp",
     "troll": false
   },
   {
@@ -178,7 +178,7 @@
       "The freckled, gluttonous Vegapunk clone designated explicitly as Punk 06."
     ],
     "answer": ["York", "Punk 06", "Punk06"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/OnePiece/Punk6.webp",
     "troll": false
   },
   {
@@ -190,7 +190,7 @@
 "The legendary, dog-mask wearing Marine Vice Admiral universally celebrated as the Hero."
 ],
 "answer": ["Garp", "Monkey D Garp", "MonkeyDGarp", "Hero of the Marines", "HerooftheMarines"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/OnePiece/Monkeydgarp.webp",
 "troll": false
 },
 {
@@ -203,7 +203,7 @@
 "Luffy's beloved adoptive older brother who was famously known as 'Fire Fist'."
 ],
 "answer": ["Ace", "Portgas D Ace", "PortgasDAce", "Gol D Ace", "GolDAce", "Fire Fist Ace", "FireFistAce"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/OnePiece/Ace.webp",
 "troll": false
 },
 {
@@ -216,7 +216,7 @@
 "The fishnet-wearing clone agent who operates as the hidden asset of the Future Island labs."
 ],
 "answer": ["Stussy"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/OnePiece/Stussy.webp",
 "troll": false
 },
 {
@@ -229,7 +229,7 @@
 "The medical-based fruit consumed by the 'Surgeon of Death', Trafalgar D. Water Law."
 ],
 "answer": ["Ope Ope no Mi", "OpeOpenoMi", "Op Op Fruit", "OpOpFruit"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/OnePiece/OpOpFruit.webp",
 "troll": false
 },
 {
@@ -242,7 +242,7 @@
 "The grand Daimyo of Kuri who wielded the legendary two-sword style and fathered Momonosuke."
 ],
 "answer": ["Oden", "Kozuki Oden", "KozukiOden"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/OnePiece/Oden.webp",
 "troll": false
 },{
 "id": "onepiece-hard-q20",
@@ -254,7 +254,7 @@
 "The vanished historical island where the Rocks Pirates met their ultimate downfall."
 ],
 "answer": ["God Valley", "GodValley"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/OnePiece/GodValley.webp",
 "troll": false
 }
 ]

@@ -9,7 +9,7 @@
       "The scar-faced, battle-hungry Captain of the 11th Division."
     ],
     "answer": ["Kenpachi", "Kenpachi Zaraki", "Zaraki Kenpachi", "Zaraki"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Kenpachi.webp",
     "troll": false
   },
   {
@@ -22,7 +22,7 @@
       "The red-headed, tattooed Lieutenant of the 6th Division."
     ],
     "answer": ["Renji", "Renji Abarai", "Abarai Renji", "Abarai"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Renji.webp",
     "troll": false
   },
   {
@@ -35,7 +35,7 @@
       "The gentle-looking 4th Division Captain who was secretly an elite killer."
     ],
     "answer": ["Unohana", "Retsu Unohana", "Yachiru Unohana", "Unohana Retsu", "Unohana Yachiru"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Unohana.webp",
     "troll": false
   },
  {
@@ -48,7 +48,7 @@
       "The eccentric Sternritter who wears structural safety goggle glasses."
     ],
     "answer": ["Askin", "Askin Nakk Le Var", "Askin Nakk LeVaar", "Askin Nakklavaar", "Askin Nak Le Vaar"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Askin.webp",
     "troll": false
   },
   {
@@ -61,7 +61,7 @@
       "The pale, green-teardrop masked 4th Espada who throws spears of light."
     ],
     "answer": ["Ulquiorra", "Ulquiorra Cifer", "Ulquiorra Schiffer", "Ulquiorra Ciffer"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Ulquiorra.webp",
     "troll": false
   },
   {
@@ -74,7 +74,7 @@
       "The wavy blonde hair soul reaper who returned to lead the 3rd Division."
     ],
     "answer": ["Rojuro", "Rose", "Rojuro Otoribashi", "Otoribashi Rojuro", "RojuroOtoribashi"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Rojuro.webp",
     "troll": false
   },
   {
@@ -87,7 +87,7 @@
       "Ichigo's brilliant, glasses-wearing rival who is the main cast Quincy."
     ],
     "answer": ["Uryu", "Uryu Ishida", "Ishida Uryu", "Ishida"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Ishida.webp",
     "troll": false
   },
   {
@@ -100,7 +100,7 @@
       "The brilliant, bucket-hat wearing ex-Captain of the 12th Division."
     ],
     "answer": ["Kisuke", "Kisuke Urahara", "Urahara Kisuke", "Urahara"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Urahara.webp",
     "troll": false
   },
   {
@@ -113,7 +113,7 @@
       "The fire-type Bankai belonging to Captain-Commander Yamamoto, Zanka no Tachi."
     ],
     "answer": ["Zanka no Tachi", "Zankanotachi", "Yamamoto Bankai", "YamamotosBankai"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Tachi.webp",
     "troll": false
   },
   {
@@ -126,7 +126,7 @@
       "The long, blonde-haired elite Sternritter who serves as Yhwach's top proxy."
     ],
     "answer": ["Jugram", "Jugram Haschwalth", "Haschwalth Jugram", "Haschwalth"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Jugram.webp",
     "troll": false
   },
   {
@@ -139,7 +139,7 @@
       "The purple-haired, highly athletic ex-Captain who loves teasing Ichigo."
     ],
     "answer": ["Yoruichi", "Yoruichi Shihoin", "Shihoin Yoruichi", "YoruichiShihoin"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Yourichi.webp",
     "troll": false
   },
   {
@@ -152,7 +152,7 @@
       "The supreme Emperor of the Quincies and main villain of the Blood War arc."
     ],
     "answer": ["Yhwach", "Juha Bach", "Juhabach", "Yuhabaaku"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Yhwach.webp",
     "troll": false
   },
   {
@@ -165,7 +165,7 @@
       "The smooth-talking blonde Shinigami who currently leads the 5th Division."
     ],
     "answer": ["Shinji", "Shinji Hirako", "Hirako Shinji", "ShinjiHirako"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Shinji.webp",
     "troll": false
   },
   {
@@ -178,7 +178,7 @@
       "The terrifying, makeup-wearing mad scientist Captain of the Gotei 13."
     ],
     "answer": ["Mayuri", "Mayuri Kurotsuchi", "Kurotsuchi Mayuri", "Kurotsuchi"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Mayuri.webp",
     "troll": false
   },
   {
@@ -190,8 +190,8 @@
       "In the Blood War, it achieved a mature, adult state that flash-freezes all matter.",
       "The legendary ice blade Hyōrinmaru, wielded by Hitsugaya."
     ],
-    "answer": ["Hyorinmaru", "Hyouorinmaru", "Hitsugaya Zanpakuto", "HitsugayasSword"],
-    "image": "/sample.png",
+    "answer": ["Hyorinmaru", "Hyouorinmaru", "Hitsugaya Zanpakuto", "HitsugayasSword","Toshiro","Toshiro Hitsugaya"],
+    "image": "/DescriptionCorrect/Bleach/Toshiro.webp",
     "troll": false
   },
   {
@@ -204,7 +204,7 @@
       "The calm, book-reading rogue warrior who wears a distinct suspender outfit."
     ],
     "answer": ["Tsukishima", "Shukurou Tsukishima", "Shukuro Tsukishima", "ShukurouTsukishima", "ShukuroTsukishima"],
-    "image": "/sample.png",
+    "image": "/DescriptionCorrect/Bleach/Tsukishima.webp",
     "troll": false
   },
   {
@@ -216,7 +216,7 @@
 "The rogue leader who manipulated Ichigo in the Lost Agent arc to steal his physical powers."
 ],
 "answer": ["Kugo", "Kugo Ginjo", "Ginjo Kugo", "Ginjo"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/Bleach/ginjo.webp",
 "troll": false
 },
 {
@@ -229,7 +229,7 @@
 "The massive, bearded leader of the Royal Guard with oversized prayer beads."
 ],
 "answer": ["Ichibe", "Ichibe Hyosube", "Hyosube Ichibe", "Ichibei"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/Bleach/Ichibe.webp",
 "troll": false
 },
 {
@@ -242,7 +242,7 @@
 "The eerie Quincy warrior who was eventually incinerated by Rukia's new Bankai."
 ],
 "answer": ["As Nodt", "AsNodt", "Aes Nodt", "AesNodt"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/Bleach/Asnodt.webp",
 "troll": false
 },
 {
@@ -255,7 +255,7 @@
 "The pink-haired hollow who wears glasses made from mask fragments."
 ],
 "answer": ["Szayelaporro", "Szayelaporro Granz", "Szayel", "Szayel Aporro Granz"],
-"image": "/sample.png",
+"image": "/DescriptionCorrect/Bleach/Granz.webp",
 "troll": false
 }
 ]
