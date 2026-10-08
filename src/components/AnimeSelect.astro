@@ -67,7 +67,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
           {supportedAnime.map((anime) => (
-            <article class="card group relative aspect-square overflow-hidden bg-cover bg-center !p-0" style="background-image: url('/sample.png');">
+            <article class="card group relative aspect-square overflow-hidden bg-cover bg-center !p-0" style={`background-image: url('${anime.imagepath}');`}>
               <div class="absolute inset-0 bg-blue-950/60 transition-colors duration-300 group-hover:bg-blue-950/45" aria-hidden="true"></div>
               
               <div class="relative h-full flex flex-col">
