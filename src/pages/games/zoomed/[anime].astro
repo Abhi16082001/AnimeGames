@@ -336,19 +336,19 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
     // Get zoom config or use defaults
     const zoom = question.zoom || { scale: 2.5, position: { x: 50, y: 50 } };
     
-    // Apply zoom via CSS transform
+    // Show the next question already zoomed, without transitioning from the full image.
+    zoomedView.style.transition = 'none';
     zoomedView.style.backgroundSize = `${zoom.scale * 100}%`;
     zoomedView.style.backgroundPosition = `${zoom.position.x}% ${zoom.position.y}%`;
-    zoomedView.style.transition = 'background-size 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-position 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
   }
 
   function zoomOut() {
     if (!zoomedView) return;
     
     // Animate to full image
+    zoomedView.style.transition = 'background-size 1s cubic-bezier(0.4, 0, 0.2, 1), background-position 1s cubic-bezier(0.4, 0, 0.2, 1)';
     zoomedView.style.backgroundSize = '100%';
     zoomedView.style.backgroundPosition = '50% 50%';
-    zoomedView.style.transition = 'background-size 1s cubic-bezier(0.4, 0, 0.2, 1), background-position 1s cubic-bezier(0.4, 0, 0.2, 1)';
   }
 
   function updateQuestionDisplay() {
@@ -372,12 +372,12 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
     fullImage?.classList.add('hidden');
     zoomedView?.classList.remove('hidden');
     
-    // Apply zoom for this question
-    applyZoom(currentQuestionIndex);
-
     if (zoomedView && q.image) {
       zoomedView.style.backgroundImage = `url('${q.image}')`;
     }
+
+    // Apply the zoom after replacing the image so the full previous image never flashes.
+    applyZoom(currentQuestionIndex);
     
     if (fullImage && q.image) {
       fullImage.style.backgroundImage = `url('${q.image}')`;
@@ -488,6 +488,6 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
   #zoomed-view {
     background-size: 250%;
     background-position: 50% 50%;
-    transition: background-size 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-position 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: none;
   }
 </style>
