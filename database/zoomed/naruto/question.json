@@ -2,140 +2,140 @@
   {
     "id": "naruto-zoomed-q1",
     "answer": ["Naruto Uzumaki", "naruto uzumaki", "narutouzumaki", "Naruto", "Uzumaki"],
-    "image": "/public/ZoomImages/Naruto/Naruto.webp",
+    "image": "/ZoomImages/Naruto/Naruto.webp",
     "troll": false,
     "zoom": { "scale": 8, "position": { "x": 392, "y": 207 } }
   },
   {
     "id": "naruto-zoomed-q2",
     "answer": ["Sasuke Uchiha", "sasuke uchiha", "sasukeuchiha", "Sasuke", "Uchiha"],
-    "image": "/public/ZoomImages/Naruto/Sasuke.webp",
+    "image": "/ZoomImages/Naruto/Sasuke.webp",
     "troll": false,
     "zoom": { "scale": 4, "position": { "x": 51.3, "y": 90} }
   },
   {
     "id": "naruto-zoomed-q3",
     "answer": ["Kakashi Hatake", "kakashi hatake", "kakashihatake", "Kakashi", "Hatake"],
-    "image": "/public/ZoomImages/Naruto/Kakashi.webp",
+    "image": "/ZoomImages/Naruto/Kakashi.webp",
     "troll": false,
     "zoom": { "scale": 6, "position": { "x": 10, "y": 90.0 } }
   },
   {
     "id": "naruto-zoomed-q4",
     "answer": ["Itachi Uchiha", "itachi uchiha", "itachiuchiha", "Itachi", "Uchiha"],
-    "image": "/public/ZoomImages/Naruto/Itachi.webp",
+    "image": "/ZoomImages/Naruto/Itachi.webp",
     "troll": false,
     "zoom": { "scale": 10, "position": { "x": 43.84, "y": 56.62 } }
   },
   {
     "id": "naruto-zoomed-q5",
     "answer": ["Gaara", "gaara", "Gaara of the Sand"],
-    "image": "/public/ZoomImages/Naruto/Garra.webp",
+    "image": "/ZoomImages/Naruto/Garra.webp",
     "troll": false,
     "zoom": { "scale": 3.5, "position": { "x": 98.58, "y": 25.34 } }
   },
   {
     "id": "naruto-zoomed-q6",
     "answer": ["Jiraiya", "jiraiya", "Ero-Sennin"],
-    "image": "/public/ZoomImages/Naruto/Jiraiya.webp",
+    "image": "/ZoomImages/Naruto/Jiraiya.webp",
     "troll": false,
     "zoom": { "scale": 3.5, "position": { "x": 75.16, "y": 45 } }
   },
   {
     "id": "naruto-zoomed-q7",
     "answer": ["Tsunade", "tsunade", "Lady Tsunade"],
-    "image": "/public/ZoomImages/Naruto/Tsunade.webp",
+    "image": "/ZoomImages/Naruto/Tsunade.webp",
     "troll": false,
     "zoom": { "scale": 3.5, "position": { "x": 60, "y": 70 } }
   },
   {
     "id": "naruto-zoomed-q8",
     "answer": ["Orochimaru", "orochimaru"],
-    "image": "/public/ZoomImages/Naruto/Orochimaru.webp",
+    "image": "/ZoomImages/Naruto/Orochimaru.webp",
     "troll": false,
     "zoom": { "scale": 3.7, "position": { "x": 60, "y": 60 } }
   },
   {
     "id": "naruto-zoomed-q9",
     "answer": ["Minato Namikaze", "minato namikaze", "minatonamikaze", "Minato", "Namikaze"],
-    "image": "/public/ZoomImages/Naruto/Minato.webp",
+    "image": "/ZoomImages/Naruto/Minato.webp",
     "troll": false,
     "zoom": { "scale": 4.2, "position": { "x": 5, "y": 90 } }
   },
   {
     "id": "naruto-zoomed-q10",
     "answer": ["Shikamaru Nara", "shikamaru nara", "shikamarunara", "Shikamaru", "Nara"],
-    "image": "/public/ZoomImages/Naruto/Shikamaru.webp",
+    "image": "/ZoomImages/Naruto/Shikamaru.webp",
     "troll": false,
     "zoom": { "scale": 4.0, "position": { "x": 55, "y": 65 } }
   },
   {
     "id": "naruto-zoomed-q11",
     "answer": ["Pain", "pain", "Nagato", "Yahiko", "Deva Path"],
-    "image": "/public/ZoomImages/Naruto/Pain.webp",
+    "image": "/ZoomImages/Naruto/Pain.webp",
     "troll": false,
     "zoom": { "scale": 5, "position": { "x": 90, "y": 20 } }
   },
   {
     "id": "naruto-zoomed-q12",
     "answer": ["Rock Lee", "rock lee", "rocklee", "Lee"],
-    "image": "/public/ZoomImages/Naruto/Rocklee.webp",
+    "image": "/ZoomImages/Naruto/Rocklee.webp",
     "troll": false,
     "zoom": { "scale": 5, "position": { "x": 20, "y": 95 } }
   },
   {
     "id": "naruto-zoomed-q13",
     "answer": ["Neji Hyuga", "neji hyuga", "nejihyuga", "Neji", "Hyuga"],
-    "image": "/public/ZoomImages/Naruto/Neji.webp",
+    "image": "/ZoomImages/Naruto/Neji.webp",
     "troll": false,
     "zoom": { "scale": 4.0, "position": { "x": 48, "y": 20 } }
   },
   {
     "id": "naruto-zoomed-q14",
     "answer": ["Hinata Hyuga", "hinata hyuga", "hinatahyuga", "Hinata", "Hyuga"],
-    "image": "/public/ZoomImages/Naruto/Hinata.webp",
+    "image": "/ZoomImages/Naruto/Hinata.webp",
     "troll": false,
     "zoom": { "scale": 3.5, "position": { "x": 80, "y": 55 } }
   },
   {
     "id": "naruto-zoomed-q15",
     "answer": ["Sakura Haruno", "sakura haruno", "sakuraharuno", "Sakura", "Haruno"],
-    "image": "/public/ZoomImages/Naruto/Sakura.webp",
+    "image": "/ZoomImages/Naruto/Sakura.webp",
     "troll": false,
     "zoom": { "scale": 3.6, "position": { "x": 90, "y": 40 } }
   },
   {
     "id": "naruto-zoomed-q16",
     "answer": ["Madara Uchiha", "madara uchiha", "madarauchiha", "Madara", "Uchiha"],
-    "image": "/public/ZoomImages/Naruto/Madara.webp",
+    "image": "/ZoomImages/Naruto/Madara.webp",
     "troll": false,
     "zoom": { "scale": 4, "position": { "x": 20, "y": 60 } }
   },
   {
     "id": "naruto-zoomed-q17",
     "answer": ["Obito Uchiha", "obito uchiha", "obitouchiha", "Obito", "Tobi", "tobi"],
-    "image": "/public/ZoomImages/Naruto/Obito.webp",
+    "image": "/ZoomImages/Naruto/Obito.webp",
     "troll": false,
     "zoom": { "scale": 5.5, "position": { "x": 40, "y": 12 } }
   },
   {
     "id": "naruto-zoomed-q18",
     "answer": ["Killer Bee", "killer bee", "killerbee", "Bee"],
-    "image": "/public/ZoomImages/Naruto/Killerbee.webp",
+    "image": "/ZoomImages/Naruto/Killerbee.webp",
     "troll": false,
     "zoom": { "scale": 3.8, "position": { "x": 2, "y": 60 } }
   },
   {
     "id": "naruto-zoomed-q19",
     "answer": ["Deidara", "deidara"],
-    "image": "/public/ZoomImages/Naruto/Deidara.webp",
+    "image": "/ZoomImages/Naruto/Deidara.webp",
     "troll": false,
     "zoom": { "scale": 4.0, "position": { "x": 65, "y": 45 } }
   },
   {
     "id": "naruto-zoomed-q20",
     "answer": ["Might Guy", "might guy", "mightguy", "Guy", "Gai"],
-    "image": "/public/ZoomImages/Naruto/Mightguy.webp",
+    "image": "/ZoomImages/Naruto/Mightguy.webp",
     "troll": false,
     "zoom": { "scale": 3.8, "position": { "x": 40, "y": 70 } }
   }
