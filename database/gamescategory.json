@@ -14,13 +14,5 @@
     "gamepath": "/games/zoomed",
     "questionLimit": 4,
     "imagepath": "/gamecategory/zoom.webp"
-  },
-  {
-    "id": "colour",
-    "name": "Colour Guessing Game",
-    "show": true,
-    "gamepath": "/games/colour",
-    "questionLimit": 4,
-    "imagepath": "/gamecategory/colour.webp"
   }
 ]

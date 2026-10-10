@@ -16,10 +16,10 @@ import FAQSection from '../../components/FAQSection.astro';
           Choose a game mode, pick an anime, and test your character knowledge.
         </p>
 
-        <div class="mt-8 flex flex-wrap items-center justify-center gap-3" aria-label="Troll Mode settings">
+        <!-- <div class="mt-8 flex flex-wrap items-center justify-center gap-3" aria-label="Troll Mode settings">
           <span class="text-sm font-semibold text-[var(--color-text-muted)]">Global setting:</span>
           <TrollModeToggle />
-        </div>
+        </div> -->
       </div>
     </section>
 
@@ -60,10 +60,16 @@ import FAQSection from '../../components/FAQSection.astro';
                         <span class="relative mt-1 text-sm font-medium text-white/85">Play {game.name}</span>
                       </a>
                     ))}
-                    <a href={`/games/${game.id}/miscellaneous`} class="group/anime relative flex aspect-square min-h-48 flex-col justify-end overflow-hidden rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] p-5 shadow-sm transition-transform hover:-translate-y-1 hover:shadow-lg">
+                    <a href={`/games/${game.id}/miscellaneous`} class="group/anime relative flex aspect-square min-h-48 flex-col justify-end overflow-hidden rounded-xl p-5 shadow-sm transition-transform hover:-translate-y-1 hover:shadow-lg" style="background-image: url('/animecategory/Miscellaneous.webp');">
+                        <span class="absolute inset-0 bg-blue-950/60 transition-colors group-hover/anime:bg-blue-950/45" aria-hidden="true"></span>
+
                       <span class="text-4xl" aria-hidden="true">🎲</span>
-                      <span class="mt-4 text-xl font-bold text-white">Miscellaneous</span>
-                      <span class="mt-1 text-sm font-medium text-white/85">Mix every supported anime</span>
+                        <span class="relative text-xl font-bold text-white drop-shadow-md">Miscellaneous</span>
+                      {/* <span class="mt-4 text-xl font-bold text-white">Miscellaneous</span> */}
+                      {/* <span class="mt-1 text-sm font-medium text-white/85">Mix every supported anime</span> */}
+                        <span class="relative mt-1 text-sm font-medium text-white/85">Mix every supported anime</span>
+                        
+
                     </a>
                   </div>
                 </div>

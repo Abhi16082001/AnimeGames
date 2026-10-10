@@ -55,7 +55,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
               </svg>
               Back to Games
             </a>
-            <TrollModeToggle />
+            <!-- <TrollModeToggle /> -->
           </div>
         </div>
       </div>
@@ -97,7 +97,8 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
           <article class="card group relative aspect-square overflow-hidden gradient-border !p-5 sm:!p-8">
             <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-[var(--color-secondary)]/10 group-hover:from-[var(--color-primary)]/20 group-hover:to-[var(--color-secondary)]/20 transition-all duration-300" aria-hidden="true"></div>
             
-            <div class="relative h-full flex flex-col items-center justify-center text-center p-8">
+            <div class="relative h-full flex flex-col items-center justify-center text-center p-8"
+           >
               <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-3xl mb-6 animate-float" aria-hidden="true">
                 🎲
               </div>
@@ -105,7 +106,7 @@ const supportedAnime = animecategory.filter(a => a.gameCategoryIds.includes(game
                 Miscellaneous
               </h3>
               <p class="text-[var(--color-text-muted)] leading-relaxed mb-6 max-w-sm">
-                Mixed questions from all {supportedAnime.length} supported anime. Questions are shuffled across series for a true test of knowledge!
+                Mixed questions from all {supportedAnime.length} supported anime. New animes are<b><i> coming soon</i> </b> !!
               </p>
               
               <a 
