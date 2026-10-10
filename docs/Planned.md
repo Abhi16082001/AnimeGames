@@ -11,7 +11,7 @@
   2. And add more game category in animecategory.json 
 
   3. Daily challenge:
-  IN leaderboard page: uncomment daily challenge values in two arrays.
+  IN leaderboard page: uncomment daily challenge and colour values in two arrays.
 And make it true in google script.
 
 4. Toggle mode:
