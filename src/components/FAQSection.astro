@@ -12,7 +12,20 @@ const defaultFaqs: FAQ[] = [
   { q: 'Can I play on mobile?', a: 'Absolutely! The site is fully responsive and works great on mobile devices. All game modes are touch-friendly with appropriate controls for each platform.' },
 ];
 const faqs = suppliedFaqs ?? defaultFaqs;
-const faqSchema = { '@context': 'https://schema.org', '@type': 'QAPage', mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.q, text: faq.q, answerCount: 1, acceptedAnswer: { '@type': 'Answer', text: faq.a } })) };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.a,
+    },
+  })),
+};
+
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
