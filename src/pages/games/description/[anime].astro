@@ -171,6 +171,7 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
                   ></button>
                   <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6 sm:p-12">
                     <p id="result-status" class="text-2xl md:text-3xl font-bold text-[var(--color-text)]">Correct</p>
+                    <p id="result-answer" class="hidden mt-3 text-base font-medium text-[var(--color-text-muted)]"></p>
                   </div>
                   <div class="mt-4 flex justify-center gap-4">
                     <button
@@ -241,7 +242,7 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
 <script>
   import { getClientSessionQuestions, loadCurrentClientQuestions, saveClientSession } from '../../../utils/gameClient';
   import { submitDailyScoreOnce } from '../../../utils/api';
-  import { isAnswerInList } from '../../../utils/gameSession';
+  import { getPrimaryAnswer, getTrollMode, isAnswerInList } from '../../../utils/gameSession';
 
   const sessionData = document.getElementById('game-session-data')?.textContent;
   if (!sessionData) throw new Error('Missing game session data');
@@ -274,6 +275,7 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
   const sessionQuestionPlural = document.getElementById('session-question-plural');
   const currentQNum = document.getElementById('current-q-num');
   const resultStatus = document.getElementById('result-status');
+  const resultAnswer = document.getElementById('result-answer');
   const revealImage = document.getElementById('reveal-image') as HTMLButtonElement | null;
   const nextQuestionBtn = document.getElementById('next-question-btn');
   const scoreSummary = document.getElementById('score-summary');
@@ -411,6 +413,8 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
 
     resultStatus.textContent = 'Correct';
     resultStatus.className = 'text-2xl md:text-3xl font-bold text-green-300';
+    resultAnswer?.classList.add('hidden');
+    if (resultAnswer) resultAnswer.textContent = '';
     revealImage?.classList.add('hidden');
     // Reset flipped state and visibility
     questionAnswered = false;
@@ -484,7 +488,18 @@ const seoDescription = `Play the ${animeName} Description Game at Otaku Blitz. U
 
         resultStatus.textContent = 'Wrong';
         resultStatus.className = 'text-2xl md:text-3xl font-bold text-red-300';
-        revealImage?.classList.add('hidden');
+        if (getTrollMode(gameId) && revealImage && question.image) {
+          if (resultAnswer) {
+            resultAnswer.textContent = `Correct answer: ${getPrimaryAnswer(question.answer)}`;
+            resultAnswer.classList.remove('hidden');
+          }
+          revealImage.style.backgroundImage = `url('${question.image}')`;
+          revealImage.classList.remove('hidden');
+          canReviewCorrectAnswer = true;
+        } else {
+          resultAnswer?.classList.add('hidden');
+          revealImage?.classList.add('hidden');
+        }
 
         // Disable input
         answerInput.disabled = true;

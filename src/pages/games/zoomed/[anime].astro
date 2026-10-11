@@ -225,7 +225,7 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
 <script>
   import { getClientSessionQuestions, loadCurrentClientQuestions, saveClientSession } from '../../../utils/gameClient';
   import { submitDailyScoreOnce } from '../../../utils/api';
-  import { getPrimaryAnswer, isAnswerInList } from '../../../utils/gameSession';
+  import { getPrimaryAnswer, getTrollMode, isAnswerInList } from '../../../utils/gameSession';
 
   const sessionData = document.getElementById('game-session-data')?.textContent;
   if (!sessionData) throw new Error('Missing game session data');
@@ -425,8 +425,18 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
       showFeedback('Wrong! Score: 0 points.', 'error');
       resultMessage.textContent = 'Wrong · 0 points';
       resultMessage.className = 'mb-4 text-center text-sm font-semibold text-red-300';
-      // Incorrect answers keep the existing zoomed-in image visible.
-      resultView?.classList.remove('hidden');
+      if (getTrollMode(gameId)) {
+        // Troll Mode reveals the answer using the same zoom-out treatment as a correct answer.
+        zoomOut();
+        fullImage?.classList.remove('hidden');
+        setTimeout(() => {
+          zoomedView?.classList.add('hidden');
+          resultView?.classList.remove('hidden');
+        }, 1000);
+      } else {
+        // In normal mode, incorrect answers keep the existing zoomed-in image visible.
+        resultView?.classList.remove('hidden');
+      }
     }
     
   }

@@ -14,7 +14,7 @@
   IN leaderboard page: uncomment daily challenge and colour values in two arrays.
 And make it true in google script.
 
-4. Toggle mode:
+4. Troll mode:
 uncomment trollmodetoggle tag from games->index.astro and components->animeselect.astro
 
 5. Final sitemap.xml
