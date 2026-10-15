@@ -152,10 +152,6 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
               
               <!-- Result View (shown after answer) -->
               <div id="result-view" class="hidden">
-                <div class="relative aspect-square rounded-xl overflow-hidden bg-[var(--color-bg)] bg-[var(--color-border)] mb-4 hidden" style="background-image: url('{sessionQuestions[0].image}'); background-size: cover; background-position: center;" id="full-image">
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" aria-hidden="true"></div>
-                  <p id="correct-name" class="absolute bottom-4 left-4 rounded-lg bg-black/60 px-3 py-2 text-lg font-bold text-white shadow-lg backdrop-blur-sm"></p>
-                </div>
                 <p id="result-message" class="mb-4 text-center text-sm font-semibold" aria-live="polite"></p>
                 <div class="flex justify-center gap-4">
                   <button
@@ -225,7 +221,7 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
 <script>
   import { getClientSessionQuestions, loadCurrentClientQuestions, saveClientSession } from '../../../utils/gameClient';
   import { submitDailyScoreOnce } from '../../../utils/api';
-  import { getPrimaryAnswer, getTrollMode, isAnswerInList } from '../../../utils/gameSession';
+  import { getTrollMode, isAnswerInList } from '../../../utils/gameSession';
 
   const sessionData = document.getElementById('game-session-data')?.textContent;
   if (!sessionData) throw new Error('Missing game session data');
@@ -254,8 +250,6 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
   const resultMessage = document.getElementById('result-message');
   const nextQuestionBtn = document.getElementById('next-question-btn');
   const resultView = document.getElementById('result-view');
-  const fullImage = document.getElementById('full-image');
-  const correctName = document.getElementById('correct-name');
   const scoreSummary = document.getElementById('score-summary');
   const finalCorrect = document.getElementById('final-correct');
   const finalWrong = document.getElementById('final-wrong');
@@ -367,9 +361,8 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
     feedback.textContent = '';
     feedback.className = 'hidden mb-4 p-4 rounded-lg';
     
-    // Hide result view, show zoomed view
+    // Hide result view and restore the zoomed image for the next question.
     resultView?.classList.add('hidden');
-    fullImage?.classList.add('hidden');
     zoomedView?.classList.remove('hidden');
     
     if (zoomedView && q.image) {
@@ -379,10 +372,6 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
     // Apply the zoom after replacing the image so the full previous image never flashes.
     applyZoom(currentQuestionIndex);
     
-    if (fullImage && q.image) {
-      fullImage.style.backgroundImage = `url('${q.image}')`;
-    }
-    if (correctName) correctName.textContent = getPrimaryAnswer(q.answer);
   }
 
   function submitAnswer() {
@@ -409,13 +398,8 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
       resultMessage.textContent = 'Correct · 1 point';
       resultMessage.className = 'mb-4 text-center text-sm font-semibold text-green-300';
       zoomOut();
-      fullImage?.classList.remove('hidden');
-
-      // Only correct answers reveal the full image after zooming out.
-      setTimeout(() => {
-        zoomedView?.classList.add('hidden');
-        resultView?.classList.remove('hidden');
-      }, 1000);
+      // Keep the original image view in place while it reveals the full image.
+      resultView?.classList.remove('hidden');
     } else {
       // Wrong answer
       wrongCount++;
@@ -428,11 +412,7 @@ const seoDescription = `Play the ${animeName} Zoomed Image Game at Otaku Blitz. 
       if (getTrollMode(gameId)) {
         // Troll Mode reveals the answer using the same zoom-out treatment as a correct answer.
         zoomOut();
-        fullImage?.classList.remove('hidden');
-        setTimeout(() => {
-          zoomedView?.classList.add('hidden');
-          resultView?.classList.remove('hidden');
-        }, 1000);
+        resultView?.classList.remove('hidden');
       } else {
         // In normal mode, incorrect answers keep the existing zoomed-in image visible.
         resultView?.classList.remove('hidden');
